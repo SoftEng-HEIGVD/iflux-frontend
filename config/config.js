@@ -14,7 +14,7 @@ var config = {
       name: 'code',
 			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
     },
-    port: 3000,
+    port: 3006
   },
 
   test: {
@@ -23,7 +23,7 @@ var config = {
       name: 'code',
 			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
     },
-    port: 3000
+    port: 3006
   },
 
   production: {
@@ -32,7 +32,7 @@ var config = {
       name: 'code',
 			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
     },
-    port: 3000
+    port: 3006
   }
 };
 
