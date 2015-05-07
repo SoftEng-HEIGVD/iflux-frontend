@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "title": "Slack",
+  "properties": {
+    "channel": {
+      "title": "Channel",
+      "type": "string"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel",
+    "message"
+  ]
+}

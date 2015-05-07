@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "title": "Publibike",
+  "properties": {
+    "terminal": {
+      "type": "object",
+      "title": "properties.terminal",
+      "properties": {
+        "terminalid": {
+          "title": "properties.terminal.terminalid",
+          "type": "string"
+        },
+        "terminal": {
+          "title": "properties.terminal.terminal",
+          "type": "string"
+        },
+        "name": {
+          "title": "properties.terminal.name",
+          "type": "string"
+        },
+        "infotext": {
+          "title": "properties.terminal.infotext",
+          "type": "string"
+        },
+        "street": {
+          "title": "properties.terminal.street",
+          "type": "string"
+        },
+        "zip": {
+          "title": "properties.terminal.zip",
+          "type": "string"
+        },
+        "city": {
+          "title": "properties.terminal.city",
+          "type": "string"
+        },
+        "country": {
+          "title": "properties.terminal.country",
+          "type": "string"
+        },
+        "lat": {
+          "title": "properties.terminal.lat",
+          "type": "number"
+        },
+        "lng": {
+          "title": "properties.terminal.lng",
+          "type": "number"
+        },
+        "image": {
+          "title": "properties.terminal.image",
+          "type": "string"
+        }
+      }
+    },
+    "new": {
+      "type": "object",
+      "title": "properties.new",
+      "properties": {
+        "freeholders": {
+          "title": "properties.new.freholders",
+          "type": "string"
+        },
+        "bikes": {
+          "title": "properties.new.bikes",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+  ]
+}

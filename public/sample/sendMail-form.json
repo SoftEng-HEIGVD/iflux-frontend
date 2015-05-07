@@ -1,0 +1,9 @@
+[
+  "email",
+  "subject",
+  {
+    "key": "body",
+    "type": "textarea",
+    "placeholder": "Write your text"
+  }
+]

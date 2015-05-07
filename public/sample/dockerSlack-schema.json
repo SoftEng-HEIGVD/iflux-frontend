@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "title": "properties",
+  "properties": {
+    "custom": {
+      "title": "properties.custom",
+      "type": "string"
+    }
+  }
+}

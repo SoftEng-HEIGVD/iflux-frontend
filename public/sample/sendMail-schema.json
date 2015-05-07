@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "title": "Write Email",
+  "properties": {
+    "email": {
+      "title": "Email",
+      "type": "string"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string"
+    },
+    "body": {
+      "title": "Message",
+      "type": "string"
+    }
+  },
+  "required": [
+    "subject",
+    "email",
+    "body"
+  ]
+}

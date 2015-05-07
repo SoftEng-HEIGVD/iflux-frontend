@@ -1,0 +1,8 @@
+[
+  "channel",
+  {
+    "key": "message",
+    "type": "textarea",
+    "placeholder": "Write your text"
+  }
+]

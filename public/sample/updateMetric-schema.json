@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "title": "Update Metric",
+  "properties": {
+    "metric": {
+      "title": "Metric",
+      "type": "string"
+    },
+    "value": {
+      "title": "Value",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "metric",
+    "timestamp"
+  ]
+}
