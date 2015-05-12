@@ -18,7 +18,7 @@
     <link href="public/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="public/components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
-    <link href="public/components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="public/components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="public/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
     <link href="public/css/style.css" rel="stylesheet">
@@ -35,11 +35,13 @@
     <script src="public/components/angular-schema-form/dist/schema-form.min.js"></script>
     <script src="public/components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
     <script src="public/components/angular-ui-select/dist/select.min.js"></script>
+    <script src='public/components/ngstorage/ngStorage.min.js'></script>
 
 
     <script src="app/script/app.js"></script>
     <script src="app/script/controllers/RulesCtrl.js"></script>
     <script src="app/script/controllers/MainCtrl.js"></script>
+    <script src="app/script/controllers/AuthenticationCtrl.js"></script>
     <script src="app/script/services/service.js"></script>
     <script src="app/script/services/restService.js"></script>
     <script src="app/script/services/sharedProperties.js"></script>
@@ -56,7 +58,7 @@
 <body>
 
 <!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" data-ng-controller="AuthCtrl" >
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -69,9 +71,13 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a ng-href="#/home">Home</a></li>
-                <li><a ng-href="#/rules">Rules</a></li>
-
+                <li ng-hide="isAuthenticate"><a ng-href="#/home">Home</a></li>
+                <li ng-show="isAuthenticate"><a ng-href="#/cockpit">Cockpit</a></li>
+                <li ng-show="isAuthenticate"><a ng-href="#/rules">Rules</a></li>
+                <li ng-hide="isAuthenticate"><a ng-href="#/signin">Sign in</a></li>
+                <li ng-hide="isAuthenticate"><a ng-href="#/register">Register</a></li>
+                <li ng-show="isAuthenticate"><a ng-href="#/user">User</a></li>
+                <li ng-show="isAuthenticate"><a ng-href="#" ng-click="logout()">Logout</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
