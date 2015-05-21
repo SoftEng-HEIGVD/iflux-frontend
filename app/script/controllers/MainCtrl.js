@@ -4,5 +4,9 @@
 
 var iFluxFrontCtrl = angular.module('iFluxFrontControllers', [
     'RulesCtrl',
-    'AuthenticationCtrl'
+    'AuthenticationCtrl',
+    'SettingsCtrl',
+    'EventSource',
+    'ActionTarget'
+
 ]);

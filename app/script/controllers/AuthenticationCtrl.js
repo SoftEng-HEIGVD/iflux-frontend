@@ -14,12 +14,14 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                     alert(res.data);
                 } else {
                     $localStorage.token = res.token;
-                    partnerId = res.tpartnersTid.tidPartner;
                     $location.path('/cockpit');
                 }
             });
-            //TODO remove when authentication is working
-            $rootScope.isAuthenticate = "blublu";
+            //TODO remove the 2 lines when authentication is working
+            $location.path('/cockpit');
+            $localStorage.token = "blublu";
+
+            $rootScope.isAuthenticate =$localStorage.token;
         };
 
         $scope.register = function () {
@@ -33,8 +35,11 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
             }, function () {
                 $rootScope.error = 'Failed to signup';
             });
-            //TODO remove when authentication is working
-            $rootScope.isAuthenticate = "blublu";
+            //TODO remove the 2 lines when authentication is working
+            $location.path('/cockpit');
+            $localStorage.token = "blublu";
+
+            $rootScope.isAuthenticate =$localStorage.token;
         };
 
         $scope.logout = function () {
@@ -43,8 +48,17 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
             $location.path('/home');
         };
 
-        //TODO change with $scope.token =$localStorage.token;
-        //   $scope.isAuthenticate =$localStorage.token;
+        //TODO change with
+        $rootScope.isAuthenticate =$localStorage.token;
     }
 
+]);
+
+
+iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me',
+    function ($rootScope, $scope, $location, $localStorage, Me) {
+        //  $scope.organization = Me.query();
+        $scope.organizations = [{"orgName": "HEIA-FR", "orgId": 1}, {"orgName": "HES-SO", "orgId": 2}];
+
+    }
 ]);

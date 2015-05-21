@@ -5,7 +5,6 @@
 
         <div class="big-panel">
             <div class="col-lg-12 form-horizontal">
-
                 <div class="form-group">
                     <label for="descriptionRules" class="col-sm-2 control-label">Description </label>
 
@@ -26,14 +25,10 @@
 
                     <div class="col-sm-10">
                         <div>
-
                             <input bs-switch ng-model="payload.enabled" type="checkbox">
-
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
 
@@ -47,7 +42,7 @@
                             <div class="panel-heading">
                                 Event source: <span><ui-select ng-model="eventSelected.event" theme="bootstrap">
                                 <ui-select-match placeholder="Select an event source or do a search">{{$select.selected.displayName}}</ui-select-match>
-                                <ui-select-choices repeat="eventSource in eventSources" value="{{$select.selected.event}}">
+                                <ui-select-choices repeat="eventSource in eventSources | filter: { displayName: $select.search }" value="{{$select.selected.event}}">
                                     <div ng-bind-html="eventSource.displayName | highlight: $select.search"></div>
                                     <small>
                                         eventSource: <span ng-bind-html="eventSource.eventSource | highlight: $select.search"></span>
@@ -92,7 +87,7 @@
                             <div class="panel-heading">
                                 Action: <span><ui-select ng-model="actionSelected.action" theme="bootstrap">
                                 <ui-select-match placeholder="Select an action target or do a search">{{$select.selected.displayName}}</ui-select-match>
-                                <ui-select-choices repeat="actionTarget in actionTargets" value="{{$select.selected.action}}">
+                                <ui-select-choices repeat="actionTarget in actionTargets | filter: { displayName: $select.search }" value="{{$select.selected.action}}">
                                     <div ng-bind-html="actionTarget.displayName | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select></span>

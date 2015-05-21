@@ -1,0 +1,121 @@
+<div class="container">
+    <div id="page-content-wrapper">
+        <h1>iFLUX Action Target Template Editor</h1>
+
+        <div class="big-panel">
+            <div class="col-lg-12 form-horizontal">
+                <div class="col-lg-6">
+                    <h3>General Info</h3>
+
+                    <div class="form-group">
+                        <label for="NameTemplate" class="col-sm-4 control-label">Name </label>
+
+                        <div class="col-sm-8"><input id="NameTemplate" name="nameTemplate" type="text" class="form-control"
+                                                     placeholder="Name of the template"
+                                                     ng-model="atTemplate.name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="organizationSelect" class="col-sm-4 control-label">Organization </label>
+
+                        <div class="col-sm-8">
+                            <ui-select id="organizationSelect" ng-model="atTemplate.organizationId" theme="bootstrap">
+                                <ui-select-match placeholder="Select an organization">{{$select.selected.orgName}}</ui-select-match>
+                                <ui-select-choices repeat="organization in organizations  | filter: { orgName: $select.search }" value="{{$select.selected.orgName}}">
+                                    <div ng-bind-html="organization.orgName | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="templatePublic" class="col-sm-4 control-label">Make the template public</label>
+
+                        <div class="col-sm-8">
+                            <div>
+                                <input id="templatePublic" ng-model="atTemplate.public" type="checkbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3>Schema</h3>
+
+                    <div class="form-group">
+                        <label for="schemaUrl" class="col-sm-4 control-label">Schema URL </label>
+
+                        <div class="col-sm-8"><input id="schemaUrl" name="schemaUrl" type="url" class="form-control"
+                                                     placeholder="Schema URL"
+                                                     ng-model="atTemplate.schema.$schema" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="configurationUrl" class="col-sm-4 control-label">Configuration URL </label>
+
+                        <div class="col-sm-8"><input id="configurationUrl" name="ConfigUrl" type="url" class="form-control"
+                                                     placeholder="Configuration URL "
+                                                     ng-model="atTemplate.schema.url" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="configurationToken" class="col-sm-4 control-label">Token </label>
+
+                        <div class="col-sm-8"><input id="configurationToken" name="ConfigToken" type="text" class="form-control"
+                                                     placeholder="JWT Token"
+                                                     ng-model="atTemplate.schema.token">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 form-horizontal">
+                <div class="col-lg-6">
+                    <h3>Target</h3>
+
+                    <div class="form-group">
+                        <label for="targetUrl" class="col-sm-4 control-label">Url </label>
+
+                        <div class="col-sm-8"><input id="targetUrl" name="targetUrl" type="url" class="form-control"
+                                                     placeholder="Url of the Target"
+                                                     ng-model="atTemplate.target.url" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetToken" class="col-sm-4 control-label">Make the template public</label>
+
+
+                        <div class="col-sm-8"><input id="targetToken" name="targetToken" type="text" class="form-control"
+                                                     placeholder="Target JWT Token "
+                                                     ng-model="atTemplate.target.token">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3>Configuration UI</h3>
+
+                    <div class="form-group">
+                        <label for="schemaForm" class="col-sm-4 control-label">Schema Form</label>
+
+                        <div class="col-sm-8"><input id="schemaForm" name="schemaUrl" type="url" class="form-control"
+                                                     placeholder="Configuration Schema"
+                                                     ng-model="atTemplate.configurationUi">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="buttonbar">
+                    <a class="btn btn-primary" ng-click="cancel()">Cancel</a>
+                    <a class="btn btn-primary" ng-click="create()">{{buttonName}}</a>
+                </div>
+            </div>
+            {{atTemplate}}
+
+        </div>
+    </div>
+</div>

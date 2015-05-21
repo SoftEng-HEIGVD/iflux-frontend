@@ -5,8 +5,8 @@
 ## Board
 
 [![Stories in Backlog](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=backlog&title=Backlog)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
-[![Stories in Ready](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=ready&title=Ready)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
 [![Stories in In Progress](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
+[![Stories in Ready](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=ready&title=Ready)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
 [![Stories in In Done](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=done&title=Done)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
 
 

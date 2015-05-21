@@ -1,7 +1,12 @@
 light-red = #FFDDDD
+very-light-red = #FFEEEE
 light-green = #DDFFDD
 red = #d9534f
 green = #5cb85c
+brand-primary = #2b6195
+brand-secondary = #f1772c
+light-grey = #EEEEEE
+white = #FFFFFF
 
 body
   margin-bottom 60px
@@ -14,6 +19,15 @@ a
 html
   position relative
   min-height 100%
+
+.text-primary
+  color brand-primary
+
+.text-primary i:hover
+  color brand-secondary
+
+.text-secondary
+  color brand-secondary
 
 .footer
   position absolute
@@ -62,20 +76,19 @@ html
     border-width 1px
     min-height 400px
 
-
 .panel-heading
   border-top-left-radius 0px
   border-top-right-radius 0px
 
 .panel-green .panel-heading
   border-color green
-  color #ffffff
+  color white
   background-color green
 
 .panel-red .panel-heading
   border-color red
   background-color red
-  color #ffffff
+  color white
 
 .big-panel
   border-color #333333
@@ -85,3 +98,24 @@ html
 
 .titleIfThen
   padding-top 5px
+
+.header-select
+  padding-top 10px
+  padding-bottom 10px
+  min-height 30px
+  width 200px
+
+.clickableRow
+  cursor pointer
+
+.rowOddClickable
+  background-color light-grey
+  cursor pointer
+
+.rowEvenClickable
+  background-color white
+  cursor pointer
+
+.table .table-intern
+  border-color
+  background-color very-light-red
