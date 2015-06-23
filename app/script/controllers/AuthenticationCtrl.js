@@ -11,9 +11,10 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
         $scope.login = function () {
             Authentication.login($scope.credentials, function (res) {
                 if (res.type == false) {
-                    alert(res.data);
                 } else {
                     $localStorage.token = res.token;
+                    $rootScope.token = $localStorage.token;
+                    $rootScope.isAuthenticate = $localStorage.token;
                     $location.path('/cockpit');
                 }
             }, function (err) {
@@ -27,6 +28,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
         $scope.register = function () {
             Authentication.register($scope.credentials, function (res) {
                 if (res.type == false) {
+                    $location.path('/login');
                 } else {
                     $localStorage.token = res.data.token;
                     $location.path('/cockpit');
@@ -43,7 +45,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
         $scope.logout = function () {
             $rootScope.isAuthenticate = null;
             delete $localStorage.token;
-            $location.path('/home');
+            $location.path('/signin');
         };
 
         $rootScope.isAuthenticate = $localStorage.token;
