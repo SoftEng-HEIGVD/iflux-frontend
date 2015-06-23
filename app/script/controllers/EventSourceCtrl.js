@@ -4,9 +4,9 @@
 
 var iFluxFrontCtrl = angular.module('EventSource', []);
 
-iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance',
-    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance) {
-
+iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
+    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance,Me) {
+        $scope.organizations = Me.query();
         $scope.showIndex = null;
         $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
         $scope.eventSourceInstances = EventSourceInstance.query({allOrganizations: true});

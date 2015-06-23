@@ -46,6 +46,8 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider',
             when('/eventSourceInstanceEditor/:id', {templateUrl: 'app/partials/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
             when('/eventSourceTemplateEditor/:id', {templateUrl: 'app/partials/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
 
+            when('/userOrganizationEditor', {templateUrl: 'app/partials/userOrganizationEditor.html', controller: 'userOrganizationEditorCtrl'}).
+
             otherwise({redirectTo: '/home'});
 
         $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {

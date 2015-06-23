@@ -63,12 +63,12 @@ iFluxFrontServices.factory('EventSourceTemplate', ['$resource',
 
 iFluxFrontServices.factory('Organization', ['$resource',
     function ($resource) {
-        return $resource(baseUrl + '/users/:userId/:action', {}, {
+        return $resource(baseUrl + '/organizations/:organizationId/:action', {}, {
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {organizationId: '@organizationId'}},
             get: {method: 'GET', params: {organizationId: '@organizationId'}},
-            action: {method: 'POST', params: {organizationId: '@organizationId', action: 'action'}},
+            action: {method: 'POST', params: {organizationId: '@organizationId', action: 'actions'}},
             users: {method: 'GET', params: {organizationId: '@organizationId', action: 'users'}, isArray: true}
         });
     }

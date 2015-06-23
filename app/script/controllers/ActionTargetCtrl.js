@@ -11,14 +11,11 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
         $scope.actionTargetTemplates = ActionTargetTemplate.query({allOrganizations: true});
         $scope.actionTargetInstances = ActionTargetInstance.query({allOrganizations: true});
         $scope.selectTableRow = function (index) {
-            console.log(index);
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
-                console.log("set null");
             }
             else {
                 $scope.showIndex = index;
-                console.log("showindex: " + $scope.showIndex);
             }
         };
 
