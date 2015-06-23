@@ -8,73 +8,8 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
     function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance) {
 
         $scope.showIndex = null;
-        //   $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations:true});
-        $scope.eventSourceTemplates = [
-            {
-                "id": 1,
-                "key": "ooimemdazaus",
-                "name": "iFlux thermometer",
-                "public": true,
-                "organizationId": 1
-            },
-            {
-                "id": 2,
-                "key": "imemdtreeazaus",
-                "name": "publibike",
-                "public": true,
-                "organizationId": 3
-            },
-            {
-                "id": 3,
-                "key": "imemdadsfzaus",
-                "name": "citizen engagement",
-                "public": false,
-                "organizationId": 1
-            }
-        ];
-        $scope.eventSourceInstances = [
-            {
-                "id": 1,
-                "name": "my Temperature Instance",
-                "eventSourceTemplateId": 1,
-                "configuration": {
-                    "captorId": "abcdef"
-                }
-            },
-            {
-                "id": 2,
-                "name": "my Temperature Instance 2",
-                "eventSourceTemplateId": 1,
-                "configuration": {
-                    "captorId": "abcdef"
-                }
-            },
-            {
-                "id": 3,
-                "name": "my Temperature Instance 3",
-                "eventSourceTemplateId": 1,
-                "configuration": {
-                    "captorId": "abcdef"
-                }
-            },
-            {
-                "id": 4,
-                "name": "Publibike instance",
-                "eventSourceTemplateId": 2,
-                "configuration": {
-                    "captorId": "abcdef"
-                }
-            },
-            {
-                "id": 5,
-                "name": "citizen engagement",
-                "eventSourceTemplateId": 3,
-                "configuration": {
-                    "captorId": "abcdef"
-                }
-            }
-        ];
-
+        $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
+        $scope.eventSourceInstances = EventSourceInstance.query({allOrganizations: true});
         $scope.selectTableRow = function (index, templateId) {
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
@@ -83,22 +18,71 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
                 $scope.showIndex = index;
             }
         };
+
+        $scope.createInstance = function (esTemplateId) {
+            $rootScope.esTemplateId = esTemplateId;
+            $location.path('/eventSourceInstanceEditor');
+        }
     }
 
 ]);
 
 
-iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance',
-    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance) {
+iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
 
+        $scope.organizations = Me.query();
+        var isUpdate = false;
+        var instanceId = $route.current.params.id;
+        //init the data structure
+
+        $scope.esInstance = {};
+        //if it's a modification
+        if (instanceId !== undefined && instanceId !== "") {
+            //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
+            $scope.buttonName = "Update it!";
+            $scope.esInstance = EventSourceInstance.get({eventSourceInstanceId: instanceId});
+            isUpdate = true;
+        }
+        //Or a new template
+        else {
+            $scope.esInstance.eventSourceTemplateId = $rootScope.esTemplateId;
+            $scope.buttonName = "Create it!";
+        }
+
+        $scope.cancel = function () {
+            $location.path('/eventSource');
+        }
+
+        $scope.submitForm = function () {
+            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
+            if (isUpdate) {
+                $scope.esInstance.eventSourceInstanceId = instanceId;
+                EventSourceInstance.update($scope.esInstance);
+            }
+            else {
+                EventSourceInstance.save($scope.esInstance);
+            }
+
+            $location.path('/eventSource');
+            isUpdate = false;
+        }
+
+
+    }
+]);
+iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
+        $scope.organizations = Me.query();
+        var isUpdate = false;
         var templateId = $route.current.params.id;
         //init the data structure
 
         //if it's a modification
         if (templateId !== undefined && templateId !== "") {
-            //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
-            //     $scope.payload = selectedRule;
             $scope.buttonName = "Update it!";
+            $scope.esTemplate = EventSourceTemplate.get({eventSourceId: templateId});
+            isUpdate = true;
         }
         //Or a new template
         else {
@@ -109,30 +93,18 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
             $location.path('/eventSource');
         }
 
-    }
-]);
-iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance',
-    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance) {
-        $scope.organizations = [{"orgName": "HEIA-FR", "orgId": 1}, {"orgName": "HES-SO", "orgId": 2}];
-
-        var templateId = $route.current.params.id;
-        //init the data structure
-
-        //if it's a modification
-        if (templateId !== undefined && templateId !== "") {
-            //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
-            //     $scope.payload = selectedRule;
-            $scope.buttonName = "Update it!";
-        }
-        //Or a new template
-        else {
-            $scope.buttonName = "Create it!";
-        }
-
-        $scope.cancel = function () {
+        $scope.submitForm = function () {
+            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
+            if (isUpdate) {
+                $scope.esTemplate.eventSourceId = templateId;
+                EventSourceTemplate.update($scope.esTemplate);
+            }
+            else {
+                EventSourceTemplate.save($scope.esTemplate);
+            }
             $location.path('/eventSource');
+            isUpdate = false;
         }
-
     }
 ]);
 

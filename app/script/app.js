@@ -14,6 +14,7 @@ var iFluxFrontendApp = angular.module('iFluxFrontendApp', [
     'iFluxFrontControllers',
     'iFluxFrontFilters',
     'iFluxFrontServices',
+    'iFluxDirectives',
     'frapontillo.bootstrap-switch',
     'ngSanitize'
 ]);
@@ -44,8 +45,6 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider',
             when('/eventSourceTemplateEditor', {templateUrl: 'app/partials/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
             when('/eventSourceInstanceEditor/:id', {templateUrl: 'app/partials/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
             when('/eventSourceTemplateEditor/:id', {templateUrl: 'app/partials/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
-
-
 
             otherwise({redirectTo: '/home'});
 

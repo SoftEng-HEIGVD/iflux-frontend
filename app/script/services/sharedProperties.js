@@ -46,8 +46,11 @@ iFluxFrontServices.factory('Utils', ['$localStorage',
             }
             return user;
         }
+
         return {
-            currentUser: getUserFromToken()
+            currentUser: function () {
+                return getUserFromToken();
+            }
         };
 
     }

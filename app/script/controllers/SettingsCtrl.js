@@ -8,12 +8,9 @@ iFluxFrontCtrl.controller('SettingsCtrl', ['$rootScope', '$scope', '$location', 
     function ($rootScope, $scope, $location, $localStorage, Organization, Users, Utils) {
         $scope.allOrgAvailable = Organization.query();
 
-        //get currentUserId
-        //var currentUser = Utils.currentUser();
-
-        //get user info
-        //var detailCurrentUser = Users.get(currentUser.id);
-        $scope.detailCurrentUser = {"firstName": "Henri", "lastName": "Dupont", "userId": 1};
+        //get user info stored in the token
+        var currentUser = Utils.currentUser();
+        $scope.detailCurrentUser = currentUser;
 
         $scope.modifyUser = function () {
             Users.update($scope.detailCurrentUser);

@@ -8,133 +8,105 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
     function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTargetInstance) {
 
         $scope.showIndex = null;
-        //   $scope.actionTargetTemplates = ActionTargetTemplate.query({allOrganizations:true});
-        $scope.actionTargetTemplates = [
-            {
-                "id": 1,
-                "key": "dazimausme",
-                "name": "iFlux Slack bot",
-                "public": true,
-                "organizationId": 1,
-                "target": {
-                    "url": "http://slackgateway.bot.instance/actions",
-                    "token": "<JSON Web Token>"
-                }
-            },
-            {
-                "id": 2,
-                "key": "asdfasdf",
-                "name": "Email ",
-                "public": false,
-                "organizationId": 2,
-                "target": {
-                    "url": "http://slackgateway.bot.instance/actions",
-                    "token": "<JSON Web Token>"
-                }
-            },
-            {
-                "id": 3,
-                "key": "werewrew",
-                "name": "Metric",
-                "public": true,
-                "organizationId": 1,
-                "target": {
-                    "url": "http://slackgateway.bot.instance/actions",
-                    "token": "<JSON Web Token>"
-                }
-            }
-        ];
-        $scope.actionTargetInstances = [
-            {
-                "id": 1,
-                "name": "my Slack Instance",
-                "actionTargetTemplateId": 1,
-                "configuration": {
-                    "botId": "jgajdsjgiqd"
-                }
-            },
-            {
-                "id": 2,
-                "name": "Slack instance 2",
-                "actionTargetTemplateId": 1,
-                "configuration": {
-                    "botId": "uiuzi"
-                }
-            },
-            {
-                "id": 3,
-                "name": "Email me",
-                "actionTargetTemplateId": 2,
-                "configuration": {
-                    "botId": "wewer"
-                }
-            },
-            {
-                "id": 4,
-                "name": "Metric instance ",
-                "actionTargetTemplateId": 3,
-                "configuration": {
-                    "botId": "gjkhjh"
-                }
-            },
-        ];
-
-        $scope.selectTableRow = function (index, templateId) {
+        $scope.actionTargetTemplates = ActionTargetTemplate.query({allOrganizations: true});
+        $scope.actionTargetInstances = ActionTargetInstance.query({allOrganizations: true});
+        $scope.selectTableRow = function (index) {
+            console.log(index);
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
+                console.log("set null");
             }
             else {
                 $scope.showIndex = index;
+                console.log("showindex: " + $scope.showIndex);
             }
         };
+
+        $scope.createInstance = function (atTemplateId) {
+            $rootScope.atTemplateId = atTemplateId;
+            $location.path('/actionTargetInstanceEditor');
+        }
     }
 
 ]);
 
 
-iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '$location', '$route','$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance',
-    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance) {
+iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
+        $scope.organizations = Me.query();
+        var isUpdate = false;
+        var instanceId = $route.current.params.id;
 
-        var templateId = $route.current.params.id;
         //init the data structure
-
+        $scope.atInstance = {};
         //if it's a modification
-        if (templateId !== undefined && templateId !== "") {
+        if (instanceId !== undefined && instanceId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
-            //     $scope.payload = selectedRule;
             $scope.buttonName = "Update it!";
+            $scope.atInstance = ActionTargetInstance.get({actionTargetInstanceId: instanceId});
+            isUpdate = true;
         }
         //Or a new template
         else {
+            $scope.atInstance.actionTargetTemplateId = $rootScope.atTemplateId;
             $scope.buttonName = "Create it!";
         }
 
         $scope.cancel = function () {
             $location.path('/actionTarget');
+        };
+        $scope.submitForm = function () {
+            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
+            if (isUpdate) {
+                $scope.atInstance.actionTargetInstanceId = instanceId;
+                ActionTargetInstance.update($scope.atInstance);
+            }
+            else {
+                ActionTargetInstance.save($scope.atInstance);
+            }
+
+            $location.path('/actionTarget');
+            isUpdate = false;
         }
+
 
     }
 ]);
-iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance',
-    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance) {
-        $scope.organizations = [{"orgName": "HEIA-FR", "orgId": 1}, {"orgName": "HES-SO", "orgId": 2}];
-
+iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
+        $scope.organizations = Me.query();
+        var isUpdate = false;
         var templateId = $route.current.params.id;
         //init the data structure
 
         //if it's a modification
         if (templateId !== undefined && templateId !== "") {
-            //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
-            //     $scope.payload = selectedRule;
             $scope.buttonName = "Update it!";
+            $scope.atTemplate = ActionTargetTemplate.get({actionTargetId: templateId});
+            isUpdate = true;
         }
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
+
         }
 
         $scope.cancel = function () {
             $location.path('/actionTarget');
+        };
+
+        $scope.submitForm = function () {
+            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
+            if (isUpdate) {
+                $scope.atTemplate.actionTargetId = templateId;
+                ActionTargetTemplate.update($scope.atTemplate);
+            }
+            else {
+                ActionTargetTemplate.save($scope.atTemplate);
+            }
+
+            $location.path('/actionTarget');
+            isUpdate = false;
         }
 
     }

@@ -4,7 +4,7 @@
 var iFluxFrontServices = angular.module('restServices', ['ngResource']);
 
 
-var baseUrl = "http://localhost:3000/v1";
+var baseUrl = "http://localhost:3000/api/v1";
 
 
 

@@ -52,7 +52,7 @@
                 <li ng-show="isAuthenticate"><a ng-href="#/rules">Rules</a></li>
                 <li ng-hide="isAuthenticate"><a ng-href="#/signin">Sign in</a></li>
                 <li ng-hide="isAuthenticate"><a ng-href="#/register">Register</a></li>
-                <li ng-show="isAuthenticate"><a ng-href="#/user">User</a></li>
+                <li ng-show="isAuthenticate"><a ng-href="#/settings">User</a></li>
                 <li ng-show="isAuthenticate"><a ng-href="#/actionTarget">Action Target</a></li>
                 <li ng-show="isAuthenticate"><a ng-href="#/eventSource">Event Source</a></li>
                 <li ng-show="isAuthenticate"><a ng-href="#" ng-click="logout()">Sign out</a></li>
@@ -61,9 +61,9 @@
                 <div class="nav navbar-nav navbar-right header-select" ng-controller="LoginInfoCtrl">
 
                     <ui-select ng-model="currentOrganization" theme="bootstrap">
-                        <ui-select-match placeholder="Select an organization">{{$select.selected.orgName}}</ui-select-match>
-                        <ui-select-choices repeat="organization in organizations  | filter: { orgName: $select.search }" value="{{$select.selected.orgName}}">
-                            <div ng-bind-html="organization.orgName | highlight: $select.search"></div>
+                        <ui-select-match placeholder="Select an organization">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="organization in organizations  | filter: { orgName: $select.search }" value="{{$select.selected.name}}">
+                            <div ng-bind-html="organization.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -93,7 +93,7 @@
 <script src="public/components/objectpath/lib/ObjectPath.js"></script>
 <script src="public/components/angular-schema-form/dist/schema-form.min.js"></script>
 <script src="public/components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
-<script src="public/components/angular-ui-select/dist/select.min.js"></script>
+<script src="public/components/angular-ui-select/dist/select.js"></script>
 <script src='public/components/ngstorage/ngStorage.min.js'></script>
 
 <script src="app/script/app.js"></script>
@@ -107,6 +107,9 @@
 <script src="app/script/services/restService.js"></script>
 <script src="app/script/services/sharedProperties.js"></script>
 <script src="app/script/filters/filter.js"></script>
+<script src="app/script/directives/directives.js"></script>
+
+<script src="app/script/jqBootstrapValidation.js"></script>
 
 
 </body>

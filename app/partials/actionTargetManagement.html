@@ -11,16 +11,17 @@
                 <th><a href="" ng-click="predicate = 'organization'; reverse=!reverse">Organization</a></th>
                 <th>Modification</th>
                 <th>Create instance</th>
+                <th>View instances</th>
                 </thead>
                 <tbody ng-repeat="actionTargetTemplate in actionTargetTemplates | orderBy:predicate:reverse | filter:{name:search}">
-                <tr ng-class-odd="'rowOddClickable'" ng-class-even="'rowEvenClickable'" title="Click to toggle collapse/expand action target instances."
-                    ng-click="selectTableRow($index, actionTargetTemplate.id)" href="#">
+                <tr ng-class-odd="'rowOddClickable'" ng-class-even="'rowEvenClickable'" title="Click to toggle collapse/expand action target instances.">
                     <td>{{actionTargetTemplate.name}}</td>
                     <td>{{actionTargetTemplate.key }}</td>
                     <td><input type="checkbox" ng-model="actionTargetTemplate.public" ng-disabled="true"></td>
                     <td>{{actionTargetTemplate.organizationId}}</td>
                     <td><a class="btn btn-xs btn-primary" ng-href="#/actionTargetTemplateEditor/{{actionTargetTemplate.id}}">Modifiy</a></td>
-                    <td><a class="btn btn-xs btn-primary" ng-href="#/actionTargetInstanceEditor">Add </a></td>
+                    <td><a class="btn btn-xs btn-primary" ng-click="createInstance(actionTargetTemplate.id)">Add </a></td>
+                    <td><a class="btn btn-xs btn-primary" ng-click="selectTableRow($index)">View</a></td>
                 </tr>
                 <tr ng-show="$index === showIndex">
                     <td></td>
