@@ -38,7 +38,7 @@
                                     <td>{{actionTargetInstance.name}}
                                     </td>
                                     <td>{{actionTargetInstance.id}}</td>
-                                    <td><a class="btn btn-xs btn-danger" ng-href="#/actionTargetInstanceEditor/{{actionTargetInstance.id}}">Modify</a></td>
+                                    <td><a class="btn btn-xs btn-danger" ng-click="modifyInstance(actionTargetInstance.id, actionTargetTemplate.id)">Modify</a></td>
                                 </tr>
                                 </tbody>
                             </table>

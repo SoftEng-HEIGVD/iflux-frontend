@@ -11,6 +11,7 @@ var iFluxFrontendApp = angular.module('iFluxFrontendApp', [
     'ngStorage',
     'schemaForm',
     'ui.select',
+    'ui.ace',
     'iFluxFrontControllers',
     'iFluxFrontFilters',
     'iFluxFrontServices',
@@ -19,8 +20,8 @@ var iFluxFrontendApp = angular.module('iFluxFrontendApp', [
     'ngSanitize'
 ]);
 
-iFluxFrontendApp.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
+    function ($routeProvider, $httpProvider, $locationProvider) {
 
         $routeProvider.
             when('/home', {templateUrl: 'app/partials/home.html'}).
@@ -50,7 +51,9 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider',
 
             otherwise({redirectTo: '/home'});
 
-        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+        // $locationProvider.html5Mode(true);
+
+        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
             return {
                 'request': function (config) {
                     config.headers = config.headers || {};
@@ -59,8 +62,8 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider',
                     }
                     return config;
                 },
-                'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
+                'responseError': function (response) {
+                    if (response.status === 401 || response.status === 403) {
                         $location.path('/signin');
                     }
                     return $q.reject(response);

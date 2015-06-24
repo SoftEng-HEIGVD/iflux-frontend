@@ -3,7 +3,7 @@
         <h1>iFLUX Action Target Template Editor</h1>
 
         <div class="big-panel">
-            <form name="atTemplateForm" id="atTemplateForm" novalidate>
+            <div name="atTemplateForm" id="atTemplateForm" novalidate>
                 <div class="col-lg-12 form-horizontal">
                     <div class="col-lg-6">
                         <h3>General Info</h3>
@@ -13,8 +13,9 @@
 
                             <div class="col-sm-8"><input id="NameTemplate" name="nameTemplate" type="text" class="form-control"
                                                          placeholder="Name of the template"
-                                                         ng-model="atTemplate.name"required
+                                                         ng-model="atTemplate.name" required
                                                          data-validation-required-message="Please enter your name">
+
                                 <p class="help-block text-danger"></p>
                             </div>
 
@@ -23,9 +24,10 @@
                             <label for="organizationSelect" class="col-sm-4 control-label">Organization </label>
 
                             <div class="col-sm-8">
-                                <ui-select id="organizationSelect" name="orgSelect0" ng-model="atTemplate.organizationId" theme="bootstrap" >
+                                <ui-select id="organizationSelect" name="orgSelect0" ng-model="atTemplate.organizationId" theme="bootstrap">
                                     <ui-select-match placeholder="Select an organization">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="organization.id as organization in organizations  | filter: { name: $select.search }" name="orgSelect2" value="{{$select.selected.name}}">
+                                    <ui-select-choices repeat="organization.id as organization in organizations  | filter: { name: $select.search }" name="orgSelect2"
+                                                       value="{{$select.selected.name}}">
                                         <div ng-bind-html="organization.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
@@ -48,13 +50,22 @@
                         <h3>Schema</h3>
 
                         <div class="form-group">
-                            <label for="schemaUrl" class="col-sm-4 control-label">Schema URL </label>
+                            <div class="col-sm-10">
+                                <label class="control-label">Write a JSON Schema to create a configuration form</label>
 
-                            <div class="col-sm-8"><textarea json-text id="schemaUrl" name="schemaUrl" type="text" class="form-control"
-                                                         placeholder="Schema URL" rows="5"
-                                                         ng-model="atTemplate.configuration.schema" required
-                                                         data-validation-required-message="Please enter a valid JSON Schema"></textarea>
-                                <p class="help-block text-danger"></p>
+                                <div>
+                                    <div>
+                                        <div ui-ace="{require: ['ace/ext/language_tools'],
+                                        advanced: {
+                                            enableSnippets: true,
+                                            enableBasicAutocompletion: true,
+                                            enableLiveAutocompletion: true
+                                        },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}" ng-model="jsonSchema"></div>
+                                    </div>
+
+
+                                    <p class="help-block text-danger"></p>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,6 +75,7 @@
                                                          placeholder="Configuration URL "
                                                          ng-model="atTemplate.configuration.url" required
                                                          data-validation-required-message="Please enter a valid configuration URL">
+
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -88,6 +100,7 @@
                                                          placeholder="Url of the Target"
                                                          ng-model="atTemplate.target.url" required
                                                          data-validation-required-message="Please enter a valid target URL">
+
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -107,14 +120,30 @@
                         <h3>Configuration UI</h3>
 
                         <div class="form-group">
-                            <label for="schemaForm" class="col-sm-4 control-label">Schema Form</label>
+                            <div class="col-sm-10">
+                                <label class=" control-label">Schema Form</label>
 
-                            <div class="col-sm-8"><textarea json-text id="schemaForm" name="schemaUrl" type="text" class="form-control"
-                                                         placeholder="Configuration Schema" rows="5"
-                                                         ng-model="atTemplate.configurationUi"></textarea>
+                                <div>
+                                    <div ui-ace="{require: ['ace/ext/language_tools'],
+                                advanced: {
+                                enableSnippets: true,
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true
+                                },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: formChanged}" ng-model="jsonForm"></div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>Preview Configuration</h3>
 
+                        <div class="panel">
+                            <div class="panel-green col-lg-10">
+                                <div class="col-lg-10">
+                                    <form sf-schema="schema" sf-form="form" sf-model="actionSchema"></form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -125,8 +154,7 @@
                         <input class="btn btn-primary" type="submit" ng-click="submitForm()" value="{{buttonName}}">
                     </div>
                 </div>
-            </form>
-            {{atTemplate}}
+            </div>
 
         </div>
     </div>
