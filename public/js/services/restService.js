@@ -4,10 +4,6 @@
 var iFluxFrontServices = angular.module('restServices', ['ngResource']);
 
 
-var baseUrl = "http://localhost:3000/api/v1";
-
-
-
 iFluxFrontServices.factory('Authentication', ['$resource',
     function ($resource) {
         return $resource(baseUrl + '/auth/:funct', {}, {

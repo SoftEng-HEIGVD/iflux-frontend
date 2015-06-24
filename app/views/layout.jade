@@ -1,13 +1,74 @@
 doctype html
-html(lang='en')
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width')
-    title= title
-    block css
-      link(rel='stylesheet', href='/css/style.css')
-    block js
-      if ENV_DEVELOPMENT
-        script(src='http://localhost:35729/livereload.js')
-  body
-    block content
+
+html(lang='en' ng-app='iFluxFrontendApp')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+
+		//- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+		meta(name='description' content='')
+		meta(name='author' content='')
+		link(rel='icon' href='')
+
+		title= title
+
+		block css
+			//- Bootstrap core CSS
+			link(href=contextRoot + '/components/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet')
+			link(href=contextRoot + '/components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css' rel='stylesheet')
+			link(href=contextRoot + '/components/fontawesome/css/font-awesome.min.css' rel='stylesheet')
+			link(href=contextRoot + '/components/angular-ui-select/dist/select.min.css' rel='stylesheet')
+
+			link(rel='stylesheet', href='/css/style.css')
+
+			//- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+			<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<![endif]-->
+
+		block js-head
+			if ENV_DEVELOPMENT
+				script(src='http://localhost:35729/livereload.js')
+
+				script
+					| var baseUrl = "#{apiUrl}";
+					| var partialsPath = "#{partialsPath}";
+
+	body
+		include ./navigation.jade
+
+		//- Begin page content
+		div(ng-view)
+
+	//- Bootstrap core JavaScript
+	//- Placed at the end of the document so the pages load faster
+	block js-footer
+		script(src=contextRoot + '/components/angular/angular.js')
+		script(src=contextRoot + '/components/angular-route/angular-route.js')
+		script(src=contextRoot + '/components/angular-resource/angular-resource.js')
+		script(src=contextRoot + '/components/angular-sanitize/angular-sanitize.js')
+		script(src=contextRoot + '/components/jquery/dist/jquery.min.js')
+		script(src=contextRoot + '/components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js')
+		script(src=contextRoot + '/components/tv4/tv4.js')
+		script(src=contextRoot + '/components/objectpath/lib/ObjectPath.js')
+		script(src=contextRoot + '/components/angular-schema-form/dist/schema-form.min.js')
+		script(src=contextRoot + '/components/angular-schema-form/dist/bootstrap-decorator.min.js')
+		script(src=contextRoot + '/components/angular-ui-select/dist/select.js')
+		script(src=contextRoot + '/components/ngstorage/ngStorage.min.js')
+
+		script(src=contextRoot + '/vendors/js/jqBootstrapValidation.js')
+
+		script(src=contextRoot + '/js/app.js')
+		script(src=contextRoot + '/js/controllers/RulesCtrl.js')
+		script(src=contextRoot + '/js/controllers/MainCtrl.js')
+		script(src=contextRoot + '/js/controllers/SettingsCtrl.js')
+		script(src=contextRoot + '/js/controllers/AuthenticationCtrl.js')
+		script(src=contextRoot + '/js/controllers/ActionTargetCtrl.js')
+		script(src=contextRoot + '/js/controllers/EventSourceCtrl.js')
+		script(src=contextRoot + '/js/services/service.js')
+		script(src=contextRoot + '/js/services/restService.js')
+		script(src=contextRoot + '/js/services/sharedProperties.js')
+		script(src=contextRoot + '/js/filters/filter.js')
+		script(src=contextRoot + '/js/directives/directives.js')

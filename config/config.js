@@ -11,8 +11,8 @@ var config = {
   development: {
     root: rootPath,
     app: {
-      name: 'code',
-			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
+      name: 'iFLUX Frontend',
+			apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
     port: 3006
   },
@@ -20,8 +20,8 @@ var config = {
   test: {
     root: rootPath,
     app: {
-      name: 'code',
-			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
+	    name: 'iFLUX Frontend',
+	    apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
     port: 3006
   },
@@ -29,11 +29,20 @@ var config = {
   production: {
     root: rootPath,
     app: {
-      name: 'code',
-			iflux_url: process.env.IFLUX_SERVER_URL || 'http://www.iflux.io'
+	    name: 'iFLUX Frontend',
+	    apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
     port: 3006
-  }
+  },
+
+	docker: {
+   root: rootPath,
+   app: {
+    name: 'iFLUX Frontend',
+	   apiUrl: process.env.IFLUX_PUBLIC_API_URL
+   },
+   port: 3006
+ }
 };
 
 module.exports = config[env];
