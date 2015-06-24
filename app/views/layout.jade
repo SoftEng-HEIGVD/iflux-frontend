@@ -32,9 +32,9 @@ html(lang='en' ng-app='iFluxFrontendApp')
 			if ENV_DEVELOPMENT
 				script(src='http://localhost:35729/livereload.js')
 
-				script
-					| var baseUrl = "#{apiUrl}";
-					| var partialsPath = "#{partialsPath}";
+			script
+				| var baseUrl = "#{apiUrl}";
+				| var partialsPath = "#{partialsPath}";
 
 	body
 		include ./navigation.jade
