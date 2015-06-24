@@ -5,7 +5,7 @@
 var iFluxFrontCtrl = angular.module('EventSource', []);
 
 iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
-    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance,Me) {
+    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
         $scope.organizations = Me.query();
         $scope.showIndex = null;
         $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
@@ -22,6 +22,10 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
         $scope.createInstance = function (esTemplateId) {
             $rootScope.esTemplateId = esTemplateId;
             $location.path('/eventSourceInstanceEditor');
+        };
+        $scope.modifyInstance = function (esInstanceId, esTemplateId) {
+            $rootScope.esTemplateId = esTemplateId;
+            $location.path('/eventSourceInstanceEditor/' + esInstanceId);
         }
     }
 
@@ -30,13 +34,23 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
 
 iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
     function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
-
         $scope.organizations = Me.query();
         var isUpdate = false;
         var instanceId = $route.current.params.id;
         //init the data structure
+        $scope.esInstance = {"configuration": {}};
 
-        $scope.esInstance = {};
+        //get schema and form for configuration
+        EventSourceTemplate.get({eventSourceId: $rootScope.esTemplateId}, function success(data, status) {
+            $scope.schema = data.configuration.schema;
+            if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+                $scope.form = ["*"];
+            }
+            else {
+                $scope.form = data.configurationUi.schemaForm;
+            }
+        });
+
         //if it's a modification
         if (instanceId !== undefined && instanceId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
@@ -81,17 +95,27 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         //if it's a modification
         if (templateId !== undefined && templateId !== "") {
             $scope.buttonName = "Update it!";
-            $scope.esTemplate = EventSourceTemplate.get({eventSourceId: templateId});
+            $scope.esTemplate = EventSourceTemplate.get({eventSourceId: templateId}, function success(data, status) {
+                $scope.jsonSchema = JSON.stringify(data.configuration.schema, null, '\t');
+                if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+                    $scope.jsonForm = ["*"];
+                }
+                else {
+                    $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
+                }
+            });
+
             isUpdate = true;
         }
         //Or a new template
         else {
+            $scope.esTemplate={"configurationUi":"","configuration":""};
             $scope.buttonName = "Create it!";
         }
 
         $scope.cancel = function () {
             $location.path('/eventSource');
-        }
+        };
 
         $scope.submitForm = function () {
             $("input,textarea").not("[type=submit]").jqBootstrapValidation();
@@ -104,7 +128,33 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
             }
             $location.path('/eventSource');
             isUpdate = false;
-        }
+        };
+        $scope.$watch(
+            "esTemplate.configuration.schema",
+            function (newValue) {
+                if (newValue !== undefined) {
+                    $scope.schema = newValue;
+                }
+            }
+        );
+        $scope.$watch(
+            "esTemplate.configurationUi.schemaForm",
+            function (newValue) {
+                if (newValue === "" || newValue === undefined) {
+                    $scope.form = ["*"];
+                }
+                else {
+                    $scope.form = newValue;
+                }
+            }
+        );
+
+        $scope.eventFormChanged = function (e) {
+            $scope.esTemplate.configurationUi.schemaForm = JSON.parse($scope.jsonForm);
+        };
+        $scope.eventSchemaChanged = function (e) {
+            $scope.esTemplate.configuration.schema = JSON.parse($scope.jsonSchema);
+        };
     }
 ]);
 

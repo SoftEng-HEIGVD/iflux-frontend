@@ -42,15 +42,23 @@
 
                 <div class="col-lg-6">
                     <h3>Schema</h3>
-
                     <div class="form-group">
-                        <label for="configuration" class="col-sm-4 control-label">Configuration </label>
-
-                        <div class="col-sm-8"><textarea json-text id="configuration" name="configuration" type="text" class="form-control"
-                                                     placeholder="Configuration"
-                                                     ng-model="esInstance.configuration" required></textarea>
+                        <div class="col-sm-12">
+                            <label class="control-label">Complete the form below to configure the Event Source Instance </label>
+                            <hr>
                         </div>
+
+
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <div>
+                                    <form sf-schema="schema" sf-form="form" sf-model="esInstance.configuration"></form>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
             </div>
 
@@ -62,6 +70,5 @@
                 <a class="btn btn-primary" ng-click="submitForm()">{{buttonName}}</a>
             </div>
         </div>
-        {{esInstance}}
     </div>
 </div>

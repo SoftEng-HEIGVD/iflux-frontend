@@ -97,7 +97,12 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
             $scope.buttonName = "Update it!";
             $scope.atTemplate = ActionTargetTemplate.get({actionTargetId: templateId}, function success(data, status) {
                 $scope.jsonSchema = JSON.stringify(data.configuration.schema, null, '\t');
-                $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
+                if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+                    $scope.jsonForm = ["*"];
+                }
+                else {
+                    $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
+                }
             });
 
             isUpdate = true;
@@ -105,6 +110,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
+            $scope.atTemplate={"configurationUi":"","configuration":""};
 
         }
 
@@ -124,7 +130,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
 
             $location.path('/actionTarget');
             isUpdate = false;
-        }
+        };
         $scope.$watch(
             "atTemplate.configuration.schema",
             function (newValue) {

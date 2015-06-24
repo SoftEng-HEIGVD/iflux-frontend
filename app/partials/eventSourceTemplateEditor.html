@@ -45,14 +45,27 @@
                     <h3>Schema</h3>
 
                     <div class="form-group">
-                        <label for="schemaUrl" class="col-sm-4 control-label">Schema Form </label>
+                        <div class="col-sm-10">
+                            <label class="control-label">Write a JSON Schema to create a configuration form</label>
 
-                        <div class="col-sm-8"><textarea json-text id="schemaUrl" name="schemaForm" type="text" class="form-control"
-                                                     placeholder="JSON form"
-                                                     ng-model="esTemplate.configuration.schema" required></textarea>
-                            <p class="help-block text-danger"></p>
+                            <div>
+                                <div>
+                                    <div ui-ace="{require: ['ace/ext/language_tools'],
+                                        advanced: {
+                                            enableSnippets: true,
+                                            enableBasicAutocompletion: true,
+                                            enableLiveAutocompletion: true
+                                        },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: eventSchemaChanged}" ng-model="jsonSchema"></div>
+                                </div>
+
+
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
                     </div>
+
+
+
                     <div class="form-group">
                         <label for="configurationUrl" class="col-sm-4 control-label">Configuration URL </label>
 
@@ -77,14 +90,30 @@
                     <h3>Configuration UI</h3>
 
                     <div class="form-group">
-                        <label for="schemaForm" class="col-sm-4 control-label">Configuration Form</label>
+                        <div class="col-sm-10">
+                            <label class=" control-label">Schema Form</label>
 
-                        <div class="col-sm-8"><textarea json-text id="schemaForm" name="schemaUrl" type="text" class="form-control"
-                                                     placeholder="JSON Schema"
-                                                     ng-model="esTemplate.configurationUi"></textarea>
+                            <div>
+                                <div ui-ace="{require: ['ace/ext/language_tools'],
+                                advanced: {
+                                enableSnippets: true,
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true
+                                },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: eventFormChanged}" ng-model="jsonForm"></div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Live preview configuration</h3>
 
+                    <div class="panel">
+                        <div class="panel-red col-lg-10">
+                            <div class="col-lg-10">
+                                <form sf-schema="schema" sf-form="form" sf-model="eventSchema"></form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -95,8 +124,6 @@
                     <a class="btn btn-primary" type="submit" ng-click="submitForm()">{{buttonName}}</a>
                 </div>
             </div>
-            {{esTemplate}}
-
         </div>
     </div>
 </div>
