@@ -14,7 +14,7 @@ var config = {
       name: 'iFLUX Frontend',
 			apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
-    port: 3006
+    port: 3007
   },
 
   test: {
@@ -23,7 +23,7 @@ var config = {
 	    name: 'iFLUX Frontend',
 	    apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
-    port: 3006
+    port: 3007
   },
 
   production: {
@@ -32,7 +32,7 @@ var config = {
 	    name: 'iFLUX Frontend',
 	    apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
-    port: 3006
+    port: 3007
   },
 
 	docker: {
@@ -41,7 +41,7 @@ var config = {
     name: 'iFLUX Frontend',
 	   apiUrl: process.env.IFLUX_PUBLIC_API_URL
    },
-   port: 3006
+   port: 3000
  }
 };
 
