@@ -15,7 +15,7 @@ iFluxFrontServices.factory('Authentication', ['$resource',
 
 iFluxFrontServices.factory('ActionTargetInstance', ['$resource',
     function ($resource) {
-        return $resource(baseUrl + '/actionTargetInstances/:actionTargetInstanceId', {}, {
+        return $resource(baseUrl + '/actionTargets/:actionTargetInstanceId', {}, {
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {actionTargetInstanceId: '@actionTargetInstanceId'}},
@@ -37,7 +37,7 @@ iFluxFrontServices.factory('ActionTargetTemplate', ['$resource',
 
 iFluxFrontServices.factory('EventSourceInstance', ['$resource',
     function ($resource) {
-        return $resource(baseUrl + '/eventSourceInstances/:eventSourceInstanceId', {}, {
+        return $resource(baseUrl + '/eventSources/:eventSourceInstanceId', {}, {
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {eventSourceInstanceId: '@eventSourceInstanceId'}},
