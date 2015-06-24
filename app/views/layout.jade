@@ -34,7 +34,7 @@ html(lang='en' ng-app='iFluxFrontendApp')
 
 			script
 				| var baseUrl = "#{apiUrl}";
-				| var partialsPath = "#{partialsPath}";
+				| var partialsPath = "#{contextRoot}#{partialsPath}";
 
 	body
 		include ./navigation.jade
