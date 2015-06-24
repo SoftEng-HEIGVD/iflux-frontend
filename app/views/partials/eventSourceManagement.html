@@ -41,7 +41,7 @@
                                     <td>{{eventSourceInstance.name}}
                                     </td>
                                     <td>{{eventSourceInstance.id}}</td>
-                                    <td><a class="btn btn-xs btn-danger" ng-href="#/eventSourceInstanceEditor/{{eventSourceInstance.id}}">Modify</a></td>
+                                    <td><a class="btn btn-xs btn-danger" ng-click="modifyInstance(eventSourceInstance.id, eventSourceTemplate.id)">Modify</a></td>
                                 </tr>
                                 </tbody>
                             </table>

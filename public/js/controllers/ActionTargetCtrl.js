@@ -22,7 +22,12 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
         $scope.createInstance = function (atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
             $location.path('/actionTargetInstanceEditor');
+        };
+        $scope.modifyInstance = function (atInstanceId, atTemplateId) {
+            $rootScope.atTemplateId = atTemplateId;
+            $location.path('/actionTargetInstanceEditor/' + atInstanceId);
         }
+
     }
 
 ]);
@@ -32,10 +37,21 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
     function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
         $scope.organizations = Me.query();
         var isUpdate = false;
-        var instanceId = $route.current.params.id;
-
         //init the data structure
-        $scope.atInstance = {};
+        $scope.atInstance = {"configuration":{}};
+        var instanceId = $route.current.params.id;
+        //get schema and form for configuration
+        ActionTargetTemplate.get({actionTargetId: $rootScope.atTemplateId}, function success(data, status) {
+            $scope.schema = data.configuration.schema;
+            if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+                $scope.form = ["*"];
+            }
+            else {
+                $scope.form = data.configurationUi.schemaForm;
+            }
+        });
+
+
         //if it's a modification
         if (instanceId !== undefined && instanceId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
@@ -64,7 +80,7 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
 
             $location.path('/actionTarget');
             isUpdate = false;
-        }
+        };
 
 
     }
@@ -79,12 +95,22 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         //if it's a modification
         if (templateId !== undefined && templateId !== "") {
             $scope.buttonName = "Update it!";
-            $scope.atTemplate = ActionTargetTemplate.get({actionTargetId: templateId});
+            $scope.atTemplate = ActionTargetTemplate.get({actionTargetId: templateId}, function success(data, status) {
+                $scope.jsonSchema = JSON.stringify(data.configuration.schema, null, '\t');
+                if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+                    $scope.jsonForm = ["*"];
+                }
+                else {
+                    $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
+                }
+            });
+
             isUpdate = true;
         }
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
+            $scope.atTemplate={"configurationUi":"","configuration":""};
 
         }
 
@@ -104,10 +130,36 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
 
             $location.path('/actionTarget');
             isUpdate = false;
-        }
+        };
+        $scope.$watch(
+            "atTemplate.configuration.schema",
+            function (newValue) {
+                if (newValue !== undefined) {
+                    $scope.schema = newValue;
+                }
+            }
+        );
+        $scope.$watch(
+            "atTemplate.configurationUi.schemaForm",
+            function (newValue) {
+                if (newValue === "" || newValue === undefined) {
+                    $scope.form = ["*"];
+                }
+                else {
+                    $scope.form = newValue;
+                }
+            }
+        );
 
+        $scope.formChanged = function (e) {
+            $scope.atTemplate.configurationUi.schemaForm = JSON.parse($scope.jsonForm);
+        };
+        $scope.schemaChanged = function (e) {
+            $scope.atTemplate.configuration.schema = JSON.parse($scope.jsonSchema);
+        };
     }
 ]);
+
 
 
 
