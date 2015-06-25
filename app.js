@@ -1,11 +1,10 @@
+var
+	express = require('express'),
+  config = require('./config/config');
 
+var app = express();
 
-//var express = require('express'),
-//  config = require('./config/config');
+require('./config/express')(app, config);
 
-//var app = express();
-
-//require('./config/express')(app, config);
-
-//app.listen(config.port);
+app.listen(config.port);
 

@@ -10,18 +10,27 @@
 [![Stories in In Done](https://badge.waffle.io/SoftEng-HEIGVD/iflux-frontend.svg?label=done&title=Done)](http://waffle.io/SoftEng-HEIGVD/iflux-frontend)
 
 
-## Setup
-Create the file .env in the root directory of the project. This file will not be commited. The content refers the iflux server API
+## Development setup
+
+Create a `.env` file in the root directory of the project and put the following content:
+
 ```bash
-IFLUX_SERVER_URL=http://localhost:3000/v1
+IFLUX_PUBLIC_API_URL=http://<Boot2Docker IP>:3000/api/v1
+
 ```
 
-## Run it
+### Mandatory
 
-Setup and run [iflux-Docker](https://github.com/SoftEng-HEIGVD/iflux-docker)
+It's highly recommended to use `Docker` to simplify your environment setup. Refers to this [iFLUX Docker](https://github.com/SoftEng-HEIGVD/iflux-docker) repository. 
 
-Run the http-server on localhost
-```bash
-npm start ./
+| Name                       | Description                               |
+| -------------------------- | ----------------------------------------- |
+| IFLUX_PUBLIC_API_URL       | Should be the Docker host IP (boot2docker IP, Vagrant VM IP, ...) or the IP of your host if you have installed iFLUX Server manually. |
+
+## Run
+
 ```
-Access it with [http://localhost:8100](http://localhost:8100).
+$> npm install
+$> bower install
+$> grunt
+```

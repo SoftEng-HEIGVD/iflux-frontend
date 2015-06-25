@@ -12,9 +12,31 @@ module.exports = function(app, config) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
 
-  var env = process.env.NODE_ENV || 'development';
+	var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
+
+	app.use(function(req, res, next) {
+		var contextRoot = req.headers['x-context-root'];
+
+		if (contextRoot) {
+			if (contextRoot.indexOf('/', contextRoot.length - 1) !== -1) {
+				contextRoot = contextRoot.substr(0, contextRoot.length - 2);
+			}
+
+			if (contextRoot.indexOf('/') === 0) {
+				app.locals.contextRoot = contextRoot;
+			}
+			else {
+				app.locals.contextRoot = '/' + contextRoot;
+			}
+		}
+		else {
+			app.locals.contextRoot = '';
+		}
+
+		next();
+	});
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
@@ -37,7 +59,7 @@ module.exports = function(app, config) {
     err.status = 404;
     next(err);
   });
-  
+
   if(app.get('env') === 'development'){
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
