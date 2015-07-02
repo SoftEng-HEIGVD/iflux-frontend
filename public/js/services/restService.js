@@ -34,6 +34,16 @@ iFluxFrontServices.factory('ActionTargetTemplate', ['$resource',
         });
     }
 ]);
+iFluxFrontServices.factory('ActionTypes', ['$resource',
+    function ($resource) {
+        return $resource(baseUrl + '/actionTypes/:actionTypeId', {}, {
+            query: {method: 'GET', isArray: true},
+            save: {method: 'POST'},
+            update: {method: 'PATCH', params: {actionTypeId: '@actionTypeId'}},
+            get: {method: 'GET', params: {actionTypeId: '@actionTypeId'}}
+        });
+    }
+]);
 
 iFluxFrontServices.factory('EventSourceInstance', ['$resource',
     function ($resource) {
@@ -56,7 +66,16 @@ iFluxFrontServices.factory('EventSourceTemplate', ['$resource',
         });
     }
 ]);
-
+iFluxFrontServices.factory('EventTypes', ['$resource',
+    function ($resource) {
+        return $resource(baseUrl + '/eventTypes/:eventTypeId', {}, {
+            query: {method: 'GET', isArray: true},
+            save: {method: 'POST'},
+            update: {method: 'PATCH', params: {eventTypeId: '@eventTypeId'}},
+            get: {method: 'GET', params: {eventTypeId: '@eventTypeId'}}
+        });
+    }
+]);
 iFluxFrontServices.factory('Organization', ['$resource',
     function ($resource) {
         return $resource(baseUrl + '/organizations/:organizationId/:action', {}, {

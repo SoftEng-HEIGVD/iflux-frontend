@@ -16,147 +16,50 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
     }
 }]);
 
-iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTarget', 'EventSource', 'SharedProperties', function ($scope, $filter, $location, $route, Rules, ActionTarget, EventSource, SharedProperties) {
-    var ruleId = $route.current.params.id;
-    //init the data structure
-    $scope.actionSelected = {};
-    $scope.actionSchema = {};
+iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance','ActionTypes','EventSourceTemplate', 'EventSourceInstance', 'EventTypes', 'SharedProperties', 'Me',
+    function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventTypes, SharedProperties, Me) {
+        var ruleId = $route.current.params.id;
 
-    $scope.eventSelected = {};
-    $scope.eventSchema = {};
+        $scope.organizations = Me.query();
+        $scope.eventSources = EventSourceInstance.query({allOrganizations: true});
+        $scope.eventTypes = EventTypes.query({allOrganizations: true});
+        $scope.actionTypes = ActionTypes.query({allOrganizations: true});
+        $scope.actionTargets = ActionTargetInstance.query({allOrganizations: true});
+        $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
 
-    $scope.rule = {};
-    $scope.payload = {};
-    var selectedRule = {};
+        $scope.rule = {};
+        $scope.payload = {conditions: [{}], transformations: [{}]};
+        var selectedRule = {};
 
-    //if it's a modification
-    if (ruleId !== undefined && ruleId !== "") {
-        selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
-        $scope.payload = selectedRule;
-        $scope.buttonName = "Update the rule";
-    }
+        //if it's a modification
+        if (ruleId !== undefined && ruleId !== "") {
+           // selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
+            $scope.buttonName = "Update the rule";
+        }
 
-    //Or a new rules
-    else {
-        $scope.payload = {
-            "description": "",
-            "enabled": true,
-            "reference": "",
-            "if": {
-                "eventSource": "",
-                "eventType": "",
-                "eventProperties": {}
-            },
-            "then": {
-                "actionTarget": "",
-                "actionSchema": ""
-            }
+        //Or a new rules
+        else {
+            $scope.buttonName = "Create the rule";
+        }
+
+
+
+        $scope.addConditions = function () {
+            $scope.payload.conditions.push({"description": ""});
         };
-        $scope.actionSchema.type = {};
-        $scope.actionSchema.properties = {};
-        $scope.buttonName = "Create the rule";
-    }
+        $scope.addTransformations = function () {
+            $scope.payload.transformations.push({});
+        };
+        $scope.removeConditions = function (index) {
+            $scope.payload.conditions.splice(index, 1);
+        };
+        $scope.removeTransformations = function (index) {
 
-    $scope.actionTargets = ActionTarget.query(function (data) {
+            $scope.payload.transformations.splice(index, 1);
+        };
+        $scope.create = function () {
 
-        if (ruleId !== undefined && ruleId !== "") {
-            //    console.log(selectedRule.then.actionSchema);
-            var jsonActionSchema = angular.fromJson(selectedRule.then.actionSchema);
-            var selectedActionTarget = $filter('filter')(data, {action: jsonActionSchema.type})[0];
-
-            $scope.actionSelected = {action: selectedActionTarget};
-            $scope.actionSchema = jsonActionSchema;
-            $scope.payload.then.actionTarget = selectedRule.then.actionTarget;
+          //  Rules.save($scope.payload);
         }
-    });
-
-    $scope.eventSources = EventSource.query(function (data) {
-        if (ruleId !== undefined && ruleId !== "") {
-            var selectedEventSource = $filter('filter')(data, {eventSource: selectedRule.if.eventSource})[0];
-            $scope.eventSelected = {event: selectedEventSource};
-            $scope.eventSchema = selectedRule.if.eventSource;
-            $scope.payload.if.eventType = selectedRule.if.eventType;
-            $scope.payload.if.eventProperties = selectedRule.if.eventProperties;
-        }
-    });
-
-    $scope.create = function () {
-        $scope.payload.then.actionSchema = JSON.stringify($scope.actionSchema);
-        //send id
-        Rules.save($scope.payload);
-    }
-}]);
-
-
-iFluxFrontCtrl.controller('NestedFormCtrl', ['$scope', function ($scope) {
-
-}]);
-
-iFluxFrontCtrl.controller('FormController', ['$scope', '$http', function ($scope, $http) {
-    $scope.$watch(
-        "actionSelected.action",
-        function (newValue) {
-            if (newValue !== undefined) {
-                $scope.actionSchema.type = newValue.action;
-                console.log(newValue.urlForm);
-                if (newValue.urlForm === "" || newValue.urlForm === undefined) {
-                    $scope.form = ["*"];
-                }
-                else {
-                    $http.get(newValue.urlForm).
-                        success(function (data, status, headers, config) {
-                            $scope.form = data;
-                            console.log(data);
-                        }).
-                        error(function (data, status, headers, config) {
-                        }
-                    );
-                }
-
-                $http.get(newValue.urlSchema).
-                    success(function (data, status, headers, config) {
-                        $scope.schema = data;
-                        console.log(data);
-                    }).
-                    error(function (data, status, headers, config) {
-                    }
-                );
-            }
-        }
-    );
-}]);
-
-iFluxFrontCtrl.controller('FormControllerEvent', ['$scope', '$http', function ($scope, $http) {
-    $scope.$watch(
-        "eventSelected.event",
-        function (newValue) {
-            if (newValue !== undefined) {
-                $scope.payload.if.eventSource = newValue.eventSource;
-
-                if (newValue.urlForm === "" || newValue.urlForm === undefined) {
-                    $scope.form = ["*"];
-                }
-                else {
-                    $http.get(newValue.urlForm).
-                        success(function (data, status, headers, config) {
-                            $scope.form = data;
-                        }).
-                        error(function (data, status, headers, config) {
-                        }
-                    );
-                }
-
-                $http.get(newValue.urlSchema).
-                    success(function (data, status, headers, config) {
-                        $scope.schema = data;
-                    }).
-                    error(function (data, status, headers, config) {
-                    }
-                );
-            }
-        }
-    );
-}]);
-
-
+    }]);
 
