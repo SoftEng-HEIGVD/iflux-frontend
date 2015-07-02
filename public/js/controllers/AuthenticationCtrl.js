@@ -26,19 +26,23 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
         };
 
         $scope.register = function () {
-            Authentication.register($scope.credentials, function (res) {
-                if (res.type == false) {
-                    $location.path('/login');
-                } else {
-                    $localStorage.token = res.data.token;
-                    $location.path('/cockpit');
+            Authentication.register($scope.credentials, function success(data) {
+
+                $location.path('/login');
+
+            }, function error(err) {
+                if(err.data.email !==undefined){
+                    alert(JSON.stringify(err.data.email[0]));
                 }
-            }, function (err) {
-                alert(err.message);
+                if(err.data.password !==undefined){
+                    alert(JSON.stringify(err.data.password[0]));
+                }
+                if(err.data.firstName !==undefined){
+                    alert(JSON.stringify(err.data.firstName[0]));
+                }
                 $rootScope.error = 'Failed to signup';
+                $location.path('/register');
             });
-            $rootScope.token = $localStorage.token;
-            $rootScope.isAuthenticate = $localStorage.token;
 
         };
 
@@ -56,7 +60,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 
 iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me',
     function ($rootScope, $scope, $location, $localStorage, Me) {
-          $scope.organizations = Me.query();
+        $scope.organizations = Me.query();
 
     }
 ]);

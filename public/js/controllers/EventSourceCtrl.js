@@ -60,6 +60,7 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
         }
         //Or a new template
         else {
+
             $scope.esInstance.eventSourceTemplateId = $rootScope.esTemplateId;
             $scope.buttonName = "Create it!";
         }
@@ -97,8 +98,11 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
             $scope.buttonName = "Update it!";
             $scope.esTemplate = EventSourceTemplate.get({eventSourceId: templateId}, function success(data, status) {
                 $scope.jsonSchema = JSON.stringify(data.configuration.schema, null, '\t');
-                if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
+
+                if (data.configurationUi === undefined || data.configurationUi.schemaForm === undefined || data.configurationUi.schemaForm === "" || !data.configurationUi.schemaForm) {
                     $scope.jsonForm = ["*"];
+                    $scope.esTemplate.configurationUi = {};
+                    $scope.esTemplate.configurationUi.schemaForm = ["*"];
                 }
                 else {
                     $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
@@ -109,7 +113,8 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         }
         //Or a new template
         else {
-            $scope.esTemplate={"configurationUi":"","configuration":""};
+
+            $scope.esTemplate = {"configurationUi": {}, "configuration": {}};
             $scope.buttonName = "Create it!";
         }
 
