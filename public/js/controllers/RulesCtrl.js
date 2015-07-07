@@ -16,7 +16,7 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
     }
 }]);
 
-iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance','ActionTypes','EventSourceTemplate', 'EventSourceInstance', 'EventTypes', 'SharedProperties', 'Me',
+iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance','ActionType','EventSourceTemplate', 'EventSourceInstance', 'EventTypes', 'SharedProperties', 'Me',
     function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventTypes, SharedProperties, Me) {
         var ruleId = $route.current.params.id;
 

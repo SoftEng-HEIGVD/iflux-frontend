@@ -31,13 +31,14 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                 $location.path('/login');
 
             }, function error(err) {
-                if(err.data.email !==undefined){
+                console.log(err);
+                if (err.data !== null && err.data.email !== undefined) {
                     alert(JSON.stringify(err.data.email[0]));
                 }
-                if(err.data.password !==undefined){
+                if (err.data !== null && err.data.password !== undefined) {
                     alert(JSON.stringify(err.data.password[0]));
                 }
-                if(err.data.firstName !==undefined){
+                if (err.data !== null && err.data.firstName !== undefined) {
                     alert(JSON.stringify(err.data.firstName[0]));
                 }
                 $rootScope.error = 'Failed to signup';

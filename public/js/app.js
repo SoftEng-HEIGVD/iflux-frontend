@@ -41,6 +41,10 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
             when('/actionTargetInstanceEditor/:id', {templateUrl: partialsPath + '/actionTargetInstanceEditor.html', controller: 'ActionTargetInstanceCtrl'}).
             when('/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.html', controller: 'ActionTargetTemplateCtrl'}).
 
+            when('/actionType', {templateUrl: partialsPath + '/actionTypeManagement.html', controller: 'ActionTypeMgmtCtrl'}).
+            when('/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.html', controller: 'ActionTypeEditorCtrl'}).
+            when('/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.html', controller: 'ActionTypeEditorCtrl'}).
+
             when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.html', controller: 'EventSourceCtrl'}).
             when('/eventSourceInstanceEditor', {templateUrl: partialsPath + '/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
             when('/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).

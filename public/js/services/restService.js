@@ -34,7 +34,7 @@ iFluxFrontServices.factory('ActionTargetTemplate', ['$resource',
         });
     }
 ]);
-iFluxFrontServices.factory('ActionTypes', ['$resource',
+iFluxFrontServices.factory('ActionType', ['$resource',
     function ($resource) {
         return $resource(baseUrl + '/actionTypes/:actionTypeId', {}, {
             query: {method: 'GET', isArray: true},

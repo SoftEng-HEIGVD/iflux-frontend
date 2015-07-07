@@ -124,12 +124,14 @@
                                 <label class=" control-label">Schema Form</label>
 
                                 <div>
-                                    <div ui-ace="{require: ['ace/ext/language_tools'],
+                                    <div class="js-editor-medium">
+                                        <div ui-ace="{require: ['ace/ext/language_tools'],
                                 advanced: {
                                 enableSnippets: true,
                                 enableBasicAutocompletion: true,
                                 enableLiveAutocompletion: true
                                 },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: formChanged}" ng-model="jsonForm"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
