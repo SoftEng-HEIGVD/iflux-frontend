@@ -40,7 +40,6 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
         };
 
         $scope.submitForm = function () {
-            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.aType.id = typeId;
                 ActionType.update($scope.aType);

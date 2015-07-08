@@ -3,139 +3,140 @@
         <h1>iFLUX Action Target Template Editor</h1>
 
         <div class="big-panel">
-            <div name="atTemplateForm" id="atTemplateForm" novalidate>
+            <div>
                 <div class="col-lg-12 form-horizontal">
-                    <div class="col-lg-6">
-                        <h3>General Info</h3>
+                    <form name="atTemplateForm" id="atTemplateForm">
+                        <div class="col-lg-6">
+                            <h3>General Info</h3>
 
-                        <div class="form-group">
-                            <label for="NameTemplate" class="col-sm-4 control-label">Name *</label>
+                            <div class="form-group" show-errors>
+                                <label for="NameTemplate" class="col-sm-4 control-label">Name *</label>
 
-                            <div class="col-sm-8"><input id="NameTemplate" name="nameTemplate" type="text" class="form-control"
-                                                         placeholder="Name of the template"
-                                                         ng-model="atTemplate.name" required
-                                                         data-validation-required-message="Please enter your name">
+                                <div class="col-sm-8"><input id="NameTemplate" name="nameTemplate" type="text" class="form-control"
+                                                             placeholder="Name of the template"
+                                                             ng-model="atTemplate.name" required>
 
-                                <p class="help-block text-danger"></p>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+
+                            </div>
+                            <div class="form-group" show-errors>
+                                <label for="organizationSelect" class="col-sm-4 control-label">Organization *</label>
+
+                                <div class="col-sm-8">
+                                    <ui-select id="organizationSelect" name="orgSelect0" ng-model="atTemplate.organizationId" theme="bootstrap" required>
+                                        <ui-select-match placeholder="Select an organization">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="organization.id as organization in organizations  | filter: { name: $select.search }" name="orgSelect2"
+                                                           value="{{$select.selected.name}}">
+                                            <div ng-bind-html="organization.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <p class="help-block text-danger"></p>
+                                </div>
                             </div>
 
-                        </div>
-                        <div class="form-group">
-                            <label for="organizationSelect" class="col-sm-4 control-label">Organization </label>
+                            <div class="form-group">
+                                <label for="templatePublic" class="col-sm-4 control-label">Make the template public</label>
 
-                            <div class="col-sm-8">
-                                <ui-select id="organizationSelect" name="orgSelect0" ng-model="atTemplate.organizationId" theme="bootstrap">
-                                    <ui-select-match placeholder="Select an organization">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="organization.id as organization in organizations  | filter: { name: $select.search }" name="orgSelect2"
-                                                       value="{{$select.selected.name}}">
-                                        <div ng-bind-html="organization.name | highlight: $select.search"></div>
-                                    </ui-select-choices>
-                                </ui-select>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="templatePublic" class="col-sm-4 control-label">Make the template public</label>
-
-                            <div class="col-sm-8">
-                                <div>
-                                    <input id="templatePublic" ng-model="atTemplate.public" type="checkbox">
+                                <div class="col-sm-8">
+                                    <div>
+                                        <input id="templatePublic" ng-model="atTemplate.public" type="checkbox">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-6">
-                        <h3>Schema</h3>
+                        <div class="col-lg-6">
+                            <h3>Schema</h3>
 
-                        <div class="form-group">
-                            <div class="col-sm-10">
-                                <label class="control-label">Write a JSON Schema to create a configuration form</label>
+                            <div class="form-group" show-errors>
+                                <div class="col-sm-10">
+                                    <label class="control-label">Write a JSON Schema to create a configuration form *</label>
 
-                                <div>
-                                    <div class="js-editor-medium">
-                                        <div ui-ace="{require: ['ace/ext/language_tools'],
+                                    <div>
+                                        <div class="js-editor-medium">
+                                            <div required name="jsonSchemaConfiguration" ui-ace="{require: ['ace/ext/language_tools'],
                                         advanced: {
                                             enableSnippets: true,
                                             enableBasicAutocompletion: true,
                                             enableLiveAutocompletion: true
                                         },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}" ng-model="jsonSchema"></div>
-                                    </div>
+                                        </div>
 
+
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" show-errors>
+                                <label for="configurationUrl" class="col-sm-4 control-label">Configuration URL *</label>
+
+                                <div class="col-sm-8"><input id="configurationUrl" name="ConfigUrl" type="url" class="form-control"
+                                                             placeholder="Configuration URL "
+                                                             ng-model="atTemplate.configuration.url" required>
 
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="configurationUrl" class="col-sm-4 control-label">Configuration URL </label>
+                            <div class="form-group">
+                                <label for="configurationToken" class="col-sm-4 control-label">Token </label>
 
-                            <div class="col-sm-8"><input id="configurationUrl" name="ConfigUrl" type="url" class="form-control"
-                                                         placeholder="Configuration URL "
-                                                         ng-model="atTemplate.configuration.url" required
-                                                         data-validation-required-message="Please enter a valid configuration URL">
-
-                                <p class="help-block text-danger"></p>
+                                <div class="col-sm-8"><input id="configurationToken" name="ConfigToken" type="text" class="form-control"
+                                                             placeholder="JWT Token"
+                                                             ng-model="atTemplate.schema.token">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="configurationToken" class="col-sm-4 control-label">Token </label>
-
-                            <div class="col-sm-8"><input id="configurationToken" name="ConfigToken" type="text" class="form-control"
-                                                         placeholder="JWT Token"
-                                                         ng-model="atTemplate.schema.token">
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-lg-12 form-horizontal">
-                    <div class="col-lg-6">
-                        <h3>Target</h3>
+                    <form name="atTemplateForm2" id="atTemplateForm2">
+                        <div class="col-lg-6">
+                            <h3>Target</h3>
 
-                        <div class="form-group">
-                            <label for="targetUrl" class="col-sm-4 control-label">Url </label>
+                            <div class="form-group" show-errors>
+                                <label for="targetUrl" class="col-sm-4 control-label">Url *</label>
 
-                            <div class="col-sm-8"><input id="targetUrl" name="targetUrl" type="url" class="form-control"
-                                                         placeholder="Url of the Target"
-                                                         ng-model="atTemplate.target.url" required
-                                                         data-validation-required-message="Please enter a valid target URL">
+                                <div class="col-sm-8"><input id="targetUrl" name="targetUrl" type="url" class="form-control"
+                                                             placeholder="Url of the Target"
+                                                             ng-model="atTemplate.target.url" required>
 
-                                <p class="help-block text-danger"></p>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="targetToken" class="col-sm-4 control-label">Token</label>
+
+
+                                <div class="col-sm-8"><input id="targetToken" name="targetToken" type="text" class="form-control"
+                                                             placeholder="Target JWT Token "
+                                                             ng-model="atTemplate.target.token">
+                                </div>
+
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="targetToken" class="col-sm-4 control-label">Token</label>
 
+                        <div class="col-lg-6">
+                            <h3>Configuration UI</h3>
 
-                            <div class="col-sm-8"><input id="targetToken" name="targetToken" type="text" class="form-control"
-                                                         placeholder="Target JWT Token "
-                                                         ng-model="atTemplate.target.token">
-                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <label class=" control-label">Schema Form</label>
 
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <h3>Configuration UI</h3>
-
-                        <div class="form-group">
-                            <div class="col-sm-10">
-                                <label class=" control-label">Schema Form</label>
-
-                                <div>
-                                    <div class="js-editor-medium">
-                                        <div ui-ace="{require: ['ace/ext/language_tools'],
+                                    <div>
+                                        <div class="js-editor-medium">
+                                            <div ui-ace="{require: ['ace/ext/language_tools'],
                                 advanced: {
                                 enableSnippets: true,
                                 enableBasicAutocompletion: true,
                                 enableLiveAutocompletion: true
                                 },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: formChanged}" ng-model="jsonForm"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="col-lg-6">
                         <h3>Live preview configuration</h3>
 

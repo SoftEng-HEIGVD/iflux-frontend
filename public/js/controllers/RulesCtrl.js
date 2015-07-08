@@ -34,13 +34,14 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
         //if it's a modification
         if (ruleId !== undefined && ruleId !== "") {
             $scope.payload = Rules.get({"rulesId": ruleId}, function success(data, status) {
-                for(var i = 0; i<data.transformations.length;i++){
+                for (var i = 0; i < data.transformations.length; i++) {
                     $scope.payload.transformations[i].actionTargetId = data.transformations[i].actionTarget.id;
                     $scope.payload.transformations[i].actionTypeId = data.transformations[i].actionType.id;
                     $scope.payload.transformations[i].eventTypeId = data.transformations[i].eventType.id;
 
-                };
-                for(var i = 0; i<data.conditions.length;i++){
+                }
+                ;
+                for (var i = 0; i < data.conditions.length; i++) {
                     $scope.payload.conditions[i].eventSourceId = data.conditions[i].eventSource.id;
                     $scope.payload.conditions[i].eventTypeId = data.conditions[i].eventType.id;
 
@@ -73,8 +74,13 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
         $scope.create = function () {
 
             if (isUpdate) {
-                $scope.payload.id = ruleId;
-                Rules.update($scope.payload);
+                $scope.payload.rulesId = ruleId;
+                Rules.update($scope.payload, function success(data, status) {
+                        $location.path('/rules');
+                    },
+                    function error(err) {
+                        console.log(err);
+                    });
             }
             else {
                 Rules.save($scope.payload,

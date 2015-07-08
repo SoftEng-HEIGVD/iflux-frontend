@@ -122,7 +122,6 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         };
 
         $scope.submitForm = function () {
-            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.atTemplate.actionTargetId = templateId;
                 ActionTargetTemplate.update($scope.atTemplate);

@@ -38,7 +38,6 @@ iFluxFrontCtrl.controller('SettingsCtrl', ['$rootScope', '$scope', '$location', 
 
 
         $scope.modifyOrganization = function (organization) {
-            //TODO organization must contains organizationId int
             Organization.update(organization);
         }
     }

@@ -70,7 +70,6 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
         }
 
         $scope.submitForm = function () {
-            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.esInstance.eventSourceInstanceId = instanceId;
                 EventSourceInstance.update($scope.esInstance);
@@ -123,7 +122,6 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         };
 
         $scope.submitForm = function () {
-            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.esTemplate.eventSourceId = templateId;
                 EventSourceTemplate.update($scope.esTemplate);
