@@ -51,6 +51,10 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
             when('/eventSourceInstanceEditor/:id', {templateUrl: partialsPath + '/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
             when('/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
 
+            when('/eventType', {templateUrl: partialsPath + '/eventTypeManagement.html', controller: 'EventTypeMgmtCtrl'}).
+            when('/eventTypeEditor', {templateUrl: partialsPath + '/eventTypeEditor.html', controller: 'EventTypeEditorCtrl'}).
+            when('/eventTypeEditor/:id', {templateUrl: partialsPath + '/eventTypeEditor.html', controller: 'EventTypeEditorCtrl'}).
+
             when('/userOrganizationEditor', {templateUrl: partialsPath + '/userOrganizationEditor.html', controller: 'userOrganizationEditorCtrl'}).
 
             otherwise({redirectTo: '/home'});

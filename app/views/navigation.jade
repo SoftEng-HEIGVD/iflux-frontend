@@ -19,12 +19,17 @@ nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
                 li(ng-hide='isAuthenticate'): a(ng-href='#/register') Register
                 li(ng-show='isAuthenticate'): a(ng-href='#/settings') Settings
                 li.dropdown(ng-show='isAuthenticate')
-                    a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Action
+                    a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Actions
                         span.caret
                     ul.dropdown-menu
                         li: a(ng-href='#/actionTarget') Action Target
                         li: a(ng-href='#/actionType') Action Type
-                li(ng-show='isAuthenticate'): a(ng-href='#/eventSource') Event Source
+                li.dropdown(ng-show='isAuthenticate')
+                    a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Events
+                        span.caret
+                    ul.dropdown-menu
+                        li: a(ng-href='#/eventSource') Event Source
+                        li: a(ng-href='#/eventType') Event Type
                 li(ng-show='isAuthenticate'): a(ng-href='#' ng-click='logout()') Sign out
 
             div(ng-show='isAuthenticate')

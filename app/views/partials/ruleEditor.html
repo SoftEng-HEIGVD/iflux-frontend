@@ -19,7 +19,7 @@
 
                     <div class="col-sm-10">
                         <div>
-                            <input bs-switch ng-model="payload.active" id="activeRule" type="checkbox">
+                            <input ng-model="payload.active" id="activeRule" type="checkbox">
                         </div>
                     </div>
                 </div>
@@ -219,7 +219,7 @@
                                             enableBasicAutocompletion: true,
                                             enableLiveAutocompletion: true
                                         },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}"
-                                                 ng-model="transformation.fn.sampleEvent"></div>
+                                                 ng-model="transformation.fn.sample.event"></div>
                                         </div>
                                         <p class="help-block text-danger"></p>
                                     </div>
@@ -251,7 +251,8 @@
 
             <div class="col-lg-12">
                 <div class="buttonbar">
-                    <a class="btn btn-primary" ng-click="create()">{{buttonName}}</a>
+                    <input class="btn btn-primary" type="button" ng-click="cancel()" value="Cancel">
+                    <a class="btn btn-success" ng-click="create()">{{buttonName}}</a>
                 </div>
             </div>
         </div>

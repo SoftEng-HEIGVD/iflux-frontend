@@ -7,16 +7,14 @@
             Search a rule: <input ng-model="search">
             <table class="table table-condensed">
                 <thead>
-                <th><a href="" ng-click="predicate = 'description'; reverse=!reverse">Description</a></th>
-                <th><a href="" ng-click="predicate = 'reference'; reverse=!reverse">Reference</a></th>
+                <th><a href="" ng-click="predicate = 'name'; reverse=!reverse">Name</a></th>
                 <th><a href="" ng-click="predicate = 'enabled'; reverse=!reverse">Enable</a></th>
                 <th>Modification</th>
                 <th>Delete</th>
                 </thead>
                 <tbody>
                 <tr ng-repeat="rule in rules | orderBy:predicate:reverse | filter:search">
-                    <td>{{rule.description}}</td>
-                    <td>{{rule.reference}}</td>
+                    <td>{{rule.name}}</td>
                     <td>{{rule.enabled}}</td>
                     <td><a class="btn btn-xs btn-primary" ng-href="#/ruleEditor/{{rule.id}}">Modification </a></td>
                     <td><a class="btn btn-xs btn-primary" ng-disabled="true" ng-click="delete(rule.id, $index)">Delete </a></td>

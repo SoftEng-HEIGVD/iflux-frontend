@@ -20,9 +20,9 @@
                         <label for="organizationSelect" class="col-sm-4 control-label">Organization </label>
 
                         <div class="col-sm-8">
-                            <ui-select id="organizationSelect" ng-model="esTemplate.organizationId" theme="bootstrap">
+                            <ui-select id="organizationSelect" name="orgSelect0" ng-model="esTemplate.organizationId" theme="bootstrap">
                                 <ui-select-match placeholder="Select an organization">{{$select.selected.name}}</ui-select-match>
-                                <ui-select-choices repeat="organization.id as organization in organizations  | filter: { orgName: $select.search }" value="{{$select.selected.name}}">
+                                <ui-select-choices repeat="organization.id as organization in organizations  | filter: { name: $select.search }" value="{{$select.selected.name}}">
                                     <div ng-bind-html="organization.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
@@ -121,7 +121,7 @@
             <div class="col-lg-12">
                 <div class="buttonbar">
                     <a class="btn btn-primary" type="button" ng-click="cancel()">Cancel</a>
-                    <a class="btn btn-primary" type="submit" ng-click="submitForm()">{{buttonName}}</a>
+                    <a class="btn btn-success" type="submit" ng-click="submitForm()">{{buttonName}}</a>
                 </div>
             </div>
 

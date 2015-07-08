@@ -66,7 +66,7 @@ iFluxFrontServices.factory('EventSourceTemplate', ['$resource',
         });
     }
 ]);
-iFluxFrontServices.factory('EventTypes', ['$resource',
+iFluxFrontServices.factory('EventType', ['$resource',
     function ($resource) {
         return $resource(baseUrl + '/eventTypes/:eventTypeId', {}, {
             query: {method: 'GET', isArray: true},

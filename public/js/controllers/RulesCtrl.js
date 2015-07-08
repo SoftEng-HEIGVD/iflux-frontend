@@ -16,13 +16,13 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
     }
 }]);
 
-iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance','ActionType','EventSourceTemplate', 'EventSourceInstance', 'EventTypes', 'SharedProperties', 'Me',
-    function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventTypes, SharedProperties, Me) {
+iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance', 'ActionType', 'EventSourceTemplate', 'EventSourceInstance', 'EventType', 'SharedProperties', 'Me',
+    function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventType, SharedProperties, Me) {
         var ruleId = $route.current.params.id;
-
+        var isUpdate = false;
         $scope.organizations = Me.query();
         $scope.eventSources = EventSourceInstance.query({allOrganizations: true});
-        $scope.eventTypes = EventTypes.query({allOrganizations: true});
+        $scope.eventTypes = EventType.query({allOrganizations: true});
         $scope.actionTypes = ActionTypes.query({allOrganizations: true});
         $scope.actionTargets = ActionTargetInstance.query({allOrganizations: true});
         $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
@@ -33,15 +33,28 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
 
         //if it's a modification
         if (ruleId !== undefined && ruleId !== "") {
-           // selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
+            $scope.payload = Rules.get({"rulesId": ruleId}, function success(data, status) {
+                for(var i = 0; i<data.transformations.length;i++){
+                    $scope.payload.transformations[i].actionTargetId = data.transformations[i].actionTarget.id;
+                    $scope.payload.transformations[i].actionTypeId = data.transformations[i].actionType.id;
+                    $scope.payload.transformations[i].eventTypeId = data.transformations[i].eventType.id;
+
+                };
+                for(var i = 0; i<data.conditions.length;i++){
+                    $scope.payload.conditions[i].eventSourceId = data.conditions[i].eventSource.id;
+                    $scope.payload.conditions[i].eventTypeId = data.conditions[i].eventType.id;
+
+
+                }
+            });
             $scope.buttonName = "Update the rule";
+            isUpdate = true;
         }
 
         //Or a new rules
         else {
             $scope.buttonName = "Create the rule";
         }
-
 
 
         $scope.addConditions = function () {
@@ -59,7 +72,22 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
         };
         $scope.create = function () {
 
-          //  Rules.save($scope.payload);
+            if (isUpdate) {
+                $scope.payload.id = ruleId;
+                Rules.update($scope.payload);
+            }
+            else {
+                Rules.save($scope.payload,
+                    function success(data, status) {
+                        $location.path('/rules');
+                    }, function error(err, status) {
+                        alert(err);
+
+                    });
+            }
+
+
+            isUpdate = false;
         }
     }]);
 
