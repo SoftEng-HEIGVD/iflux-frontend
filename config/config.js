@@ -14,7 +14,7 @@ var config = {
       name: 'iFLUX Frontend',
 			apiUrl: process.env.IFLUX_PUBLIC_API_URL
     },
-    port: 3007
+    port: 8007
   },
 
   test: {
