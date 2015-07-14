@@ -72,14 +72,26 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.esInstance.eventSourceInstanceId = instanceId;
-                EventSourceInstance.update($scope.esInstance);
+                EventSourceInstance.update($scope.esInstance,
+                    function success(data, status) {
+                        $location.path('/eventSource');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                EventSourceInstance.save($scope.esInstance);
+                EventSourceInstance.save($scope.esInstance,
+                    function success(data, status) {
+                        $location.path('/eventSource');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
-
-            $location.path('/eventSource');
-            isUpdate = false;
         }
 
 
@@ -124,13 +136,27 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.esTemplate.eventSourceId = templateId;
-                EventSourceTemplate.update($scope.esTemplate);
+                EventSourceTemplate.update($scope.esTemplate,
+                    function success(data, status) {
+                        $location.path('/eventSource');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                EventSourceTemplate.save($scope.esTemplate);
+                EventSourceTemplate.save($scope.esTemplate,
+                    function success(data, status) {
+                        $location.path('/eventSource');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
-            $location.path('/eventSource');
-            isUpdate = false;
+
         };
         $scope.$watch(
             "esTemplate.configuration.schema",

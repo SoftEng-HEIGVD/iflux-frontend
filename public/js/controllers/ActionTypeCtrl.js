@@ -42,14 +42,26 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.aType.id = typeId;
-                ActionType.update($scope.aType);
+                ActionType.update($scope.aType,
+                    function success(data, status) {
+                        $location.path('/actionType');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                ActionType.save($scope.aType);
+                ActionType.save($scope.aType,
+                    function success(data, status) {
+                        $location.path('/actionType');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
-
-            $location.path('/actionType');
-            isUpdate = false;
         };
         $scope.$watch(
             "aType.schema",

@@ -5,46 +5,53 @@ var iFluxFrontCtrl = angular.module('AuthenticationCtrl', []);
 
 iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Authentication',
     function ($rootScope, $scope, $location, $localStorage, Authentication) {
-
+        $scope.errorMessages = null;
         $scope.credentials = {};
 
         $scope.login = function () {
-            Authentication.login($scope.credentials, function (res) {
-                if (res.type == false) {
-                } else {
-                    $localStorage.token = res.token;
-                    $rootScope.token = $localStorage.token;
-                    $rootScope.isAuthenticate = $localStorage.token;
-                    $location.path('/cockpit');
-                }
-            }, function (err) {
-                alert(err.message);
-                $rootScope.error = 'Failed to signin';
-            });
+            Authentication.login($scope.credentials,
+                function (res) {
+                    if (res.type == false) {
+                    } else {
+                        $localStorage.token = res.token;
+                        $rootScope.token = $localStorage.token;
+                        $rootScope.isAuthenticate = $localStorage.token;
+                        $location.path('/cockpit');
+                    }
+                }, function (err) {
+                    $scope.errorMessages = err.data.name;
+                });
             $rootScope.token = $localStorage.token;
             $rootScope.isAuthenticate = $localStorage.token;
         };
 
         $scope.register = function () {
-            Authentication.register($scope.credentials, function success(data) {
+            if ($scope.credentials.password !== $scope.credentials.passwordConfirmation) {
+                $scope.errorMessages = [];
+                $scope.errorMessages.push("Password does not match");
+            }
+            else {
+                Authentication.register($scope.credentials,
+                    function success(data) {
+                        $scope.errorMessages = null;
+                        $location.path('/login');
 
-                $location.path('/login');
-
-            }, function error(err) {
-                console.log(err);
-                if (err.data !== null && err.data.email !== undefined) {
-                    alert(JSON.stringify(err.data.email[0]));
-                }
-                if (err.data !== null && err.data.password !== undefined) {
-                    alert(JSON.stringify(err.data.password[0]));
-                }
-                if (err.data !== null && err.data.firstName !== undefined) {
-                    alert(JSON.stringify(err.data.firstName[0]));
-                }
-                $rootScope.error = 'Failed to signup';
-                $location.path('/register');
-            });
-
+                    }, function error(err) {
+                        $scope.errorMessages = [];
+                        if (err.data !== null && err.data.email !== undefined) {
+                            $scope.errorMessages.push(err.data.email[0]);
+                        }
+                        if (err.data !== null && err.data.password !== undefined) {
+                            $scope.errorMessages.push(err.data.password[0]);
+                        }
+                        if (err.data !== null && err.data.firstName !== undefined) {
+                            $scope.errorMessages.push(err.data.firstName[0]);
+                        }
+                        if (err.data !== null && err.data.lastName !== undefined) {
+                            $scope.errorMessages.push(err.data.lastName[0]);
+                        }
+                    });
+            }
         };
 
         $scope.logout = function () {

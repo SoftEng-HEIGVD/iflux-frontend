@@ -20,6 +20,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
     function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventType, SharedProperties, Me) {
         var ruleId = $route.current.params.id;
         var isUpdate = false;
+        $scope.errorMessage = null;
         $scope.organizations = Me.query();
         $scope.eventSources = EventSourceInstance.query({allOrganizations: true});
         $scope.eventTypes = EventType.query({allOrganizations: true});
@@ -44,8 +45,6 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
                 for (var i = 0; i < data.conditions.length; i++) {
                     $scope.payload.conditions[i].eventSourceId = data.conditions[i].eventSource.id;
                     $scope.payload.conditions[i].eventTypeId = data.conditions[i].eventType.id;
-
-
                 }
             });
             $scope.buttonName = "Update the rule";
@@ -72,28 +71,31 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
             $scope.payload.transformations.splice(index, 1);
         };
         $scope.create = function () {
-
             if (isUpdate) {
                 $scope.payload.rulesId = ruleId;
                 Rules.update($scope.payload, function success(data, status) {
                         $location.path('/rules');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
                     },
                     function error(err) {
-                        console.log(err);
+                        $scope.errorMessages = err.data.name;
                     });
             }
             else {
                 Rules.save($scope.payload,
                     function success(data, status) {
                         $location.path('/rules');
+                        $scope.errorMessages = null;
                     }, function error(err, status) {
-                        alert(err);
-
+                        $scope.errorMessages = err.data.name;
                     });
             }
 
-
+        };
+        $scope.cancel = function () {
+            $location.path('/rules');
             isUpdate = false;
-        }
+        };
     }]);
 

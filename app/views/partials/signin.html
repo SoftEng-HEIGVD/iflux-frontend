@@ -30,6 +30,12 @@
                             <!-- Button -->
 
                             <div class="col-sm-12 controls">
+                                <div class="alert alert-danger fade in" ng-hide="!errorMessages">
+                                    <div ng-repeat="errorMessage in errorMessages">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <strong>Error!</strong> {{errorMessage}}
+                                    </div>
+                                </div>
                                 <button type="submit" value="Submit" id="submit"
                                         class="btn btn-primary">Login
                                 </button>

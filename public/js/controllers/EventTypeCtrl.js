@@ -31,7 +31,7 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.eType={};
+            $scope.eType = {};
 
         }
 
@@ -42,14 +42,26 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.eType.id = typeId;
-                EventType.update($scope.eType);
+                EventType.update($scope.eType,
+                    function success(data, status) {
+                        $location.path('/eventType');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                EventType.save($scope.eType);
+                EventType.save($scope.eType,
+                    function success(data, status) {
+                        $location.path('/eventType');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
-
-            $location.path('/eventType');
-            isUpdate = false;
         };
         $scope.$watch(
             "eType.schema",

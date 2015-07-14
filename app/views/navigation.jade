@@ -30,7 +30,7 @@ nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
                     ul.dropdown-menu
                         li: a(ng-href='#/eventSource') Event Source
                         li: a(ng-href='#/eventType') Event Type
-                li(ng-show='isAuthenticate'): a(ng-href='#' ng-click='logout()') Sign out
+                li(ng-show='isAuthenticate'): a(ng-click='logout()') Sign out
 
             div(ng-show='isAuthenticate')
                 .nav.navbar-nav.navbar-right.header-select(ng-controller='LoginInfoCtrl')

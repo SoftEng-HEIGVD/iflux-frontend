@@ -38,7 +38,7 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
         $scope.organizations = Me.query();
         var isUpdate = false;
         //init the data structure
-        $scope.atInstance = {"configuration":{}};
+        $scope.atInstance = {"configuration": {}};
         var instanceId = $route.current.params.id;
         //get schema and form for configuration
         ActionTargetTemplate.get({actionTargetId: $rootScope.atTemplateId}, function success(data, status) {
@@ -72,14 +72,25 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
             $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.atInstance.actionTargetInstanceId = instanceId;
-                ActionTargetInstance.update($scope.atInstance);
+                ActionTargetInstance.update($scope.atInstance, function success(data, status) {
+                        $location.path('/actionTarget');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                ActionTargetInstance.save($scope.atInstance);
+                ActionTargetInstance.save($scope.atInstance, function success(data, status) {
+                        $location.path('/actionTarget');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
 
-            $location.path('/actionTarget');
-            isUpdate = false;
         };
 
 
@@ -100,8 +111,8 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
                 $scope.jsonForm = ["*"];
                 if (data.configurationUi === undefined || data.configurationUi.schemaForm === "" || data.configurationUi.schemaForm === undefined) {
 
-                    $scope.atTemplate.configurationUi={};
-                    $scope.atTemplate.configurationUi.schemaForm="";
+                    $scope.atTemplate.configurationUi = {};
+                    $scope.atTemplate.configurationUi.schemaForm = "";
                 }
                 else {
                     $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
@@ -113,25 +124,38 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.atTemplate={"configurationUi":{},"configuration":{}};
+            $scope.atTemplate = {"configurationUi": {}, "configuration": {}};
 
         }
 
         $scope.cancel = function () {
             $location.path('/actionTarget');
+            isUpdate = false;
         };
 
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.atTemplate.actionTargetId = templateId;
-                ActionTargetTemplate.update($scope.atTemplate);
+                ActionTargetTemplate.update($scope.atTemplate,
+                    function success(data, status) {
+                        $location.path('/actionTarget');
+                        $scope.errorMessages = null;
+                        isUpdate = false;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
             else {
-                ActionTargetTemplate.save($scope.atTemplate);
+                ActionTargetTemplate.save($scope.atTemplate,
+                    function success(data, status) {
+                        $location.path('/actionTarget');
+                        $scope.errorMessages = null;
+                    },
+                    function error(err) {
+                        $scope.errorMessages = err.data.name;
+                    });
             }
-
-            $location.path('/actionTarget');
-            isUpdate = false;
         };
         $scope.$watch(
             "atTemplate.configuration.schema",
@@ -155,7 +179,6 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
 
         $scope.formChanged = function (e) {
             $scope.atTemplate.configurationUi.schemaForm = JSON.parse($scope.jsonForm);
-            console.log("formChanged " + $scope.jsonForm);
         };
         $scope.schemaChanged = function (e) {
             $scope.atTemplate.configuration.schema = JSON.parse($scope.jsonSchema);

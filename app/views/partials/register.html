@@ -18,13 +18,13 @@
                         <div class="form-group" show-errors>
                             <label class="col-md-3 control-label">First Name</label>
                             <div class="col-md-9">
-                                <input required type="text" class="form-control" ng-model="credentials.firstName" name="firstname" placeholder="First name">
+                                <input required type="text" class="form-control" ng-model="credentials.firstName" name="firstname" placeholder="First name" minlength="2">
                             </div>
                         </div>
                         <div class="form-group" show-errors>
                             <label class="col-md-3 control-label">Last Name</label>
                             <div class="col-md-9">
-                                <input required type="text" class="form-control" ng-model="credentials.lastName" name="lastname" placeholder="Last name">
+                                <input required type="text" class="form-control" ng-model="credentials.lastName" name="lastname" placeholder="Last name" minlength="2">
                             </div>
                         </div>
                         <div class="form-group" show-errors>
@@ -50,6 +50,12 @@
                         </div>
 
                         <div class="form-group">
+                            <div class="alert alert-danger fade in" ng-hide="!errorMessages">
+                                <div ng-repeat="errorMessage in errorMessages">
+                                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <strong>Error!</strong> {{errorMessage}}
+                                </div>
+                            </div>
                             <!-- Button -->
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" value="Submit" id="submit"
