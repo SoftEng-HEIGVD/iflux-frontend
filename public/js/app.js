@@ -12,6 +12,7 @@ var iFluxFrontendApp = angular.module('iFluxFrontendApp', [
     'schemaForm',
     'ui.select',
     'ui.ace',
+    'ui.bootstrap',
     'iFluxFrontControllers',
     'iFluxFrontFilters',
     'iFluxFrontServices',

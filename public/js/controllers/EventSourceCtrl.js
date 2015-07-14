@@ -89,7 +89,13 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages = [];
+                        if (err.data !== null && err.data.organizationId !== undefined) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+                        }
+                        if (err.data !== null && err.data.actionTargetTemplateId !== undefined) {
+                            $scope.errorMessages.push(err.data.actionTargetTemplateId[0]);
+                        }
                     });
             }
         }
@@ -153,7 +159,19 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages =[];
+                        if (err.data !== null && err.data.name !== undefined) {
+                            $scope.errorMessages.push(err.data.name[0]);
+                        }
+                        if (err.data !== null && err.data.configuration !== undefined) {
+                            $scope.errorMessages.push(err.data.configuration.url[0]);
+                        }
+                        if (err.data !== null && err.data.target !== undefined) {
+                            $scope.errorMessages.push(err.data.target[0]);
+                        }
+                        if (err.data !== null && err.data.organizationId !== undefined) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+                        }
                     });
             }
 

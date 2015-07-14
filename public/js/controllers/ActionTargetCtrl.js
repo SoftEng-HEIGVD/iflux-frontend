@@ -36,6 +36,7 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
 iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance', 'Me',
     function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
         $scope.organizations = Me.query();
+        $scope.errorMessages = null;
         var isUpdate = false;
         //init the data structure
         $scope.atInstance = {"configuration": {}};
@@ -69,16 +70,20 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
             $location.path('/actionTarget');
         };
         $scope.submitForm = function () {
-            $("input,textarea").not("[type=submit]").jqBootstrapValidation();
             if (isUpdate) {
                 $scope.atInstance.actionTargetInstanceId = instanceId;
                 ActionTargetInstance.update($scope.atInstance, function success(data, status) {
                         $location.path('/actionTarget');
                         $scope.errorMessages = null;
                         isUpdate = false;
+                        $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages = [];
+                        if (err.data !== null && err.data.name !== undefined) {
+                            $scope.errorMessages.push(err.data.name[0]);
+                        }
+
                     });
             }
             else {
@@ -87,7 +92,13 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages = [];
+                        if (err.data !== null && err.data.organizationId !== undefined) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+                        }
+                        if (err.data !== null && err.data.actionTargetTemplateId !== undefined) {
+                            $scope.errorMessages.push(err.data.actionTargetTemplateId[0]);
+                        }
                     });
             }
 
@@ -153,7 +164,20 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages =[];
+                        if (err.data !== null && err.data.name !== undefined) {
+                            $scope.errorMessages.push(err.data.name[0]);
+                        }
+                        if (err.data !== null && err.data.configuration !== undefined) {
+                            $scope.errorMessages.push(err.data.configuration.url[0]);
+                        }
+                        if (err.data !== null && err.data.target !== undefined) {
+                            $scope.errorMessages.push(err.data.target[0]);
+                        }
+                        if (err.data !== null && err.data.organizationId !== undefined) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+                        }
+
                     });
             }
         };

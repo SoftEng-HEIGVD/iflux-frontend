@@ -131,7 +131,7 @@
                 </div>
                 <div class="buttonbar">
                     <a class="btn btn-primary" type="button" ng-click="cancel()">Cancel</a>
-                    <a class="btn btn-success" type="submit" ng-click="submitForm()">{{buttonName}}</a>
+                    <a class="btn btn-success" type="submit" ng-click="submitForm()" ng-disabled="eventSourceTemplateForm.$invalid">{{buttonName}}</a>
                 </div>
             </div>
         </div>

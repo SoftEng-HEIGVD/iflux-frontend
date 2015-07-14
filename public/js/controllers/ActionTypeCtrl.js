@@ -59,7 +59,13 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages = err.data.name;
+                        $scope.errorMessages =[];
+                        if (err.data !== null && err.data.name !== undefined) {
+                            $scope.errorMessages.push(err.data.name[0]);
+                        }
+                        if (err.data !== null && err.data.type !== undefined) {
+                            $scope.errorMessages.push(err.data.type[0]);
+                        }
                     });
             }
         };

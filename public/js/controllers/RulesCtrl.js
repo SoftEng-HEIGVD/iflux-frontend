@@ -18,8 +18,24 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
 
 iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance', 'ActionType', 'EventSourceTemplate', 'EventSourceInstance', 'EventType', 'SharedProperties', 'Me',
     function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventType, SharedProperties, Me) {
+        $scope.htmlTooltipTransformation = "<p><b>function</b>(event, actionTarget, actionType, eventSource, eventType, options) {<br>" +
+        "  return // Evaluation code (your expression comes there) <br>" +
+        "}</p><ul><li><b>event</b>: The event received by iFLUX</li>" +
+        "<li><b>actionTarget</b>: Always available.</li>" +
+        "<li><b>actionType</b>: Always available.</li>" +
+        "<li><b>eventSource</b>: If the event contains the event source, then it is retrieved and pass to the function</li>" +
+        "<li><b>eventType</b>: Same for the event type than the event source.</li></ul>";
+
+        $scope.htmlTooltipCondition = "<p><b>function</b>(event, eventSource, eventType, options) {<br>" +
+        "  return // Evaluation code (your expression comes there) <br>" +
+        "}</p><ul><li><b>event</b>: The event received by iFLUX</li>" +
+        "<li><b>eventSource</b>: If the event contains the event source, then it is retrieved and pass to the function</li>" +
+        "<li><b>eventType</b>: Same for the event type than the event source.</li></ul>";
+
+
         var ruleId = $route.current.params.id;
         var isUpdate = false;
+
         $scope.errorMessage = null;
         $scope.organizations = Me.query();
         $scope.eventSources = EventSourceInstance.query({allOrganizations: true});
