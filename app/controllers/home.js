@@ -9,7 +9,8 @@ module.exports = function (app) {
 };
 
 router.route('/partials/:page')
-	.get(function (req, res, next) {
+  .get(function (req, res, next) {
+    //res.render('partials/' + req.url.replace('/partials/', ''));
 		res.sendFile(path.join(__dirname, '../views/partials', req.params.page));
 	});
 
