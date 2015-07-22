@@ -42,6 +42,10 @@
                 <div class="col-lg-12 form-horizontal">
                     <h3>Conditions</h3>
 
+                    <div class="text-left">
+                        <button type="button" class="btn btn-primary" ng-click="addConditions()">Add a condition</button>
+                    </div>
+
                     <div ng-repeat="condition in payload.conditions">
 
                         <div class="col-md-6">
@@ -120,14 +124,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-success" ng-click="addConditions()">Add a condition</button>
-                    </div>
+
                 </div>
 
                 <div class="col-lg-12 form-horizontal">
                     <h3>Transformations</h3>
-
+                    <div class="text-left">
+                        <button type="button" class="btn btn-primary" ng-click="addTransformations()">Add a transformation</button>
+                    </div>
                     <div ng-repeat="transformation in payload.transformations">
 
                         <div class="col-md-6">
@@ -234,9 +238,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-success" ng-click="addTransformations()">Add a transformation</button>
                     </div>
                 </div>
             </form>

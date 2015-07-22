@@ -15,9 +15,10 @@
                 <tbody>
                 <tr ng-repeat="rule in rules | orderBy:predicate:reverse | filter:search">
                     <td>{{rule.name}}</td>
-                    <td>{{rule.enabled}}</td>
+                    <td><input type="checkbox" ng-model="rule.active" ng-disabled="true"></td>
                     <td><a class="btn btn-xs btn-primary" ng-href="#/ruleEditor/{{rule.id}}">Modification </a></td>
-                    <td><a class="btn btn-xs btn-danger" ng-disabled="true" ng-click="delete(rule.id, $index)">Delete </a></td>
+                    <td><a class="btn btn-xs btn-danger" ng-disabled="true" ng-click="delete(rule.id, $index)">Delete</a></td>
+
                 </tr>
                 </tbody>
             </table>
