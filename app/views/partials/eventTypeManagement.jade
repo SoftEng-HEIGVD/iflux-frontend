@@ -1,0 +1,30 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Types Managment
+        .col-lg-12
+            | Search an Avent Types :
+            input(type="text", ng-model="search")
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'description'; reverse=!reverse") Description
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                tbody(ng-repeat="eventType in eventTypes | orderBy:predicate:reverse | filter:{name:search, description:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
+                        td {{eventType.name}}
+                        td {{eventType.description }}
+                        td
+                            input(type="checkbox", ng-model="eventType.public", ng-disabled="true")
+                        td {{eventType.organizationId}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#/eventTypeEditor/{{eventType.id}}") Modifiy
+            a.btn.btn-primary(ng-href="#/eventTypeEditor") Create a new event type

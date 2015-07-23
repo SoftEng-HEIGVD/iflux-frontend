@@ -1,0 +1,94 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Target Template Editor
+        .big-panel
+            div
+                .col-lg-12.form-horizontal
+                    form#atTemplateForm(name="atTemplateForm")
+                        .col-lg-6
+                            h3 General Info
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="NameTemplate") Name *
+                                .col-sm-8
+                                    input#NameTemplate.form-control(type="text", name="nameTemplate", placeholder="Name of the template", ng-model="atTemplate.name", required="")
+                                    p.help-block.text-danger
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="organizationSelect") Organization *
+                                .col-sm-8
+                                    ui-select#organizationSelect(name="orgSelect0", ng-model="atTemplate.organizationId", theme="bootstrap", required="")
+                                        ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
+                                        ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
+                                            div(ng-bind-html="organization.name | highlight: $select.search")
+                                    p.help-block.text-danger
+                            .form-group
+                                label.col-sm-4.control-label(for="templatePublic") Make the template public
+                                .col-sm-8
+                                    div
+                                        input#templatePublic(type="checkbox", ng-model="atTemplate.public")
+                        .col-lg-6
+                            h3 Schema
+                            .form-group(show-errors="")
+                                .col-sm-10
+                                    label.control-label Write a JSON Schema to create a configuration form *
+                                    div
+                                        .js-editor-medium
+                                            div(required="", name="jsonSchemaConfiguration", ui-ace="{require: ['ace/ext/language_tools'],\
+                      advanced: {\
+                      enableSnippets: true,\
+                      enableBasicAutocompletion: true,\
+                      enableLiveAutocompletion: true\
+                      },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model="jsonSchema")
+                                        p.help-block.text-danger
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="configurationUrl") Configuration URL *
+                                .col-sm-8
+                                    input#configurationUrl.form-control(type="url", name="ConfigUrl", placeholder="Configuration URL ", ng-model="atTemplate.configuration.url", required="")
+                                    p.help-block.text-danger
+                            .form-group
+                                label.col-sm-4.control-label(for="configurationToken") Token
+                                .col-sm-8
+                                    input#configurationToken.form-control(type="text", name="ConfigToken", placeholder="JWT Token", ng-model="atTemplate.schema.token")
+                .col-lg-12.form-horizontal
+                    form#atTemplateForm2(name="atTemplateForm2")
+                        .col-lg-6
+                            h3 Target
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="targetUrl") Url *
+                                .col-sm-8
+                                    input#targetUrl.form-control(type="url", name="targetUrl", placeholder="Url of the Target", ng-model="atTemplate.target.url", required="")
+                                    p.help-block.text-danger
+                            .form-group
+                                label.col-sm-4.control-label(for="targetToken") Token
+                                .col-sm-8
+                                    input#targetToken.form-control(type="text", name="targetToken", placeholder="Target JWT Token ", ng-model="atTemplate.target.token")
+                        .col-lg-6
+                            h3 Configuration UI
+                            .form-group
+                                .col-sm-10
+                                    label.control-label Schema Form
+                                    div
+                                        .js-editor-medium
+                                            div(ui-ace="{require: ['ace/ext/language_tools'],\
+                      advanced: {\
+                      enableSnippets: true,\
+                      enableBasicAutocompletion: true,\
+                      enableLiveAutocompletion: true\
+                      },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: formChanged}", ng-model="jsonForm")
+                    .col-lg-6
+                        h3 Live preview configuration
+                        .panel
+                            .panel-green.col-lg-10
+                                .col-lg-10
+                                    form(sf-schema="schema", sf-form="form", sf-model="actionSchema")
+                .col-lg-12
+                    .alert.alert-danger.fade.in(ng-hide="!errorMessages")
+                        div(ng-repeat="errorMessage in errorMessages")
+                            a.close(href="#", data-dismiss="alert") &#215;
+                            strong Error!
+                            | {{errorMessage}}
+                    .buttonbar
+                        input.btn.btn-primary(type="button", ng-click="cancel()", value="Cancel")
+                        input.btn.btn-success(type="submit", ng-click="submitForm()", ng-disabled="atTemplateForm.$invalid || atTemplateForm2.$invalid", value="{{buttonName}}")

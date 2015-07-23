@@ -1,0 +1,46 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Source Instance Editor
+        .big-panel
+            .col-lg-12.form-horizontal
+                form(name="eventSourceInstanceForm")
+                    .col-lg-6
+                        h3 General Info
+                        .form-group(show-errors="")
+                            label.col-sm-4.control-label(for="NameTemplate") Name *
+                            .col-sm-8
+                                input#NameTemplate.form-control(type="text", name="nameTemplate", placeholder="Name of the template", ng-model="esInstance.name", required="")
+                        .form-group
+                            label.col-sm-4.control-label(for="description") Description
+                            .col-sm-8
+                                input#description.form-control(type="text", name="description", placeholder="Human readable description", ng-model="esInstance.description")
+                        .form-group(show-errors="")
+                            label.col-sm-4.control-label(for="organizationSelect") Organization "
+                            .col-sm-8
+                                ui-select#organizationSelect(name="orgSelect0", ng-model="esInstance.organizationId", theme="bootstrap", required="")
+                                    ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
+                                    ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
+                                        div(ng-bind-html="organization.name | highlight: $select.search")
+                                p.help-block.text-danger
+                .col-lg-6
+                    h3 Schema
+                    .form-group
+                        .col-sm-12
+                            label.control-label Complete the form below to configure the Event Source Instance *
+                            hr
+                        .panel-body
+                            .col-sm-12
+                                div
+                                    form(sf-schema="schema", sf-form="form", sf-model="esInstance.configuration")
+        .col-lg-12
+            .alert.alert-danger.fade.in(ng-hide="!errorMessages")
+                div(ng-repeat="errorMessage in errorMessages")
+                    a.close(href="#", data-dismiss="alert") &#215;
+                    strong Error!
+                    | {{errorMessage}}
+            .buttonbar
+                a.btn.btn-primary(ng-click="cancel()") Cancel
+                a.btn.btn-success(ng-click="submitForm()", ng-disabled="eventSourceInstanceForm.$invalid") {{buttonName}}

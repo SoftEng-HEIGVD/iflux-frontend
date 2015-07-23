@@ -1,0 +1,54 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Source Managment
+        .col-lg-12
+            | Search an Event Source Template:
+            input(type="text", ng-model="search")
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'key'; reverse=!reverse") Key
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Create instance
+                    th View instances
+                tbody(ng-repeat="eventSourceTemplate in eventSourceTemplates | orderBy:predicate:reverse | filter:{name:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand event source instances.")
+                        td {{eventSourceTemplate.name}}
+                        td {{eventSourceTemplate.key}}
+                        td
+                            input(type="checkbox", ng-model="eventSourceTemplate.public", ng-disabled="true")
+                        td {{eventSourceTemplate.organizationId}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="createInstance(eventSourceTemplate.id)") Add
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
+                    tr(ng-show="$index === showIndex")
+                        td
+                        td(colspan="4")
+                            div
+                                table.table.table-condensed.table-intern
+                                    thead
+                                        th
+                                            a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                                        th
+                                            a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
+                                        th Modification
+                                    tbody
+                                        tr(ng-repeat="eventSourceInstance in eventSourceInstances | orderBy:predicate:reverse | filter:{eventSourceTemplateId : eventSourceTemplate.id}")
+                                            td
+                                                | {{eventSourceInstance.name}}
+                                            td {{eventSourceInstance.id}}
+                                            td
+                                                a.btn.btn-xs.btn-danger(ng-click="modifyInstance(eventSourceInstance.id, eventSourceTemplate.id)") Modify
+            a.btn.btn-primary(ng-href="#/eventSourceTemplateEditor") Create a new event source template

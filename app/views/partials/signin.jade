@@ -1,0 +1,34 @@
+//
+    Created by vincent on 7/23/15.
+
+section
+    .container
+        #loginbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style='margin-top:50px;')
+            .panel.panel-info
+                .panel-heading
+                    .panel-title Sign In
+                    div(style='float:right; font-size: 80%; position: relative; top:-10px')
+                        a(href='#') Forgot password?
+                .panel-body(style='padding-top:30px')
+                    #login-alert.alert.alert-danger.col-sm-12(style='display:none')
+                    form#loginform.form-horizontal(role='form', ng-submit='login()')
+                        .input-group(style='margin-bottom: 25px', show-errors='')
+                            span.input-group-addon
+                                i.glyphicon.glyphicon-user
+                            input#login-username.form-control(type='email', ng-model='credentials.email', name='email', placeholder='email', required='')
+                        .input-group(style='margin-bottom: 25px', show-errors='')
+                            span.input-group-addon
+                                i.glyphicon.glyphicon-lock
+                            input#login-password.form-control(type='password', ng-model='credentials.password', name='password', placeholder='password', required='')
+                        .form-group(style='margin-top:10px')
+                            // Button
+                            .col-sm-12.controls
+                                .alert.alert-danger.fade.in(ng-hide='!errorMessages')
+                                    div(ng-repeat='errorMessage in errorMessages')
+                                        a.close(href='#', data-dismiss='alert') ×
+                                        strong Error!
+                                        |  {{errorMessage}}
+                                button#submit.btn.btn-primary(type='submit', value='Submit')
+                                    | Login
+                                div(style='float:right; position: relative; ')
+                                    a#signinlink(ng-href='#/register') Register

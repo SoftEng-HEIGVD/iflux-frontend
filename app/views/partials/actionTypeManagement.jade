@@ -1,0 +1,30 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Types Managment
+        .col-lg-12
+            | Search an Action Types :
+            input(type="text", ng-model="search")
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'description'; reverse=!reverse") Description
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                tbody(ng-repeat="actionType in actionTypes | orderBy:predicate:reverse | filter:{name:search, description:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
+                        td {{actionType.name}}
+                        td {{actionType.description }}
+                        td
+                            input(type="checkbox", ng-model="actionType.public", ng-disabled="true")
+                        td {{actionType.organizationId}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#/actionTypeEditor/{{actionType.id}}") Modifiy
+            a.btn.btn-primary(ng-href="#/actionTypeEditor") Create a new action type

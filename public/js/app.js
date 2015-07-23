@@ -28,7 +28,7 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
             when('/home', {templateUrl: partialsPath + '/home.html'}).
             when('/cockpit', {templateUrl: partialsPath + '/cockpit.html'}).
 
-            when('/rules', {templateUrl: partialsPath + '/rulesManagment.html', controller: 'RuleCtrl'}).
+            when('/rules', {templateUrl: partialsPath + '/rulesManagment.jade', controller: 'RuleCtrl'}).
             when('/ruleEditor', {templateUrl: partialsPath + '/ruleEditor.html', controller: 'RuleEditorCtrl'}).
             when('/ruleEditor/:id', {templateUrl: partialsPath + '/ruleEditor.html', controller: 'RuleEditorCtrl'}).
 

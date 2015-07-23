@@ -1,0 +1,18 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Source Instance Editor
+        .big-panel
+            .col-lg-12.form-horizontal
+                .col-lg-6
+                    h3 General Info
+                    .form-group
+                        label.col-sm-4.control-label(for='NameTemplate') email address
+                        .col-sm-8
+                            input#NameTemplate.form-control(name='nameTemplate', type='email', placeholder='email address', ng-model='form.email', required='')
+        .col-lg-12
+            .buttonbar
+                a.btn.btn-primary(ng-click='cancel()') Cancel
+                a.btn.btn-success(ng-click='submitForm()') Add user

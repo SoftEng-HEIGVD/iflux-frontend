@@ -1,0 +1,62 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Type Editor
+        .big-panel
+            #atTemplateForm(name="atTemplateForm", novalidate="")
+                .col-lg-12.form-horizontal
+                    form(name="actionTypeForm", novalidate="")
+                        .col-lg-6
+                            h3 General Info
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="NameType") Name *
+                                .col-sm-8
+                                    input#NameType.form-control(type="text", name="nameTemplate", placeholder="Name of the Action Type", ng-model="aType.name", required="", data-validation-required-message="Please enter a name")
+                                    p.help-block(ng-if="actionTypeForm.$invalid") A name is required
+                            .form-group
+                                label.col-sm-4.control-label(for="DescriptionType") Description
+                                .col-sm-8
+                                    input#DescriptionType.form-control(type="text", name="descriptionType", placeholder="Description of the Action Type", ng-model="aType.description")
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="organizationSelect") Organization *
+                                .col-sm-8
+                                    ui-select#organizationSelect(name="orgSelect0", ng-model="aType.organizationId", theme="bootstrap", required="")
+                                        ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
+                                        ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
+                                            div(ng-bind-html="organization.name | highlight: $select.search")
+                                    p.help-block.text-danger
+                            .form-group
+                                label.col-sm-4.control-label(for="templatePublic") Make the action type public
+                                .col-sm-8
+                                    div
+                                        input#templatePublic(type="checkbox", ng-model="aType.public")
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="typeUrl") Url *
+                                .col-sm-8
+                                    input#typeUrl.form-control(type="url", name="typeUrl", placeholder="Url to define the action type", ng-model="aType.type", required="")
+                                    p.help-block.text-danger
+                        .col-lg-6
+                            h3 Schema
+                            .form-group(show-errors="")
+                                .col-sm-10
+                                    label.control-label(for="configurationForm") Write a JSON Schema to create a configuration form *
+                                    div
+                                        .js-editor-medium
+                                            #configurationForm(name="configurationForm", required="", ui-ace="{require: ['ace/ext/language_tools'],\
+                      advanced: {\
+                      enableSnippets: true,\
+                      enableBasicAutocompletion: true,\
+                      enableLiveAutocompletion: true\
+                      },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model="jsonSchema")
+                                        p.help-block(ng-if="actionTypeForm.configurationForm.$invalid") A JSON Schema is required
+                .col-lg-12
+                    .alert.alert-danger.fade.in(ng-hide="!errorMessages")
+                        div(ng-repeat="errorMessage in errorMessages")
+                            a.close(href="#", data-dismiss="alert") &#215;
+                            strong Error!
+                            | {{errorMessage}}
+                    .buttonbar
+                        input.btn.btn-primary(type="button", ng-click="cancel()", value="Cancel")
+                        input.btn.btn-success(type="submit", ng-click="submitForm()", ng-disabled="actionTypeForm.$invalid", value="{{buttonName}}")

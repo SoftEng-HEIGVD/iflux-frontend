@@ -1,0 +1,45 @@
+// Created by vincent on 7/23/15.
+section
+    .container
+        #signupbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style='margin-top:50px')
+            .panel.panel-info
+                .panel-heading
+                    .panel-title Register
+                    div(style='float:right; font-size: 85%; position: relative; top:-10px')
+                        a#signinlink(ng-href='#/signin') Sign In
+                .panel-body
+                    form#signupform.form-horizontal(role='form', ng-submit='register()')
+                        #signupalert.alert.alert-danger(style='display:none')
+                            p Error:
+                            span
+                        .form-group(show-errors='')
+                            label.col-md-3.control-label First Name
+                            .col-md-9
+                                input.form-control(required='', type='text', ng-model='credentials.firstName', name='firstname', placeholder='First name', minlength='2')
+                        .form-group(show-errors='')
+                            label.col-md-3.control-label Last Name
+                            .col-md-9
+                                input.form-control(required='', type='text', ng-model='credentials.lastName', name='lastname', placeholder='Last name', minlength='2')
+                        .form-group(show-errors='')
+                            label.col-md-3.control-label Email
+                            .col-md-9
+                                input.form-control(required='', type='email', ng-model='credentials.email', name='email', placeholder='Email Address')
+                        .form-group(show-errors='')
+                            label.col-md-3.control-label Password
+                            .col-md-9
+                                input.form-control(required='', type='password', ng-model='credentials.password', name='password', placeholder='Password')
+                        .form-group(show-errors='')
+                            label.col-md-3.control-label Password
+                            .col-md-9
+                                input.form-control(required='', type='password', ng-model='credentials.passwordConfirmation', name='password', placeholder='Re-type your password')
+                        .form-group
+                            .alert.alert-danger.fade.in(ng-hide='!errorMessages')
+                                div(ng-repeat='errorMessage in errorMessages')
+                                    a.close(href='#', data-dismiss='alert') ×
+                                    strong Error!
+                                    |  {{errorMessage}}
+                            // Button
+                            .col-md-offset-3.col-md-9
+                                button#submit.btn.btn-primary(type='submit', value='Submit')
+                                    | Sign up
+

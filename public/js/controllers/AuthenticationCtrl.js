@@ -34,7 +34,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                 Authentication.register($scope.credentials,
                     function success(data) {
                         $scope.errorMessages = null;
-                        $location.path('/login');
+                        $location.path('/signin');
 
                     }, function error(err) {
                         $scope.errorMessages = [];

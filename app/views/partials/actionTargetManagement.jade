@@ -1,0 +1,54 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Target Managment
+        .col-lg-12
+            | Search an Action Target Template:
+            input(type="text", ng-model="search")
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'key'; reverse=!reverse") Key
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Create instance
+                    th View instances
+                tbody(ng-repeat="actionTargetTemplate in actionTargetTemplates | orderBy:predicate:reverse | filter:{name:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand action target instances.")
+                        td {{actionTargetTemplate.name}}
+                        td {{actionTargetTemplate.key }}
+                        td
+                            input(type="checkbox", ng-model="actionTargetTemplate.public", ng-disabled="true")
+                        td {{actionTargetTemplate.organizationId}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="createInstance(actionTargetTemplate.id)") Add
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
+                    tr(ng-show="$index === showIndex")
+                        td
+                        td(colspan="4")
+                            div
+                                table.table.table-condensed.table-intern
+                                    thead
+                                        th
+                                            a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                                        th
+                                            a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
+                                        th Modification
+                                    tbody
+                                        tr(ng-repeat="actionTargetInstance in actionTargetInstances | orderBy:predicate:reverse | filter:{actionTargetTemplateId : actionTargetTemplate.id}")
+                                            td
+                                                | {{actionTargetInstance.name}}
+                                            td {{actionTargetInstance.id}}
+                                            td
+                                                a.btn.btn-xs.btn-danger(ng-click="modifyInstance(actionTargetInstance.id, actionTargetTemplate.id)") Modify
+            a.btn.btn-primary(ng-href="#/actionTargetTemplateEditor") Create a new action target template
