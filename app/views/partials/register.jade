@@ -29,9 +29,9 @@ section
                             .col-md-9
                                 input.form-control(required='', type='password', ng-model='credentials.password', name='password', placeholder='Password')
                         .form-group(show-errors='')
-                            label.col-md-3.control-label Password
+                            label.col-md-3.control-label Confirme Password
                             .col-md-9
-                                input.form-control(required='', type='password', ng-model='credentials.passwordConfirmation', name='password', placeholder='Re-type your password')
+                                input.form-control(required='', type='password', ng-model='credentials.passwordConfirmation', name='confirmePassword', placeholder='Re-type your password')
                         .form-group
                             .alert.alert-danger.fade.in(ng-hide='!errorMessages')
                                 div(ng-repeat='errorMessage in errorMessages')
