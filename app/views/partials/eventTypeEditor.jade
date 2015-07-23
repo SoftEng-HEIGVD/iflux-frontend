@@ -19,7 +19,8 @@
                                 label.col-sm-4.control-label(for="DescriptionType") Description
                                 .col-sm-8
                                     input#DescriptionType.form-control(type="text", name="descriptionType", placeholder="Description of the Event Type", ng-model="eType.description")
-                            .form-group(show-errors="")
+                            //
+                              .form-group(show-errors="")
                                 label.col-sm-4.control-label(for="organizationSelect") Organization *
                                 .col-sm-8
                                     ui-select#organizationSelect(name="orgSelect0", ng-model="eType.organizationId", theme="bootstrap", required="")
@@ -27,13 +28,14 @@
                                         ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
                                             div(ng-bind-html="organization.name | highlight: $select.search")
                                     p.help-block.text-danger
+
                             .form-group
                                 label.col-sm-4.control-label(for="templatePublic") Make the event type public
                                 .col-sm-8
                                     div
                                         input#templatePublic(type="checkbox", ng-model="eType.public")
                             .form-group(show-errors="")
-                                label.col-sm-4.control-label(for="typeUrl") Url *
+                                label.col-sm-4.control-label(for="typeUrl") Type (url) *
                                 .col-sm-8
                                     input#typeUrl.form-control(type="url", name="typeUrl", placeholder="Url to define the event type", ng-model="eType.type", required="")
                                     p.help-block.text-danger

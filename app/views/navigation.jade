@@ -33,9 +33,8 @@ nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
                 li(ng-show='isAuthenticate'): a(ng-click='logout()') Sign out
 
             div(ng-show='isAuthenticate')
-                .nav.navbar-nav.navbar-right.header-select(ng-controller='LoginInfoCtrl')
-                    ui-select#organizationSelect(required="", name="orgSelect0", ng-model="currentOrganization", theme="bootstrap")
+                .nav.navbar-nav.navbar-right.header-select(ng-controller="LoginInfoCtrl")
+                    ui-select#organizationSelect(on-select="someFunction($item, $model)", ng-model="currentOrganization", theme="bootstrap")
                         ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
                         ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", value="{{$select.selected.name}}")
                             div(ng-bind-html="organization.name | highlight: $select.search")
-

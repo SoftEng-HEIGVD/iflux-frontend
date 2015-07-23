@@ -8,6 +8,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
         $scope.errorMessages = null;
         $scope.credentials = {};
 
+
         $scope.login = function () {
             Authentication.login($scope.credentials,
                 function (res) {
@@ -50,13 +51,15 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                         if (err.data !== null && err.data.lastName !== undefined) {
                             $scope.errorMessages.push(err.data.lastName[0]);
                         }
-                    });
+                    }
+                );
             }
         };
 
         $scope.logout = function () {
             $rootScope.isAuthenticate = null;
             delete $localStorage.token;
+            delete $localStorage.globalCurrentOrganization;
             $location.path('/signin');
         };
 
@@ -66,9 +69,16 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 ]);
 
 
-iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me',
-    function ($rootScope, $scope, $location, $localStorage, Me) {
+iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me', '$route',
+    function ($rootScope, $scope, $location, $localStorage, Me, $route) {
         $scope.organizations = Me.query();
 
+        $scope.currentOrganization = $localStorage.globalCurrentOrganization;
+        $rootScope.globalCurrentOrganization = $localStorage.globalCurrentOrganization;
+        $scope.someFunction = function (value, model) {
+            $rootScope.globalCurrentOrganization = model;
+            $localStorage.globalCurrentOrganization = model;
+            $route.reload();
+        };
     }
 ]);

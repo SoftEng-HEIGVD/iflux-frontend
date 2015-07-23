@@ -17,6 +17,7 @@
                         .col-sm-10
                             div
                                 input#activeRule(ng-model='payload.active', type='checkbox')
+                   //
                     .form-group(show-errors='')
                         label.col-sm-2.control-label(for='organizationSelect') Organization *
                         .col-sm-4
@@ -74,9 +75,9 @@
                            enableLiveAutocompletion: true\
                            },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model='condition.fn.sampleEvent')
                 .col-lg-12.form-horizontal
-                    h3 Transformations
+                    h3 Actions
                     .text-left
-                        button.btn.btn-primary(type='button', ng-click='addTransformations()') Add a transformation
+                        button.btn.btn-primary(type='button', ng-click='addTransformations()') Add an action
                     div(ng-repeat='transformation in payload.transformations')
                         .col-md-6
                             .panel

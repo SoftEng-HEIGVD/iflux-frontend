@@ -8,8 +8,8 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
     function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTargetInstance) {
 
         $scope.showIndex = null;
-        $scope.actionTargetTemplates = ActionTargetTemplate.query({allOrganizations: true});
-        $scope.actionTargetInstances = ActionTargetInstance.query({allOrganizations: true});
+        $scope.actionTargetTemplates = ActionTargetTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.actionTargetInstances = ActionTargetInstance.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.selectTableRow = function (index) {
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
@@ -87,6 +87,7 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
                     });
             }
             else {
+                $scope.atInstance.organizationId = $rootScope.globalCurrentOrganization;
                 ActionTargetInstance.save($scope.atInstance, function success(data, status) {
                         $location.path('/actionTarget');
                         $scope.errorMessages = null;
@@ -113,7 +114,6 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         var isUpdate = false;
         var templateId = $route.current.params.id;
         //init the data structure
-
         //if it's a modification
         if (templateId !== undefined && templateId !== "") {
             $scope.buttonName = "Update it!";
@@ -135,7 +135,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.atTemplate = {"configurationUi": {}, "configuration": {}};
+            $scope.atTemplate = {"configurationUi": {}, "configuration": {}, "public": false};
 
         }
 
@@ -158,13 +158,15 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
                     });
             }
             else {
+                $scope.atTemplate.organizationId = $rootScope.globalCurrentOrganization;
+                console.log("orgId: " + $rootScope.globalCurrentOrganization);
                 ActionTargetTemplate.save($scope.atTemplate,
                     function success(data, status) {
                         $location.path('/actionTarget');
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages =[];
+                        $scope.errorMessages = [];
                         if (err.data !== null && err.data.name !== undefined) {
                             $scope.errorMessages.push(err.data.name[0]);
                         }

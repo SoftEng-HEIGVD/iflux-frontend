@@ -15,14 +15,6 @@
                                 .col-sm-8
                                     input#NameTemplate.form-control(type="text", name="nameTemplate", placeholder="Name of the template", ng-model="atTemplate.name", required="")
                                     p.help-block.text-danger
-                            .form-group(show-errors="")
-                                label.col-sm-4.control-label(for="organizationSelect") Organization *
-                                .col-sm-8
-                                    ui-select#organizationSelect(name="orgSelect0", ng-model="atTemplate.organizationId", theme="bootstrap", required="")
-                                        ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
-                                        ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
-                                            div(ng-bind-html="organization.name | highlight: $select.search")
-                                    p.help-block.text-danger
                             .form-group
                                 label.col-sm-4.control-label(for="templatePublic") Make the template public
                                 .col-sm-8

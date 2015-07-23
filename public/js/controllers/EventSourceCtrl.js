@@ -8,8 +8,8 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
     function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
         $scope.organizations = Me.query();
         $scope.showIndex = null;
-        $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
-        $scope.eventSourceInstances = EventSourceInstance.query({allOrganizations: true});
+        $scope.eventSourceTemplates = EventSourceTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.eventSourceInstances = EventSourceInstance.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.selectTableRow = function (index, templateId) {
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
@@ -83,6 +83,7 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
                     });
             }
             else {
+                $scope.esInstance.organizationId = $rootScope.globalCurrentOrganization;
                 EventSourceInstance.save($scope.esInstance,
                     function success(data, status) {
                         $location.path('/eventSource');
@@ -131,7 +132,7 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         //Or a new template
         else {
 
-            $scope.esTemplate = {"configurationUi": {}, "configuration": {}};
+            $scope.esTemplate = {"configurationUi": {}, "configuration": {}, "public":false};
             $scope.buttonName = "Create it!";
         }
 
@@ -153,6 +154,7 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
                     });
             }
             else {
+                $scope.esTemplate.organizationId = $rootScope.globalCurrentOrganization;
                 EventSourceTemplate.save($scope.esTemplate,
                     function success(data, status) {
                         $location.path('/eventSource');

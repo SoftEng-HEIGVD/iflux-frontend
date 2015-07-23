@@ -5,7 +5,7 @@ var iFluxFrontCtrl = angular.module('EventTypeCtrl', []);
 
 iFluxFrontCtrl.controller('EventTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventType',
     function ($rootScope, $scope, $location, $localStorage, EventType) {
-        $scope.eventTypes = EventType.query({allOrganizations: true});
+        $scope.eventTypes = EventType.query({organizationId: $rootScope.globalCurrentOrganization});
     }
 
 ]);
@@ -31,7 +31,7 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.eType = {};
+            $scope.eType = {"public":false};
 
         }
 
@@ -53,6 +53,7 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
                     });
             }
             else {
+                $scope.eType.organizationId = $rootScope.globalCurrentOrganization;
                 EventType.save($scope.eType,
                     function success(data, status) {
                         $location.path('/eventType');

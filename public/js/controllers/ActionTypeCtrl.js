@@ -5,7 +5,7 @@ var iFluxFrontCtrl = angular.module('ActionTypeCtrl', []);
 
 iFluxFrontCtrl.controller('ActionTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionType',
     function ($rootScope, $scope, $location, $localStorage, ActionType) {
-        $scope.actionTypes = ActionType.query({allOrganizations: true});
+        $scope.actionTypes = ActionType.query({organizationId: $rootScope.globalCurrentOrganization});
     }
 
 ]);
@@ -31,7 +31,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.aType={};
+            $scope.aType={"public":false};
 
         }
 
@@ -53,6 +53,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
                     });
             }
             else {
+                $scope.aType.organizationId = $rootScope.globalCurrentOrganization;
                 ActionType.save($scope.aType,
                     function success(data, status) {
                         $location.path('/actionType');

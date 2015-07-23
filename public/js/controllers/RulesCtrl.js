@@ -38,14 +38,14 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
 
         $scope.errorMessage = null;
         $scope.organizations = Me.query();
-        $scope.eventSources = EventSourceInstance.query({allOrganizations: true});
-        $scope.eventTypes = EventType.query({allOrganizations: true});
-        $scope.actionTypes = ActionTypes.query({allOrganizations: true});
-        $scope.actionTargets = ActionTargetInstance.query({allOrganizations: true});
-        $scope.eventSourceTemplates = EventSourceTemplate.query({allOrganizations: true});
+        $scope.eventSources = EventSourceInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.eventTypes = EventType.query({public:true});
+        $scope.actionTypes = ActionTypes.query({public:true});
+        $scope.actionTargets = ActionTargetInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.eventSourceTemplates = EventSourceTemplate.query({public:true});
 
         $scope.rule = {};
-        $scope.payload = {conditions: [{}], transformations: [{}]};
+        $scope.payload = {conditions: [{}], transformations: [{}], "public": false};
         var selectedRule = {};
 
         //if it's a modification
@@ -89,6 +89,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
         $scope.create = function () {
             if (isUpdate) {
                 $scope.payload.rulesId = ruleId;
+                $scope.payload.organizationId = $rootScope.globalCurrentOrganization;
                 Rules.update($scope.payload, function success(data, status) {
                         $location.path('/rules');
                         $scope.errorMessages = null;
