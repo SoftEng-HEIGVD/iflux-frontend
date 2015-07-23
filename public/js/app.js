@@ -25,38 +25,38 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
     function ($routeProvider, $httpProvider, $locationProvider) {
 
         $routeProvider.
-            when('/home', {templateUrl: partialsPath + '/home.html'}).
-            when('/cockpit', {templateUrl: partialsPath + '/cockpit.html'}).
+            when('/home', {templateUrl: partialsPath + '/home.jade'}).
+            when('/cockpit', {templateUrl: partialsPath + '/cockpit.jade'}).
 
             when('/rules', {templateUrl: partialsPath + '/rulesManagment.jade', controller: 'RuleCtrl'}).
-            when('/ruleEditor', {templateUrl: partialsPath + '/ruleEditor.html', controller: 'RuleEditorCtrl'}).
-            when('/ruleEditor/:id', {templateUrl: partialsPath + '/ruleEditor.html', controller: 'RuleEditorCtrl'}).
+            when('/ruleEditor', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
+            when('/ruleEditor/:id', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
 
-            when('/signin', {templateUrl: partialsPath + '/signin.html', controller: 'AuthCtrl'}).
-            when('/register', {templateUrl: partialsPath + '/register.html', controller: 'AuthCtrl'}).
-            when('/settings', {templateUrl: partialsPath + '/settings.html', controller: 'SettingsCtrl'}).
+            when('/signin', {templateUrl: partialsPath + '/signin.jade', controller: 'AuthCtrl'}).
+            when('/register', {templateUrl: partialsPath + '/register.jade', controller: 'AuthCtrl'}).
+            when('/settings', {templateUrl: partialsPath + '/settings.jade', controller: 'SettingsCtrl'}).
 
-            when('/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.html', controller: 'ActionTargetCtrl'}).
-            when('/actionTargetInstanceEditor', {templateUrl: partialsPath + '/actionTargetInstanceEditor.html', controller: 'ActionTargetInstanceCtrl'}).
-            when('/actionTargetTemplateEditor', {templateUrl: partialsPath + '/actionTargetTemplateEditor.html', controller: 'ActionTargetTemplateCtrl'}).
-            when('/actionTargetInstanceEditor/:id', {templateUrl: partialsPath + '/actionTargetInstanceEditor.html', controller: 'ActionTargetInstanceCtrl'}).
-            when('/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.html', controller: 'ActionTargetTemplateCtrl'}).
+            when('/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.jade', controller: 'ActionTargetCtrl'}).
+            when('/actionTargetInstanceEditor', {templateUrl: partialsPath + '/actionTargetInstanceEditor.jade', controller: 'ActionTargetInstanceCtrl'}).
+            when('/actionTargetTemplateEditor', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
+            when('/actionTargetInstanceEditor/:id', {templateUrl: partialsPath + '/actionTargetInstanceEditor.jade', controller: 'ActionTargetInstanceCtrl'}).
+            when('/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
 
-            when('/actionType', {templateUrl: partialsPath + '/actionTypeManagement.html', controller: 'ActionTypeMgmtCtrl'}).
-            when('/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.html', controller: 'ActionTypeEditorCtrl'}).
-            when('/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.html', controller: 'ActionTypeEditorCtrl'}).
+            when('/actionType', {templateUrl: partialsPath + '/actionTypeManagement.jade', controller: 'ActionTypeMgmtCtrl'}).
+            when('/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
+            when('/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
 
-            when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.html', controller: 'EventSourceCtrl'}).
-            when('/eventSourceInstanceEditor', {templateUrl: partialsPath + '/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
-            when('/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
-            when('/eventSourceInstanceEditor/:id', {templateUrl: partialsPath + '/eventSourceInstanceEditor.html', controller: 'EventSourceInstanceCtrl'}).
-            when('/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.html', controller: 'EventSourceTemplateCtrl'}).
+            when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.jade', controller: 'EventSourceCtrl'}).
+            when('/eventSourceInstanceEditor', {templateUrl: partialsPath + '/eventSourceInstanceEditor.jade', controller: 'EventSourceInstanceCtrl'}).
+            when('/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
+            when('/eventSourceInstanceEditor/:id', {templateUrl: partialsPath + '/eventSourceInstanceEditor.jade', controller: 'EventSourceInstanceCtrl'}).
+            when('/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
 
-            when('/eventType', {templateUrl: partialsPath + '/eventTypeManagement.html', controller: 'EventTypeMgmtCtrl'}).
-            when('/eventTypeEditor', {templateUrl: partialsPath + '/eventTypeEditor.html', controller: 'EventTypeEditorCtrl'}).
-            when('/eventTypeEditor/:id', {templateUrl: partialsPath + '/eventTypeEditor.html', controller: 'EventTypeEditorCtrl'}).
+            when('/eventType', {templateUrl: partialsPath + '/eventTypeManagement.jade', controller: 'EventTypeMgmtCtrl'}).
+            when('/eventTypeEditor', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
+            when('/eventTypeEditor/:id', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
 
-            when('/userOrganizationEditor', {templateUrl: partialsPath + '/userOrganizationEditor.html', controller: 'userOrganizationEditorCtrl'}).
+            when('/userOrganizationEditor', {templateUrl: partialsPath + '/userOrganizationEditor.jade', controller: 'userOrganizationEditorCtrl'}).
 
             otherwise({redirectTo: '/home'});
 
