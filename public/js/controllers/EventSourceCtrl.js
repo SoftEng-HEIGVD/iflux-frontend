@@ -4,12 +4,12 @@
 
 var iFluxFrontCtrl = angular.module('EventSource', []);
 
-iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
-    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
+iFluxFrontCtrl.controller('EventSourceMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventSourceTemplate', 'EventSource', 'Me',
+    function ($rootScope, $scope, $location, $localStorage, EventSourceTemplate, EventSource, Me) {
         $scope.organizations = Me.query();
         $scope.showIndex = null;
         $scope.eventSourceTemplates = EventSourceTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
-        $scope.eventSourceInstances = EventSourceInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.eventSources = EventSource.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.selectTableRow = function (index, templateId) {
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
@@ -19,26 +19,26 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
             }
         };
 
-        $scope.createInstance = function (esTemplateId) {
+        $scope.createES = function (esTemplateId) {
             $rootScope.esTemplateId = esTemplateId;
-            $location.path('/eventSourceInstanceEditor');
+            $location.path('/eventSourceEditor');
         };
-        $scope.modifyInstance = function (esInstanceId, esTemplateId) {
+        $scope.modifyES = function (eSourceId, esTemplateId) {
             $rootScope.esTemplateId = esTemplateId;
-            $location.path('/eventSourceInstanceEditor/' + esInstanceId);
+            $location.path('/eventSourceEditor/' + eSourceId);
         }
     }
 
 ]);
 
 
-iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
-    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
+iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSource', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSource, Me) {
         $scope.organizations = Me.query();
         var isUpdate = false;
-        var instanceId = $route.current.params.id;
+        var esId = $route.current.params.id;
         //init the data structure
-        $scope.esInstance = {"configuration": {}};
+        $scope.eSource = {"configuration": {}};
 
         //get schema and form for configuration
         EventSourceTemplate.get({eventSourceId: $rootScope.esTemplateId}, function success(data, status) {
@@ -52,16 +52,16 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
         });
 
         //if it's a modification
-        if (instanceId !== undefined && instanceId !== "") {
+        if (esId !== undefined && esId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
             $scope.buttonName = "Update it!";
-            $scope.esInstance = EventSourceInstance.get({eventSourceInstanceId: instanceId});
+            $scope.eSource = EventSource.get({eventSourceId: esId});
             isUpdate = true;
         }
         //Or a new template
         else {
 
-            $scope.esInstance.eventSourceTemplateId = $rootScope.esTemplateId;
+            $scope.eSource.eventSourceTemplateId = $rootScope.esTemplateId;
             $scope.buttonName = "Create it!";
         }
 
@@ -71,8 +71,8 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
 
         $scope.submitForm = function () {
             if (isUpdate) {
-                $scope.esInstance.eventSourceInstanceId = instanceId;
-                EventSourceInstance.update($scope.esInstance,
+                $scope.eSource.eventSourceId = esId;
+                EventSource.update($scope.eSource,
                     function success(data, status) {
                         $location.path('/eventSource');
                         $scope.errorMessages = null;
@@ -83,8 +83,8 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
                     });
             }
             else {
-                $scope.esInstance.organizationId = $rootScope.globalCurrentOrganization;
-                EventSourceInstance.save($scope.esInstance,
+                $scope.eSource.organizationId = $rootScope.globalCurrentOrganization;
+                EventSource.save($scope.eSource,
                     function success(data, status) {
                         $location.path('/eventSource');
                         $scope.errorMessages = null;
@@ -104,8 +104,8 @@ iFluxFrontCtrl.controller('EventSourceInstanceCtrl', ['$rootScope', '$scope', '$
 
     }
 ]);
-iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'EventSourceInstance', 'Me',
-    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, EventSourceInstance, Me) {
+iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventSourceTemplate', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, EventSourceTemplate, Me) {
         $scope.organizations = Me.query();
         var isUpdate = false;
         var templateId = $route.current.params.id;

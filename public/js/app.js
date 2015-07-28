@@ -36,20 +36,20 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
             when('/register', {templateUrl: partialsPath + '/register.jade', controller: 'AuthCtrl'}).
             when('/settings', {templateUrl: partialsPath + '/settings.jade', controller: 'SettingsCtrl'}).
 
-            when('/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.jade', controller: 'ActionTargetCtrl'}).
-            when('/actionTargetInstanceEditor', {templateUrl: partialsPath + '/actionTargetInstanceEditor.jade', controller: 'ActionTargetInstanceCtrl'}).
+            when('/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.jade', controller: 'ActionTargetMgmtCtrl'}).
+            when('/actionTargetEditor', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
             when('/actionTargetTemplateEditor', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
-            when('/actionTargetInstanceEditor/:id', {templateUrl: partialsPath + '/actionTargetInstanceEditor.jade', controller: 'ActionTargetInstanceCtrl'}).
+            when('/actionTargetEditor/:id', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
             when('/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
 
             when('/actionType', {templateUrl: partialsPath + '/actionTypeManagement.jade', controller: 'ActionTypeMgmtCtrl'}).
             when('/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
             when('/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
 
-            when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.jade', controller: 'EventSourceCtrl'}).
-            when('/eventSourceInstanceEditor', {templateUrl: partialsPath + '/eventSourceInstanceEditor.jade', controller: 'EventSourceInstanceCtrl'}).
+            when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.jade', controller: 'EventSourceMgmtCtrl'}).
+            when('/eventSourceEditor', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
             when('/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
-            when('/eventSourceInstanceEditor/:id', {templateUrl: partialsPath + '/eventSourceInstanceEditor.jade', controller: 'EventSourceInstanceCtrl'}).
+            when('/eventSourceEditor/:id', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
             when('/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
 
             when('/eventType', {templateUrl: partialsPath + '/eventTypeManagement.jade', controller: 'EventTypeMgmtCtrl'}).
@@ -65,7 +65,6 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
              requireBase: false
          });
         $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
-            console.log("partialsPath: " + partialsPath);
             return {
                 'request': function (config) {
                     config.headers = config.headers || {};

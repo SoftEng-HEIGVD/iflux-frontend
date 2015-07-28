@@ -13,13 +13,13 @@ iFluxFrontServices.factory('Authentication', ['$resource',
     }
 ]);
 
-iFluxFrontServices.factory('ActionTargetInstance', ['$resource',
+iFluxFrontServices.factory('ActionTarget', ['$resource',
     function ($resource) {
-        return $resource(baseUrl + '/actionTargets/:actionTargetInstanceId', {}, {
+        return $resource(baseUrl + '/actionTargets/:actionTargetId', {}, {
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
-            update: {method: 'PATCH', params: {actionTargetInstanceId: '@actionTargetInstanceId'}},
-            get: {method: 'GET', params: {actionTargetInstanceId: '@actionTargetInstanceId'}}
+            update: {method: 'PATCH', params: {actionTargetId: '@actionTargetId'}},
+            get: {method: 'GET', params: {actionTargetId: '@actionTargetId'}}
         });
     }
 ]);
@@ -45,13 +45,13 @@ iFluxFrontServices.factory('ActionType', ['$resource',
     }
 ]);
 
-iFluxFrontServices.factory('EventSourceInstance', ['$resource',
+iFluxFrontServices.factory('EventSource', ['$resource',
     function ($resource) {
-        return $resource(baseUrl + '/eventSources/:eventSourceInstanceId', {}, {
+        return $resource(baseUrl + '/eventSources/:eventSourceId', {}, {
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
-            update: {method: 'PATCH', params: {eventSourceInstanceId: '@eventSourceInstanceId'}},
-            get: {method: 'GET', params: {eventSourceInstanceId: '@eventSourceInstanceId'}}
+            update: {method: 'PATCH', params: {eventSourceId: '@eventSourceId'}},
+            get: {method: 'GET', params: {eventSourceId: '@eventSourceId'}}
         });
     }
 ]);
@@ -116,22 +116,6 @@ iFluxFrontServices.factory('Rules', ['$resource',
             update: {method: 'PATCH', params: {rulesId: '@rulesId'}},
             get: {method: 'GET', params: {rulesId: '@rulesId'}},
             delete: {method: 'DELETE', params: {rulesId: '@rulesId'}}
-        });
-    }
-]);
-
-iFluxFrontServices.factory('ActionTarget', ['$resource',
-    function ($resource) {
-        return $resource('./public/template/actionTargets.json', {}, {
-            query: {method: 'GET', isArray: true}
-        });
-    }
-]);
-
-iFluxFrontServices.factory('EventSource', ['$resource',
-    function ($resource) {
-        return $resource('./public/template/eventSources.json', {}, {
-            query: {method: 'GET', isArray: true}
         });
     }
 ]);

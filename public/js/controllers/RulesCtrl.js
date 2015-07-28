@@ -16,8 +16,8 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
     }
 }]);
 
-iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '$route', 'Rules', 'ActionTargetInstance', 'ActionType', 'EventSourceTemplate', 'EventSourceInstance', 'EventType', 'SharedProperties', 'Me',
-    function ($scope, $filter, $location, $route, Rules, ActionTargetInstance, ActionTypes, EventSourceTemplate, EventSourceInstance, EventType, SharedProperties, Me) {
+iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', '$location', '$route', 'Rules', 'ActionTarget', 'ActionType', 'EventSourceTemplate', 'EventSource', 'EventType', 'SharedProperties', 'Me',
+    function ($rootScope, $scope, $filter, $location, $route, Rules, ActionTarget, ActionTypes, EventSourceTemplate, EventSource, EventType, SharedProperties, Me) {
         $scope.htmlTooltipTransformation = "<p><b>function</b>(event, actionTarget, actionType, eventSource, eventType, options) {<br>" +
         "  return // Evaluation code (your expression comes there) <br>" +
         "}</p><ul><li><b>event</b>: The event received by iFLUX</li>" +
@@ -38,10 +38,10 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$scope', '$filter', '$location', '
 
         $scope.errorMessage = null;
         $scope.organizations = Me.query();
-        $scope.eventSources = EventSourceInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.eventSources = EventSource.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.eventTypes = EventType.query({public:true});
         $scope.actionTypes = ActionTypes.query({public:true});
-        $scope.actionTargets = ActionTargetInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.actionTargets = ActionTarget.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.eventSourceTemplates = EventSourceTemplate.query({public:true});
 
         $scope.rule = {};

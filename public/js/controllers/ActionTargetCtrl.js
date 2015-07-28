@@ -4,12 +4,12 @@
 
 var iFluxFrontCtrl = angular.module('ActionTarget', []);
 
-iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance',
-    function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTargetInstance) {
+iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionTargetTemplate', 'ActionTarget',
+    function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTarget) {
 
         $scope.showIndex = null;
         $scope.actionTargetTemplates = ActionTargetTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
-        $scope.actionTargetInstances = ActionTargetInstance.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.actionTargets = ActionTarget.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.selectTableRow = function (index) {
             if ($scope.showIndex === index) {
                 $scope.showIndex = null;
@@ -19,13 +19,13 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
             }
         };
 
-        $scope.createInstance = function (atTemplateId) {
+        $scope.createAT = function (atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
-            $location.path('/actionTargetInstanceEditor');
+            $location.path('/actionTargetEditor');
         };
-        $scope.modifyInstance = function (atInstanceId, atTemplateId) {
+        $scope.modifyAT = function (aTargetId, atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
-            $location.path('/actionTargetInstanceEditor/' + atInstanceId);
+            $location.path('/actionTargetEditor/' + aTargetId);
         }
 
     }
@@ -33,14 +33,14 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
 ]);
 
 
-iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance', 'Me',
-    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
+iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTarget', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTarget, Me) {
         $scope.organizations = Me.query();
         $scope.errorMessages = null;
         var isUpdate = false;
         //init the data structure
-        $scope.atInstance = {"configuration": {}};
-        var instanceId = $route.current.params.id;
+        $scope.aTarget= {"configuration": {}};
+        var atId = $route.current.params.id;
         //get schema and form for configuration
         ActionTargetTemplate.get({actionTargetId: $rootScope.atTemplateId}, function success(data, status) {
             $scope.schema = data.configuration.schema;
@@ -54,15 +54,15 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
 
 
         //if it's a modification
-        if (instanceId !== undefined && instanceId !== "") {
+        if (atId !== undefined && atId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
             $scope.buttonName = "Update it!";
-            $scope.atInstance = ActionTargetInstance.get({actionTargetInstanceId: instanceId});
+            $scope.aTarget= ActionTarget.get({actionTargetId: atId});
             isUpdate = true;
         }
         //Or a new template
         else {
-            $scope.atInstance.actionTargetTemplateId = $rootScope.atTemplateId;
+            $scope.aTarget.actionTargetTemplateId = $rootScope.atTemplateId;
             $scope.buttonName = "Create it!";
         }
 
@@ -71,8 +71,8 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
         };
         $scope.submitForm = function () {
             if (isUpdate) {
-                $scope.atInstance.actionTargetInstanceId = instanceId;
-                ActionTargetInstance.update($scope.atInstance, function success(data, status) {
+                $scope.aTarget.actionTargetId = atId;
+                ActionTarget.update($scope.aTarget, function success(data, status) {
                         $location.path('/actionTarget');
                         $scope.errorMessages = null;
                         isUpdate = false;
@@ -87,8 +87,8 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
                     });
             }
             else {
-                $scope.atInstance.organizationId = $rootScope.globalCurrentOrganization;
-                ActionTargetInstance.save($scope.atInstance, function success(data, status) {
+                $scope.aTarget.organizationId = $rootScope.globalCurrentOrganization;
+                ActionTarget.save($scope.aTarget, function success(data, status) {
                         $location.path('/actionTarget');
                         $scope.errorMessages = null;
                     },
@@ -108,8 +108,8 @@ iFluxFrontCtrl.controller('ActionTargetInstanceCtrl', ['$rootScope', '$scope', '
 
     }
 ]);
-iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'ActionTargetInstance', 'Me',
-    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, ActionTargetInstance, Me) {
+iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ActionTargetTemplate', 'Me',
+    function ($rootScope, $scope, $location, $route, $localStorage, ActionTargetTemplate, Me) {
         $scope.organizations = Me.query();
         var isUpdate = false;
         var templateId = $route.current.params.id;

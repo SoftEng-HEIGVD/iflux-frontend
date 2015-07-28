@@ -18,10 +18,10 @@
                     th
                         a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
                     th Modification
-                    th Create instance
-                    th View instances
+                    th Create Event Source
+                    th View Event Source
                 tbody(ng-repeat="eventSourceTemplate in eventSourceTemplates | orderBy:predicate:reverse | filter:{name:search}")
-                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand event source instances.")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand Event Source.")
                         td {{eventSourceTemplate.name}}
                         td {{eventSourceTemplate.key}}
                         td
@@ -30,7 +30,7 @@
                         td
                             a.btn.btn-xs.btn-primary(ng-href="/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
                         td
-                            a.btn.btn-xs.btn-primary(ng-click="createInstance(eventSourceTemplate.id)") Add
+                            a.btn.btn-xs.btn-primary(ng-click="createES(eventSourceTemplate.id)") Add
                         td
                             a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
                     tr(ng-show="$index === showIndex")
@@ -45,10 +45,10 @@
                                             a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
                                         th Modification
                                     tbody
-                                        tr(ng-repeat="eventSourceInstance in eventSourceInstances | orderBy:predicate:reverse | filter:{eventSourceTemplateId : eventSourceTemplate.id}")
+                                        tr(ng-repeat="eventSource in eventSources | orderBy:predicate:reverse | filter:{eventSourceTemplateId : eventSourceTemplate.id}")
                                             td
-                                                | {{eventSourceInstance.name}}
-                                            td {{eventSourceInstance.id}}
+                                                | {{eventSource.name}}
+                                            td {{eventSource.id}}
                                             td
-                                                a.btn.btn-xs.btn-danger(ng-click="modifyInstance(eventSourceInstance.id, eventSourceTemplate.id)") Modify
+                                                a.btn.btn-xs.btn-danger(ng-click="modifyES(eventSource.id, eventSourceTemplate.id)") Modify
             a.btn.btn-primary(ng-href="/eventSourceTemplateEditor") Create a new event source template

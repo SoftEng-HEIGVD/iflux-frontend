@@ -18,10 +18,10 @@
                     th
                         a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
                     th Modification
-                    th Create instance
-                    th View instances
+                    th Create Action Target
+                    th View Action Target
                 tbody(ng-repeat="actionTargetTemplate in actionTargetTemplates | orderBy:predicate:reverse | filter:{name:search}")
-                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand action target instances.")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand action target.")
                         td {{actionTargetTemplate.name}}
                         td {{actionTargetTemplate.key }}
                         td
@@ -30,7 +30,7 @@
                         td
                             a.btn.btn-xs.btn-primary(ng-href="/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
                         td
-                            a.btn.btn-xs.btn-primary(ng-click="createInstance(actionTargetTemplate.id)") Add
+                            a.btn.btn-xs.btn-primary(ng-click="createAT(actionTargetTemplate.id)") Add
                         td
                             a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
                     tr(ng-show="$index === showIndex")
@@ -45,10 +45,10 @@
                                             a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
                                         th Modification
                                     tbody
-                                        tr(ng-repeat="actionTargetInstance in actionTargetInstances | orderBy:predicate:reverse | filter:{actionTargetTemplateId : actionTargetTemplate.id}")
+                                        tr(ng-repeat="actionTarget in actionTargets | orderBy:predicate:reverse | filter:{actionTargetTemplateId : actionTargetTemplate.id}")
                                             td
-                                                | {{actionTargetInstance.name}}
-                                            td {{actionTargetInstance.id}}
+                                                | {{actionTarget.name}}
+                                            td {{actionTarget.id}}
                                             td
-                                                a.btn.btn-xs.btn-danger(ng-click="modifyInstance(actionTargetInstance.id, actionTargetTemplate.id)") Modify
+                                                a.btn.btn-xs.btn-danger(ng-click="modifyAT(actionTarget.id, actionTargetTemplate.id)") Modify
             a.btn.btn-primary(ng-href="/actionTargetTemplateEditor") Create a new action target template
