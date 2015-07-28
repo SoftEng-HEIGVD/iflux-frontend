@@ -60,7 +60,7 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
 
             otherwise({redirectTo: '/home'});
 
-        // $locationProvider.html5Mode(true);
+      //   $locationProvider.html5Mode(true, true);
 
         $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
             return {

@@ -71,7 +71,9 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 
 iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me', '$route',
     function ($rootScope, $scope, $location, $localStorage, Me, $route) {
-        $scope.organizations = Me.query();
+        if ($rootScope.isAuthenticate) {
+            $scope.organizations = Me.query();
+        }
 
         $scope.currentOrganization = $localStorage.globalCurrentOrganization;
         $rootScope.globalCurrentOrganization = $localStorage.globalCurrentOrganization;
