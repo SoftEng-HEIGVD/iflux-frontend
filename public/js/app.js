@@ -60,9 +60,12 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
 
             otherwise({redirectTo: '/home'});
 
-      //   $locationProvider.html5Mode(true, true);
-
+         $locationProvider.html5Mode({
+             enabled: true,
+             requireBase: false
+         });
         $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+            console.log("partialsPath: " + partialsPath);
             return {
                 'request': function (config) {
                     config.headers = config.headers || {};

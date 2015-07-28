@@ -26,5 +26,5 @@
                             input(type="checkbox", ng-model="eventType.public", ng-disabled="true")
                         td {{eventType.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="#/eventTypeEditor/{{eventType.id}}") Modifiy
-            a.btn.btn-primary(ng-href="#/eventTypeEditor") Create a new event type
+                            a.btn.btn-xs.btn-primary(ng-href="/eventTypeEditor/{{eventType.id}}") Modifiy
+            a.btn.btn-primary(ng-href="/eventTypeEditor") Create a new event type

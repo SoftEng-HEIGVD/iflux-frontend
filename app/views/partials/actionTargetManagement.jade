@@ -28,7 +28,7 @@
                             input(type="checkbox", ng-model="actionTargetTemplate.public", ng-disabled="true")
                         td {{actionTargetTemplate.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="#/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
+                            a.btn.btn-xs.btn-primary(ng-href="/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
                         td
                             a.btn.btn-xs.btn-primary(ng-click="createInstance(actionTargetTemplate.id)") Add
                         td
@@ -51,4 +51,4 @@
                                             td {{actionTargetInstance.id}}
                                             td
                                                 a.btn.btn-xs.btn-danger(ng-click="modifyInstance(actionTargetInstance.id, actionTargetTemplate.id)") Modify
-            a.btn.btn-primary(ng-href="#/actionTargetTemplateEditor") Create a new action target template
+            a.btn.btn-primary(ng-href="/actionTargetTemplateEditor") Create a new action target template

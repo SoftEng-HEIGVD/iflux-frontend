@@ -28,7 +28,7 @@
                             input(type="checkbox", ng-model="eventSourceTemplate.public", ng-disabled="true")
                         td {{eventSourceTemplate.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="#/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
+                            a.btn.btn-xs.btn-primary(ng-href="/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
                         td
                             a.btn.btn-xs.btn-primary(ng-click="createInstance(eventSourceTemplate.id)") Add
                         td
@@ -51,4 +51,4 @@
                                             td {{eventSourceInstance.id}}
                                             td
                                                 a.btn.btn-xs.btn-danger(ng-click="modifyInstance(eventSourceInstance.id, eventSourceTemplate.id)") Modify
-            a.btn.btn-primary(ng-href="#/eventSourceTemplateEditor") Create a new event source template
+            a.btn.btn-primary(ng-href="/eventSourceTemplateEditor") Create a new event source template
