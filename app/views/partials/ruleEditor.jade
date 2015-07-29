@@ -56,7 +56,7 @@
                                     .form-group(show-errors='')
                                         label.col-sm-4(tooltip-html='htmlTooltipCondition', tooltip-class='tooltipCustomWidth') JS expression
                                         .col-sm-8
-                                            .js-editor-small
+                                            .js-editor-small(resizable='')
                                                 div(required='', name='conditionExpression', ui-ace="{require: ['ace/ext/language_tools'],\
                            advanced: {\
                            enableSnippets: true,\
@@ -67,7 +67,7 @@
                                     .form-group
                                         label.col-sm-4 Write a JSON example
                                         .col-sm-8
-                                            .js-editor-small
+                                            .js-editor-small(resizable='')
                                                 div(ui-ace="{require: ['ace/ext/language_tools'],\
                            advanced: {\
                            enableSnippets: true,\
@@ -113,7 +113,7 @@
                                     .form-group(show-errors='')
                                         label.col-sm-4(tooltip-html='htmlTooltipTransformation', tooltip-class='tooltipCustomWidth') JS expression *
                                         .col-sm-8
-                                            .js-editor-small
+                                            .js-editor-small(resizable='')
                                                 div(required='', name='tansformationExpression', ui-ace="{require: ['ace/ext/language_tools'],\
                            advanced: {\
                            enableSnippets: true,\
@@ -124,7 +124,7 @@
                                     .form-group(show-errors='')
                                         label.col-sm-4 Write a JSON sample *
                                         .col-sm-8
-                                            .js-editor-small
+                                            .js-editor-small(resizable='')
                                                 div(required='', name='tansformationSampleEvent', ui-ace="{require: ['ace/ext/language_tools'],\
                            advanced: {\
                            enableSnippets: true,\

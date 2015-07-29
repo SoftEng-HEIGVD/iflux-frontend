@@ -33,6 +33,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
         "<li><b>eventType</b>: Same for the event type than the event source.</li></ul>";
 
 
+
         var ruleId = $route.current.params.id;
         var isUpdate = false;
 

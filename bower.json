@@ -21,7 +21,8 @@
     "bootstrap": "3.3.x",
     "fontawesome": "~4.3.0",
     "jquery": "~2.1.1",
-    "ngstorage": "~0.3.6"
+    "ngstorage": "~0.3.6",
+    "jquery-ui": "~1.10.4"
   },
   "resolutions": {
     "angular": "1.4.1"

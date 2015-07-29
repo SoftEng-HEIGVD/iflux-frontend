@@ -20,7 +20,8 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                         $location.path('/cockpit');
                     }
                 }, function (err) {
-                    $scope.errorMessages = err.data.name;
+                    if(err.data.name)
+                        $scope.errorMessages = err.data.name;
                 });
             $rootScope.token = $localStorage.token;
             $rootScope.isAuthenticate = $localStorage.token;

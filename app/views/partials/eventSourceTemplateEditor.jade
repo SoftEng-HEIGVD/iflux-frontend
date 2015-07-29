@@ -25,7 +25,7 @@
                             .col-sm-10
                                 label.control-label Write a JSON Schema to create a configuration form *
                                 div
-                                    .js-editor-medium
+                                    .js-editor-medium(resizable='')
                                         div(name="jsonSchemaConfiguration", required="", ui-ace="{require: ['ace/ext/language_tools'],\
                     advanced: {\
                     enableSnippets: true,\
@@ -48,7 +48,7 @@
                     .form-group
                         .col-sm-10
                             label.control-label Schema Form
-                            .js-editor-medium
+                            .js-editor-medium(resizable='')
                                 div(ui-ace="{require: ['ace/ext/language_tools'],\
                 advanced: {\
                 enableSnippets: true,\

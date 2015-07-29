@@ -84,3 +84,21 @@ iFluxFrontServices.directive('showErrors', function () {
         }
     }
 });
+
+iFluxFrontServices.directive('resizable', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            callback: '&onResize'
+        },
+        link: function postLink(scope, elem, attrs) {
+            var el = $(elem);
+            el.resizable();
+            el.on('resizestop', function (evt, ui) {
+                if (scope.callback) {
+                    scope.callback();
+                }
+            });
+        }
+    };
+});
