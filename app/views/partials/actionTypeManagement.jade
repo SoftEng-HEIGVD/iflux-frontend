@@ -3,7 +3,7 @@
 
 .container
     #page-content-wrapper
-        h1 iFLUX Action Types Managment
+        h1 iFLUX Action Types Management
         .col-lg-12
             | Search an Action Types :
             input(type="text", ng-model="search")
@@ -26,5 +26,5 @@
                             input(type="checkbox", ng-model="actionType.public", ng-disabled="true")
                         td {{actionType.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="/actionTypeEditor/{{actionType.id}}") Modifiy
-            a.btn.btn-primary(ng-href="/actionTypeEditor") Create a new action type
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTypeEditor/{{actionType.id}}") Modifiy
+            a.btn.btn-primary(ng-href="#{contextRoot}/actionTypeEditor") Create a new action type

@@ -3,7 +3,7 @@
 
 .container
     #page-content-wrapper
-        h1 iFLUX Event Source Managment
+        h1 iFLUX Event Source Management
         .col-lg-12
             | Search an Event Source Templates
             input(type="text", ng-model="search")
@@ -28,7 +28,7 @@
                             input(type="checkbox", ng-model="eventSourceTemplate.public", ng-disabled="true")
                         td {{eventSourceTemplate.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
                         td
                             a.btn.btn-xs.btn-primary(ng-click="createES(eventSourceTemplate.id)") Add
                         td
@@ -51,4 +51,4 @@
                                             td {{eventSource.id}}
                                             td
                                                 a.btn.btn-xs.btn-danger(ng-click="modifyES(eventSource.id, eventSourceTemplate.id)") Modify
-            a.btn.btn-primary(ng-href="/eventSourceTemplateEditor") Create a new event source template
+            a.btn.btn-primary(ng-href="#{contextRoot}/eventSourceTemplateEditor") Create a new event source template
