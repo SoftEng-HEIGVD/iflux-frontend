@@ -10,6 +10,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 
 
         $scope.login = function () {
+            $scope.errorMessages = [];
             Authentication.login($scope.credentials,
                 function (res) {
                     if (res.type == false) {
@@ -20,8 +21,15 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                         $location.path('/cockpit');
                     }
                 }, function (err) {
-                    if(err.data.name)
-                        $scope.errorMessages = err.data.name;
+                    if (err.data.name) {
+                        $scope.errorMessages.push(err.data.name);
+                    }
+                    else if (err.status == 401) {
+                        $scope.errorMessages.push("Wrong username or password");
+                    }
+                    else {
+                        $scope.errorMessages.push("An error occur!");
+                    }
                 });
             $rootScope.token = $localStorage.token;
             $rootScope.isAuthenticate = $localStorage.token;
@@ -40,6 +48,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 
                     }, function error(err) {
                         $scope.errorMessages = [];
+                        console.log(err);
                         if (err.data !== null && err.data.email !== undefined) {
                             $scope.errorMessages.push(err.data.email[0]);
                         }
