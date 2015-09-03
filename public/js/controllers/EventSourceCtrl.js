@@ -21,11 +21,11 @@ iFluxFrontCtrl.controller('EventSourceMgmtCtrl', ['$rootScope', '$scope', '$loca
 
         $scope.createES = function (esTemplateId) {
             $rootScope.esTemplateId = esTemplateId;
-            $location.path('/eventSourceEditor');
+            $location.path(contextRoot + '/eventSourceEditor');
         };
         $scope.modifyES = function (eSourceId, esTemplateId) {
             $rootScope.esTemplateId = esTemplateId;
-            $location.path('/eventSourceEditor/' + eSourceId);
+            $location.path(contextRoot + '/eventSourceEditor/' + eSourceId);
         }
     }
 
@@ -66,7 +66,7 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
         }
 
         $scope.cancel = function () {
-            $location.path('/eventSource');
+            $location.path(contextRoot + '/eventSource');
         }
 
         $scope.submitForm = function () {
@@ -74,7 +74,7 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
                 $scope.eSource.eventSourceId = esId;
                 EventSource.update($scope.eSource,
                     function success(data, status) {
-                        $location.path('/eventSource');
+                        $location.path(contextRoot + '/eventSource');
                         $scope.errorMessages = null;
                         isUpdate = false;
                     },
@@ -86,7 +86,7 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
                 $scope.eSource.organizationId = $rootScope.globalCurrentOrganization;
                 EventSource.save($scope.eSource,
                     function success(data, status) {
-                        $location.path('/eventSource');
+                        $location.path(contextRoot + '/eventSource');
                         $scope.errorMessages = null;
                     },
                     function error(err) {
@@ -137,7 +137,7 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
         }
 
         $scope.cancel = function () {
-            $location.path('/eventSource');
+            $location.path(contextRoot + '/eventSource');
         };
 
         $scope.submitForm = function () {
@@ -145,7 +145,7 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
                 $scope.esTemplate.eventSourceId = templateId;
                 EventSourceTemplate.update($scope.esTemplate,
                     function success(data, status) {
-                        $location.path('/eventSource');
+                        $location.path(contextRoot + '/eventSource');
                         $scope.errorMessages = null;
                         isUpdate = false;
                     },
@@ -157,7 +157,7 @@ iFluxFrontCtrl.controller('EventSourceTemplateCtrl', ['$rootScope', '$scope', '$
                 $scope.esTemplate.organizationId = $rootScope.globalCurrentOrganization;
                 EventSourceTemplate.save($scope.esTemplate,
                     function success(data, status) {
-                        $location.path('/eventSource');
+                        $location.path(contextRoot + '/eventSource');
                         $scope.errorMessages = null;
                     },
                     function error(err) {

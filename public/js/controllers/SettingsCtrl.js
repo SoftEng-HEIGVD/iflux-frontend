@@ -33,7 +33,7 @@ iFluxFrontCtrl.controller('SettingsCtrl', ['$rootScope', '$scope', '$location', 
 
         $scope.addUser = function(organizationId){
             $rootScope.userOrganizationId = organizationId;
-            $location.path('/userOrganizationEditor');
+            $location.path(contextRoot + '/userOrganizationEditor');
         };
 
 
@@ -51,10 +51,10 @@ iFluxFrontCtrl.controller('userOrganizationEditorCtrl', ['$rootScope', '$scope',
             $scope.form.organizationId = $rootScope.userOrganizationId;
             $scope.form.type = "addUser";
             Organization.action($scope.form);
-            $location.path('/settings');
+            $location.path(contextRoot + '/settings');
         }
         $scope.cancel = function(){
-            $location.path('/settings');
+            $location.path(contextRoot + '/settings');
 
         };
     }
