@@ -11,8 +11,14 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties', fu
     $scope.rules = Rules.query();
     SharedProperties.setProperty($scope.rules);
     $scope.delete = function (ruleId, idx) {
-        $scope.rules.splice(idx, 1);
-        Rules.delete({"rulesId": ruleId});
+        Rules.delete({"rulesId": ruleId},
+            function success(res) {
+                $scope.rules.splice(idx, 1);
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
     }
 }]);
 
@@ -33,17 +39,16 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
         "<li><b>eventType</b>: Same for the event type than the event source.</li></ul>";
 
 
-
         var ruleId = $route.current.params.id;
         var isUpdate = false;
 
         $scope.errorMessage = null;
         $scope.organizations = Me.query();
         $scope.eventSources = EventSource.query({organizationId: $rootScope.globalCurrentOrganization});
-        $scope.eventTypes = EventType.query({public:true});
-        $scope.actionTypes = ActionTypes.query({public:true});
+        $scope.eventTypes = EventType.query({public: true});
+        $scope.actionTypes = ActionTypes.query({public: true});
         $scope.actionTargets = ActionTarget.query({organizationId: $rootScope.globalCurrentOrganization});
-        $scope.eventSourceTemplates = EventSourceTemplate.query({public:true});
+        $scope.eventSourceTemplates = EventSourceTemplate.query({public: true});
 
         $scope.rule = {};
         $scope.payload = {conditions: [{}], transformations: [{}], "public": false};

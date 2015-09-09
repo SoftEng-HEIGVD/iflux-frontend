@@ -35,7 +35,7 @@ module.exports = function(app, config) {
 			app.locals.contextRoot = '';
 		}
 
-    app.locals.contextRoot = '/fe';
+    app.locals.contextRoot = '';
 
 		next();
 	});

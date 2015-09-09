@@ -19,7 +19,8 @@ iFluxFrontServices.factory('ActionTarget', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {actionTargetId: '@actionTargetId'}},
-            get: {method: 'GET', params: {actionTargetId: '@actionTargetId'}}
+            get: {method: 'GET', params: {actionTargetId: '@actionTargetId'}},
+            delete: {method: 'DELETE', params: {actionTargetId: '@actionTargetId'}}
         });
     }
 ]);
@@ -30,7 +31,8 @@ iFluxFrontServices.factory('ActionTargetTemplate', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {actionTargetId: '@actionTargetId'}},
-            get: {method: 'GET', params: {actionTargetId: '@actionTargetId'}}
+            get: {method: 'GET', params: {actionTargetId: '@actionTargetId'}},
+            delete: {method: 'DELETE', params: {actionTargetId: '@actionTargetId'}}
         });
     }
 ]);
@@ -40,7 +42,8 @@ iFluxFrontServices.factory('ActionType', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {actionTypeId: '@actionTypeId'}},
-            get: {method: 'GET', params: {actionTypeId: '@actionTypeId'}}
+            get: {method: 'GET', params: {actionTypeId: '@actionTypeId'}},
+            delete: {method: 'DELETE', params: {actionTypeId: '@actionTypeId'}}
         });
     }
 ]);
@@ -51,7 +54,8 @@ iFluxFrontServices.factory('EventSource', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {eventSourceId: '@eventSourceId'}},
-            get: {method: 'GET', params: {eventSourceId: '@eventSourceId'}}
+            get: {method: 'GET', params: {eventSourceId: '@eventSourceId'}},
+            delete: {method: 'DELETE', params: {eventSourceId: '@eventSourceId'}}
         });
     }
 ]);
@@ -62,7 +66,8 @@ iFluxFrontServices.factory('EventSourceTemplate', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {eventSourceId: '@eventSourceId'}},
-            get: {method: 'GET', params: {eventSourceId: '@eventSourceId'}}
+            get: {method: 'GET', params: {eventSourceId: '@eventSourceId'}},
+            delete: {method: 'DELETE', params: {eventSourceId: '@eventSourceId'}}
         });
     }
 ]);
@@ -72,7 +77,8 @@ iFluxFrontServices.factory('EventType', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {eventTypeId: '@eventTypeId'}},
-            get: {method: 'GET', params: {eventTypeId: '@eventTypeId'}}
+            get: {method: 'GET', params: {eventTypeId: '@eventTypeId'}},
+            delete: {method: 'DELETE', params: {eventTypeId: '@eventTypeId'}}
         });
     }
 ]);
@@ -82,9 +88,11 @@ iFluxFrontServices.factory('Organization', ['$resource',
             query: {method: 'GET', isArray: true},
             save: {method: 'POST'},
             update: {method: 'PATCH', params: {organizationId: '@organizationId'}},
+            delete: {method: 'DELETE', params: {organizationId: '@organizationId'}},
             get: {method: 'GET', params: {organizationId: '@organizationId'}},
             action: {method: 'POST', params: {organizationId: '@organizationId', action: 'actions'}},
             users: {method: 'GET', params: {organizationId: '@organizationId', action: 'users'}, isArray: true}
+
         });
     }
 ]);

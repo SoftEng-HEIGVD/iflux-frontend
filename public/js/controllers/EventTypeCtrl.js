@@ -6,7 +6,18 @@ var iFluxFrontCtrl = angular.module('EventTypeCtrl', []);
 iFluxFrontCtrl.controller('EventTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventType',
     function ($rootScope, $scope, $location, $localStorage, EventType) {
         $scope.eventTypes = EventType.query({organizationId: $rootScope.globalCurrentOrganization});
+
+        $scope.deleteET = function (eventTypeId, idx) {
+            EventType.delete({eventTypeId: eventTypeId}, function success(res) {
+                $scope.eventTypes.splice(idx, 1);
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        }
     }
+
 
 ]);
 
@@ -31,13 +42,14 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
         //Or a new template
         else {
             $scope.buttonName = "Create it!";
-            $scope.eType = {"public":false};
+            $scope.eType = {"public": false};
 
         }
 
         $scope.cancel = function () {
             $location.path(contextRoot + '/eventType');
         };
+        ;
 
         $scope.submitForm = function () {
             if (isUpdate) {
@@ -60,7 +72,7 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
                         $scope.errorMessages = null;
                     },
                     function error(err) {
-                        $scope.errorMessages =[];
+                        $scope.errorMessages = [];
                         if (err.data !== null && err.data.name !== undefined) {
                             $scope.errorMessages.push(err.data.name[0]);
                         }

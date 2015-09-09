@@ -6,6 +6,15 @@ var iFluxFrontCtrl = angular.module('ActionTypeCtrl', []);
 iFluxFrontCtrl.controller('ActionTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionType',
     function ($rootScope, $scope, $location, $localStorage, ActionType) {
         $scope.actionTypes = ActionType.query({organizationId: $rootScope.globalCurrentOrganization});
+        $scope.deleteAT = function(actionTypeID, idx){
+            ActionType.delete({actionTypeId: actionTypeID}, function success(res) {
+                $scope.actionTypes.splice(idx, 1);
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        };
     }
 
 ]);
@@ -38,6 +47,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
         $scope.cancel = function () {
             $location.path(contextRoot + '/actionType');
         };
+
 
         $scope.submitForm = function () {
             if (isUpdate) {

@@ -27,6 +27,24 @@ iFluxFrontCtrl.controller('EventSourceMgmtCtrl', ['$rootScope', '$scope', '$loca
             $rootScope.esTemplateId = esTemplateId;
             $location.path(contextRoot + '/eventSourceEditor/' + eSourceId);
         }
+        $scope.deleteESTemplate = function(esTemplateID, idx){
+            EventSourceTemplate.delete({eventSourceId: esTemplateID}, function success(res) {
+                $scope.eventSourceTemplates.splice(idx, 1);
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        };
+        $scope.deleteES = function(esID){
+            EventSource.delete({eventSourceId: esID}, function success(res) {
+
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        }
     }
 
 ]);

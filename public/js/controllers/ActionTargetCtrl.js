@@ -27,6 +27,24 @@ iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$loc
             $rootScope.atTemplateId = atTemplateId;
             $location.path(contextRoot + '/actionTargetEditor/' + aTargetId);
         }
+        $scope.deleteATTemplate = function (atTemplateId, idx) {
+            ActionTargetTemplate.delete({actionTargetId: atTemplateId}, function success(res) {
+                $scope.actionTargetTemplates.splice(idx, 1);
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        };
+        $scope.deleteAT = function (atId) {
+            ActionTarget.delete({actionTargetId: atId}, function success(res) {
+
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        }
 
     }
 
@@ -39,7 +57,7 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
         $scope.errorMessages = null;
         var isUpdate = false;
         //init the data structure
-        $scope.aTarget= {"configuration": {}};
+        $scope.aTarget = {"configuration": {}};
         var atId = $route.current.params.id;
         //get schema and form for configuration
         ActionTargetTemplate.get({actionTargetId: $rootScope.atTemplateId}, function success(data, status) {
@@ -57,7 +75,7 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
         if (atId !== undefined && atId !== "") {
             //   selectedRule = $filter('filter')(SharedProperties.getProperty(), {id: ruleId})[0];
             $scope.buttonName = "Update it!";
-            $scope.aTarget= ActionTarget.get({actionTargetId: atId});
+            $scope.aTarget = ActionTarget.get({actionTargetId: atId});
             isUpdate = true;
         }
         //Or a new template

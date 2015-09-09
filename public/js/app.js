@@ -74,7 +74,7 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
                     return config;
                 },
                 'responseError': function (response) {
-                    if (response.status === 401 || response.status === 403) {
+                    if (response.status === 401) {
                         $location.path(contextRoot + '/signin');
                     }
                     return $q.reject(response);
