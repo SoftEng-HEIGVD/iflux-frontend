@@ -8,29 +8,29 @@ nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-            a.navbar-brand(href='#') iFLUX
+            a.navbar-brand(ng-href='#{contextRoot}/home') iFLUX
 
         .navbar-collapse.collapse#navbar
             ul.nav.navbar-nav
-                li(ng-hide='isAuthenticate'): a(ng-href='/home') Home
-                li(ng-hide='isAuthenticate'): a(ng-href='/signin') Sign in
-                li(ng-hide='isAuthenticate'): a(ng-href='/register') Register
-                li(ng-show='isAuthenticate'): a(ng-href='/cockpit') Cockpit
-                li(ng-show='isAuthenticate'): a(ng-href='/settings') Settings
-                li(ng-show='isAuthenticate'): a(ng-href='/rules') Rules
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/home') Home
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/signin') Sign in
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/register') Register
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/cockpit') Cockpit
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/settings') Settings
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/rules') Rules
 
                 li.dropdown(ng-show='isAuthenticate')
                     a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Actions
                         span.caret
                     ul.dropdown-menu
-                        li: a(ng-href='/actionTarget') Action Target Templates
-                        li: a(ng-href='/actionType') Action Type
+                        li: a(ng-href='#{contextRoot}/actionTarget') Action Target Templates
+                        li: a(ng-href='#{contextRoot}/actionType') Action Types
                 li.dropdown(ng-show='isAuthenticate')
                     a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Events
                         span.caret
                     ul.dropdown-menu
-                        li: a(ng-href='/eventSource') Event Source Templates
-                        li: a(ng-href='/eventType') Event Type
+                        li: a(ng-href='#{contextRoot}/eventSource') Event Source Templates
+                        li: a(ng-href='#{contextRoot}/eventType') Event Types
                 li(ng-show='isAuthenticate'): a(ng-click='logout()') Sign out
 
             div(ng-show='isAuthenticate')

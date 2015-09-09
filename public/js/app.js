@@ -25,40 +25,40 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
     function ($routeProvider, $httpProvider, $locationProvider) {
 
         $routeProvider.
-            when('/home', {templateUrl: partialsPath + '/home.jade'}).
-            when('/cockpit', {templateUrl: partialsPath + '/cockpit.jade'}).
+            when(contextRoot + '/home', {templateUrl: partialsPath + '/home.jade'}).
+            when(contextRoot + '/cockpit', {templateUrl: partialsPath + '/cockpit.jade'}).
 
-            when('/rules', {templateUrl: partialsPath + '/rulesManagment.jade', controller: 'RuleCtrl'}).
-            when('/ruleEditor', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
-            when('/ruleEditor/:id', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
+            when(contextRoot + '/rules', {templateUrl: partialsPath + '/rulesManagment.jade', controller: 'RuleCtrl'}).
+            when(contextRoot + '/ruleEditor', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
+            when(contextRoot + '/ruleEditor/:id', {templateUrl: partialsPath + '/ruleEditor.jade', controller: 'RuleEditorCtrl'}).
 
-            when('/signin', {templateUrl: partialsPath + '/signin.jade', controller: 'AuthCtrl'}).
-            when('/register', {templateUrl: partialsPath + '/register.jade', controller: 'AuthCtrl'}).
-            when('/settings', {templateUrl: partialsPath + '/settings.jade', controller: 'SettingsCtrl'}).
+            when(contextRoot + '/signin', {templateUrl: partialsPath + '/signin.jade', controller: 'AuthCtrl'}).
+            when(contextRoot + '/register', {templateUrl: partialsPath + '/register.jade', controller: 'AuthCtrl'}).
+            when(contextRoot + '/settings', {templateUrl: partialsPath + '/settings.jade', controller: 'SettingsCtrl'}).
 
-            when('/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.jade', controller: 'ActionTargetMgmtCtrl'}).
-            when('/actionTargetEditor', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
-            when('/actionTargetTemplateEditor', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
-            when('/actionTargetEditor/:id', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
-            when('/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
+            when(contextRoot + '/actionTarget', {templateUrl: partialsPath + '/actionTargetManagement.jade', controller: 'ActionTargetMgmtCtrl'}).
+            when(contextRoot + '/actionTargetEditor', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
+            when(contextRoot + '/actionTargetTemplateEditor', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
+            when(contextRoot + '/actionTargetEditor/:id', {templateUrl: partialsPath + '/actionTargetEditor.jade', controller: 'ActionTargetCtrl'}).
+            when(contextRoot + '/actionTargetTemplateEditor/:id', {templateUrl: partialsPath + '/actionTargetTemplateEditor.jade', controller: 'ActionTargetTemplateCtrl'}).
 
-            when('/actionType', {templateUrl: partialsPath + '/actionTypeManagement.jade', controller: 'ActionTypeMgmtCtrl'}).
-            when('/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
-            when('/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
+            when(contextRoot + '/actionType', {templateUrl: partialsPath + '/actionTypeManagement.jade', controller: 'ActionTypeMgmtCtrl'}).
+            when(contextRoot + '/actionTypeEditor', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
+            when(contextRoot + '/actionTypeEditor/:id', {templateUrl: partialsPath + '/actionTypeEditor.jade', controller: 'ActionTypeEditorCtrl'}).
 
-            when('/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.jade', controller: 'EventSourceMgmtCtrl'}).
-            when('/eventSourceEditor', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
-            when('/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
-            when('/eventSourceEditor/:id', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
-            when('/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
+            when(contextRoot + '/eventSource', {templateUrl: partialsPath + '/eventSourceManagement.jade', controller: 'EventSourceMgmtCtrl'}).
+            when(contextRoot + '/eventSourceEditor', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
+            when(contextRoot + '/eventSourceTemplateEditor', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
+            when(contextRoot + '/eventSourceEditor/:id', {templateUrl: partialsPath + '/eventSourceEditor.jade', controller: 'EventSourceCtrl'}).
+            when(contextRoot + '/eventSourceTemplateEditor/:id', {templateUrl: partialsPath + '/eventSourceTemplateEditor.jade', controller: 'EventSourceTemplateCtrl'}).
 
-            when('/eventType', {templateUrl: partialsPath + '/eventTypeManagement.jade', controller: 'EventTypeMgmtCtrl'}).
-            when('/eventTypeEditor', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
-            when('/eventTypeEditor/:id', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
+            when(contextRoot + '/eventType', {templateUrl: partialsPath + '/eventTypeManagement.jade', controller: 'EventTypeMgmtCtrl'}).
+            when(contextRoot + '/eventTypeEditor', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
+            when(contextRoot + '/eventTypeEditor/:id', {templateUrl: partialsPath + '/eventTypeEditor.jade', controller: 'EventTypeEditorCtrl'}).
 
-            when('/userOrganizationEditor', {templateUrl: partialsPath + '/userOrganizationEditor.jade', controller: 'userOrganizationEditorCtrl'}).
+            when(contextRoot + '/userOrganizationEditor', {templateUrl: partialsPath + '/userOrganizationEditor.jade', controller: 'userOrganizationEditorCtrl'}).
 
-            otherwise({redirectTo: '/home'});
+            otherwise({redirectTo: contextRoot + '/home'});
 
          $locationProvider.html5Mode({
              enabled: true,
@@ -75,7 +75,7 @@ iFluxFrontendApp.config(['$routeProvider', '$httpProvider', '$locationProvider',
                 },
                 'responseError': function (response) {
                     if (response.status === 401 || response.status === 403) {
-                        $location.path('/signin');
+                        $location.path(contextRoot + '/signin');
                     }
                     return $q.reject(response);
                 }

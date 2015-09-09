@@ -6,19 +6,19 @@ section
     .container
         .row.text-center
             .col-md-4
-                a.btn(ng-href="/settings")
+                a.btn(ng-href="#{contextRoot}/settings")
                     span.fa-stack.fa-4x.text-primary
                         i.fa.fa-square.fa-stack-2x
                         i.fa.fa-cogs.fa-stack-1x.fa-inverse
                 h4.service-heading Settings
             .col-md-4
-                a.btn(ng-href="/rules")
+                a.btn(ng-href="#{contextRoot}/rules")
                     span.fa-stack.fa-4x.text-primary
                         i.fa.fa-square.fa-stack-2x
                         i.fa.fa-connectdevelop.fa-stack-1x.fa-inverse
                 h4.service-heading Rules
             .col-md-4
-                a.btn(ng-href="/eventSource")
+                a.btn(ng-href="#{contextRoot}/eventSource")
                     span.fa-stack.fa-4x.text-primary
                         i.fa.fa-square.fa-stack-2x
                         i.fa.fa-bell.fa-stack-1x.fa-inverse
@@ -26,7 +26,7 @@ section
         br
         .row.text-center
             .col-md-4
-                a.btn(ng-href="/actionTarget")
+                a.btn(ng-href="#{contextRoot}/actionTarget")
                     span.fa-stack.fa-4x.text-primary
                         i.fa.fa-square.fa-stack-2x
                         i.fa.fa-bullseye.fa-stack-1x.fa-inverse

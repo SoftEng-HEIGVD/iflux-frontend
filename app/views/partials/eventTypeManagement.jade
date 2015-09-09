@@ -3,7 +3,7 @@
 
 .container
     #page-content-wrapper
-        h1 iFLUX Event Types Managment
+        h1 iFLUX Event Types Management
         .col-lg-12
             | Search an Avent Types :
             input(type="text", ng-model="search")
@@ -26,5 +26,5 @@
                             input(type="checkbox", ng-model="eventType.public", ng-disabled="true")
                         td {{eventType.organizationId}}
                         td
-                            a.btn.btn-xs.btn-primary(ng-href="/eventTypeEditor/{{eventType.id}}") Modifiy
-            a.btn.btn-primary(ng-href="/eventTypeEditor") Create a new event type
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventTypeEditor/{{ eventType.id }}") Modifiy
+            a.btn.btn-primary(ng-href="#{contextRoot}/eventTypeEditor") Create a new event type

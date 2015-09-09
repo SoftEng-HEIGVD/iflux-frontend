@@ -92,7 +92,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
                 $scope.payload.rulesId = ruleId;
                 $scope.payload.organizationId = $rootScope.globalCurrentOrganization;
                 Rules.update($scope.payload, function success(data, status) {
-                        $location.path('/rules');
+                        $location.path(contextRoot + '/rules');
                         $scope.errorMessages = null;
                         isUpdate = false;
                     },
@@ -103,7 +103,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
             else {
                 Rules.save($scope.payload,
                     function success(data, status) {
-                        $location.path('/rules');
+                        $location.path(contextRoot + '/rules');
                         $scope.errorMessages = null;
                     }, function error(err, status) {
                         $scope.errorMessages = err.data.name;
@@ -112,7 +112,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
 
         };
         $scope.cancel = function () {
-            $location.path('/rules');
+            $location.path(contextRoot + '/rules');
             isUpdate = false;
         };
     }]);

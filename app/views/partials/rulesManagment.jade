@@ -1,6 +1,6 @@
 .container
     #page-content-wrapper
-        h1 iFLUX Rule Managment 
+        h1 iFLUX Rule Management
         .col-lg-12
             | Search a rule:
             input(ng-model='search')
@@ -18,7 +18,7 @@
                         td
                             input(type='checkbox', ng-model='rule.active', ng-disabled='true')
                         td
-                            a.btn.btn-xs.btn-primary(ng-href='/ruleEditor/{{rule.id}}') Modification
+                            a.btn.btn-xs.btn-primary(ng-href='#{contextRoot}/ruleEditor/{{rule.id}}') Modification
                         td
                             a.btn.btn-xs.btn-danger(ng-disabled='true', ng-click='delete(rule.id, $index)') Delete
-            a.btn.btn-primary(ng-href='/ruleEditor') Create a new rule
+            a.btn.btn-primary(ng-href='#{contextRoot}/ruleEditor') Create a new rule

@@ -6,7 +6,7 @@ section
                 .panel-heading
                     .panel-title Register
                     div(style='float:right; font-size: 85%; position: relative; top:-10px')
-                        a#signinlink(ng-href='/signin') Sign In
+                        a#signinlink(ng-href='#{contextRoot}/signin') Sign In
                 .panel-body
                     form#signupform.form-horizontal(role='form', ng-submit='register()')
                         #signupalert.alert.alert-danger(style='display:none')

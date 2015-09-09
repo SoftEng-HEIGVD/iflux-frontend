@@ -36,7 +36,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
         }
 
         $scope.cancel = function () {
-            $location.path('/actionType');
+            $location.path(contextRoot + '/actionType');
         };
 
         $scope.submitForm = function () {
@@ -44,7 +44,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
                 $scope.aType.id = typeId;
                 ActionType.update($scope.aType,
                     function success(data, status) {
-                        $location.path('/actionType');
+                        $location.path(contextRoot + '/actionType');
                         $scope.errorMessages = null;
                         isUpdate = false;
                     },
@@ -56,7 +56,7 @@ iFluxFrontCtrl.controller('ActionTypeEditorCtrl', ['$rootScope', '$scope', '$loc
                 $scope.aType.organizationId = $rootScope.globalCurrentOrganization;
                 ActionType.save($scope.aType,
                     function success(data, status) {
-                        $location.path('/actionType');
+                        $location.path(contextRoot + '/actionType');
                         $scope.errorMessages = null;
                     },
                     function error(err) {

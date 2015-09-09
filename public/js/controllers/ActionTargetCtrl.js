@@ -21,11 +21,11 @@ iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$loc
 
         $scope.createAT = function (atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
-            $location.path('/actionTargetEditor');
+            $location.path(contextRoot + '/actionTargetEditor');
         };
         $scope.modifyAT = function (aTargetId, atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
-            $location.path('/actionTargetEditor/' + aTargetId);
+            $location.path(contextRoot + '/actionTargetEditor/' + aTargetId);
         }
 
     }
@@ -67,13 +67,13 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
         }
 
         $scope.cancel = function () {
-            $location.path('/actionTarget');
+            $location.path(contextRoot + '/actionTarget');
         };
         $scope.submitForm = function () {
             if (isUpdate) {
                 $scope.aTarget.actionTargetId = atId;
                 ActionTarget.update($scope.aTarget, function success(data, status) {
-                        $location.path('/actionTarget');
+                        $location.path(contextRoot + '/actionTarget');
                         $scope.errorMessages = null;
                         isUpdate = false;
                         $scope.errorMessages = null;
@@ -89,7 +89,7 @@ iFluxFrontCtrl.controller('ActionTargetCtrl', ['$rootScope', '$scope', '$locatio
             else {
                 $scope.aTarget.organizationId = $rootScope.globalCurrentOrganization;
                 ActionTarget.save($scope.aTarget, function success(data, status) {
-                        $location.path('/actionTarget');
+                        $location.path(contextRoot + '/actionTarget');
                         $scope.errorMessages = null;
                     },
                     function error(err) {
@@ -140,7 +140,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
         }
 
         $scope.cancel = function () {
-            $location.path('/actionTarget');
+            $location.path(contextRoot + '/actionTarget');
             isUpdate = false;
         };
 
@@ -149,7 +149,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
                 $scope.atTemplate.actionTargetId = templateId;
                 ActionTargetTemplate.update($scope.atTemplate,
                     function success(data, status) {
-                        $location.path('/actionTarget');
+                        $location.path(contextRoot + '/actionTarget');
                         $scope.errorMessages = null;
                         isUpdate = false;
                     },
@@ -162,7 +162,7 @@ iFluxFrontCtrl.controller('ActionTargetTemplateCtrl', ['$rootScope', '$scope', '
                 console.log("orgId: " + $rootScope.globalCurrentOrganization);
                 ActionTargetTemplate.save($scope.atTemplate,
                     function success(data, status) {
-                        $location.path('/actionTarget');
+                        $location.path(contextRoot + '/actionTarget');
                         $scope.errorMessages = null;
                     },
                     function error(err) {
