@@ -81,13 +81,26 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
 
 iFluxFrontCtrl.controller('LoginInfoCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'Me', '$route',
     function ($rootScope, $scope, $location, $localStorage, Me, $route) {
-        if ($rootScope.isAuthenticate) {
-            $scope.organizations = Me.query();
-        }
+        $rootScope.$watch(
+            "isAuthenticate",
+            function (newValue) {
+                if (newValue) {
+                    $scope.organizations = Me.query(function success(data) {
+                        if (data.length >= 1) {
+                            $rootScope.globalCurrentOrganization = data[0].id;
+                            $localStorage.globalCurrentOrganization = data[0].id;
+                            $scope.currentOrganization = data[0].id;
+                        }
+                    });
+
+                }
+            }
+        );
 
         $scope.currentOrganization = $localStorage.globalCurrentOrganization;
         $rootScope.globalCurrentOrganization = $localStorage.globalCurrentOrganization;
-        $scope.someFunction = function (value, model) {
+        $scope.changeOrganization = function (value, model) {
+            console.log(value + " || " + model);
             $rootScope.globalCurrentOrganization = model;
             $localStorage.globalCurrentOrganization = model;
             $route.reload();
