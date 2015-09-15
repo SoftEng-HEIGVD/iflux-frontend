@@ -53,7 +53,7 @@ iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$loca
 
         $scope.submitForm = function () {
             if (isUpdate) {
-                $scope.eType.id = typeId;
+                $scope.eType.eventTypeId = typeId;
                 EventType.update($scope.eType,
                     function success(data, status) {
                         $location.path(contextRoot + '/eventType');

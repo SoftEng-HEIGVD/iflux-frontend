@@ -1,12 +1,13 @@
 light-red = #FFDDDD
 very-light-red = #FFEEEE
-light-green = #DDFFDD
+light-green = #ccffcc
 red = #d9534f
 green = #5cb85c
 brand-primary = #2b6195
 brand-secondary = #f1772c
 light-grey = #EEEEEE
 white = #FFFFFF
+blue-help = #bce8f1
 
 body
   margin-bottom 60px
@@ -63,32 +64,38 @@ html
   margin 0 auto
 
   .panel-green
-    background-color light-green
-    border-color green
-    border-style solid
-    border-width 1px
-    padding 5px
+    border-color light-green
 
   .panel-red
-    background-color light-red
-    border-color red
-    border-style solid
-    border-width 1px
-    padding 5px
+    border-color light-red
 
+  .panel-info
+    border-color blue-help
+
+.panel-info .panel-heading
+  color #31708f
+  background-color #d9edf7
+  border-color blue-help
+
+
+.panel-green .panel-heading
+  border-color light-green
+  color green
+  background-color light-green
+
+.panel-red .panel-heading
+  border-color light-red
+  background-color light-red
+  color red
 .panel-heading
   border-top-left-radius 0
   border-top-right-radius 0
 
-.panel-green .panel-heading
-  border-color green
-  color white
-  background-color green
-
-.panel-red .panel-heading
-  border-color red
-  background-color red
-  color white
+.panel-title
+  margin-top 0
+  margin-bottom 0
+  font-size 16px
+  color inherit
 
 .big-panel
   border-color #333333
@@ -147,3 +154,7 @@ html
 div[resizable]
   width 100%
 
+.form-group
+  padding-left 10px
+  padding-right 10px
+  margin-top 10px

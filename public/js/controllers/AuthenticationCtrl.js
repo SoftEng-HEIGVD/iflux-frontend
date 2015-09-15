@@ -21,6 +21,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                         $location.path(contextRoot + '/cockpit');
                     }
                 }, function (err) {
+                    console.log("error: "+ err);
                     if (err.data.name) {
                         $scope.errorMessages.push(err.data.name);
                     }
