@@ -207,11 +207,11 @@
 
 
         .col-lg-12
-                .buttonbar
-                    .alert.alert-danger.fade.in(ng-hide='!errorMessages')
-                        div(ng-repeat='errorMessage in errorMessages')
-                            a.close(href='#', data-dismiss='alert') ×
-                            strong Error!
-                            |  {{errorMessage}}
-                    input.btn.btn-primary(type='button', ng-click='cancel()', value='Cancel')
-                    a.btn.btn-success(ng-click='create()') {{buttonName}}
+            .buttonbar
+                .alert.alert-danger.fade.in(ng-hide='!errorMessages')
+                    div(ng-repeat='errorMessage in errorMessages')
+                        a.close(href='#', data-dismiss='alert') ×
+                        strong Error!
+                        |  {{errorMessage}}
+                input.btn.btn-primary(type='button', ng-click='cancel()', value='Cancel')
+                a.btn.btn-success(ng-click='create()') {{buttonName}}

@@ -82,7 +82,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
 
                     $scope.payload.transformations[i].actionTargetId = data.transformations[i].actionTarget.id;
                     $scope.payload.transformations[i].actionTypeId = data.transformations[i].actionType.id;
-                    if(data.transformations[i].actionType.id){
+                    if (data.transformations[i].actionType.id) {
                         $scope.helpTransformationActionTypeForm[i] = ActionType.get({"actionTypeId": data.transformations[i].actionType.id});
                     }
                     if (data.transformations[i].eventType) {
@@ -90,8 +90,7 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
                         $scope.helpTransformationEventTypeForm[i] = EventType.get({"eventTypeId": data.transformations[i].eventType.id});
                     }
 
-                    if (data.transformations[i].fn.sample.event) {
-                        console.log("sample event true");      //   console.log(data.transformations[i].fn.sample.event);
+                    if (data.transformations[i].fn && data.transformations[i].fn.sample.event) {
                         $scope.payload.transformations[i].fn.sample2 = {"event": {"sdf": "df"}};
                         $scope.payload.transformations[i].fn.sample2.event = JSON.stringify(data.transformations[i].fn.sample.event);
                         // $scope.payload.transformations[i].fn.sample = $scope.payload.transformations[i].fn.sample2;
@@ -156,25 +155,59 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
 
 
         $scope.create = function () {
+            $scope.payload.organizationId = $rootScope.globalCurrentOrganization;
+            $scope.errorMessages = [];
             if (isUpdate) {
                 $scope.payload.rulesId = ruleId;
-                $scope.payload.organizationId = $rootScope.globalCurrentOrganization;
-                Rules.update($scope.payload, function success(data, status) {
+                Rules.update($scope.payload,
+                    function success(data, status) {
                         $location.path(contextRoot + '/rules');
                         $scope.errorMessages = null;
                         isUpdate = false;
-                    },
-                    function error(err) {
-                        $scope.errorMessages = err.data.name;
+                    }, function error(err, status) {
+                        console.log(err);
+                        if (err.data.conditions) {
+                            $scope.errorMessages.push(err.data.conditions[0][0]);
+                        }
+                        if (err.data.transformations) {
+                            if (err.data.transformations[0].actionTargetId)
+                                $scope.errorMessages.push(err.data.transformations[0].actionTargetId[0]);
+                            if (err.data.transformations[0].actionTypeId)
+                                $scope.errorMessages.push(err.data.transformations[0].actionTypeId[0]);
+
+                        }
+                        if (err.data.organizationId[0]) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+
+                        }
+
                     });
             }
             else {
+
                 Rules.save($scope.payload,
                     function success(data, status) {
                         $location.path(contextRoot + '/rules');
                         $scope.errorMessages = null;
                     }, function error(err, status) {
-                        $scope.errorMessages = err.data.name;
+                        console.log(err);
+                        if (err.data.name)
+                            $scope.errorMessages.push(err.data.name[0]);
+                        if (err.data.conditions) {
+                            $scope.errorMessages.push(err.data.conditions[0][0]);
+                        }
+                        if (err.data.transformations) {
+                            if (err.data.transformations[0].actionTargetId)
+                                $scope.errorMessages.push(err.data.transformations[0].actionTargetId[0]);
+                            if (err.data.transformations[0].actionTypeId)
+                                $scope.errorMessages.push(err.data.transformations[0].actionTypeId[0]);
+
+                        }
+                        if (err.data.organizationId) {
+                            $scope.errorMessages.push(err.data.organizationId[0]);
+
+                        }
+
                     });
             }
 
