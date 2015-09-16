@@ -102,6 +102,13 @@
                                             ul()
                                                 li(ng-repeat='(id, content) in helpConditionEventTypeForm[$index].schema.properties', ng-include="'field_renderer.html'")
                                                     div
+                        br
+                        .col-lg-12
+                            .alert.alert-danger.fade.in(ng-hide='!errorMessagesCondition[$index].length')
+                                div(ng-repeat='errorMessage in errorMessagesCondition[$index]')
+                                    a.close(href='#', data-dismiss='alert') ×
+                                    strong Error!
+                                    |  {{errorMessage}}
 
 
                 .col-lg-12.form-horizontal
@@ -218,12 +225,18 @@
                                         ul
                                             li(ng-repeat='(id, content) in helpTransformationActionTypeForm[$index].schema.properties', ng-include="'field_renderer.html'")
                         br
+                        .col-lg-12
+                            .alert.alert-danger.fade.in(ng-hide='!errorMessagesTransformation[$index].length')
+                                div(ng-repeat='errorMessage in errorMessagesTransformation[$index]')
+                                    a.close(href='#', data-dismiss='alert') ×
+                                    strong Error!
+                                    |  {{errorMessage}}
 
 
 
         .col-lg-12
             .buttonbar
-                .alert.alert-danger.fade.in(ng-hide='!errorMessages')
+                .alert.alert-danger.fade.in(ng-hide='!errorMessages.length')
                     div(ng-repeat='errorMessage in errorMessages')
                         a.close(href='#', data-dismiss='alert') ×
                         strong Error!
