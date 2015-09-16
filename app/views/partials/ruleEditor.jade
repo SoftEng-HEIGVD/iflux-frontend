@@ -42,18 +42,22 @@
                                             button.btn.btn-danger(type='button', ng-click='removeConditions($index)') Delete
                                     .form-group
                                         label.col-sm-4(for='eventSourceSelect') Event Source
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#eventSourceSelect(name='orgSelect0', ng-model='condition.eventSourceId', theme='bootstrap')
                                                 ui-select-match(placeholder='Select an event source') {{$select.selected.name}}
                                                 ui-select-choices(repeat='eventSource.id as eventSource in eventSources  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='eventSource.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventSourceModal(condition.eventSourceId)') ?
                                     .form-group
                                         label.col-sm-4(for='eventTypeSelect') Event Type
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#eventTypeSelect(name='orgSelect0', ng-model='condition.eventTypeId', on-select='eventTypeSelect(condition.eventTypeId, $index)',theme='bootstrap')
                                                 ui-select-match(placeholder='Select an event type') {{$select.selected.name}}
                                                 ui-select-choices(repeat='eventType.id as eventType in eventTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='eventType.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventTypeModal(condition.eventTypeId)') ?
                                     .form-group(show-errors='')
                                         .col-sm-4
                                             label(tooltip-html='htmlTooltipCondition', tooltip-class='tooltipCustomWidth') JS expression
@@ -116,27 +120,36 @@
                                 .panel-body
                                     .form-group(show-errors='')
                                         label.col-sm-4(for='actionTargetsSelect') Action Target *
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#actionTargetsSelect(requried='', name='orgSelect0', ng-model='transformation.actionTargetId', theme='bootstrap')
                                                 ui-select-match(placeholder='Select an action target') {{$select.selected.name}}
                                                 ui-select-choices(repeat='actionTarget.id as actionTarget in actionTargets  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='actionTarget.name | highlight: $select.search')
                                             p.help-block.text-danger
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openActionTargetModal(transformation.actionTargetId)') ?
                                     .form-group(show-errors='')
                                         label.col-sm-4(for='actionTypeSelect') Action Type *
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#actionTypeSelect(required='', name='orgSelect0', ng-model='transformation.actionTypeId', on-select='actionTypeSelect(transformation.actionTypeId, $index)', theme='bootstrap')
                                                 ui-select-match(placeholder='Select an action type') {{$select.selected.name}}
                                                 ui-select-choices(repeat='actionType.id as actionType in actionTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='actionType.name | highlight: $select.search')
                                             p.help-block.text-danger
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openActionTypeModal(transformation.actionTypeId)') ?
                                     .form-group
                                         label.col-sm-4(for='eventTypeTransSelect') Event Type
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#eventTypeTransSelect(name='orgSelect0', ng-model='transformation.eventTypeId', on-select='actionEventTypeSelect(transformation.eventTypeId, $index)', theme='bootstrap')
                                                 ui-select-match(placeholder='Select an event type') {{$select.selected.name}}
                                                 ui-select-choices(repeat='eventType.id as eventType in eventTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='eventType.name | highlight: $select.search')
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventTypeModal(transformation.eventTypeId)') ?
                                     .form-group(show-errors='')
                                         .col-sm-4
                                             label(tooltip-html='htmlTooltipTransformation', tooltip-class='tooltipCustomWidth') JS expression *

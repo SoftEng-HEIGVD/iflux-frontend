@@ -24,8 +24,8 @@ iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties',
     }
 ]);
 
-iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', '$location', '$route', 'Rules', 'ActionTarget', 'ActionType', 'EventSourceTemplate', 'EventSource', 'EventType', 'SharedProperties', 'Me',
-    function ($rootScope, $scope, $filter, $location, $route, Rules, ActionTarget, ActionType, EventSourceTemplate, EventSource, EventType, SharedProperties, Me) {
+iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', '$location', '$route', 'Rules', 'ActionTarget', 'ActionType', 'EventSourceTemplate', 'EventSource', 'EventType', 'SharedProperties', 'Me', '$modal',
+    function ($rootScope, $scope, $filter, $location, $route, Rules, ActionTarget, ActionType, EventSourceTemplate, EventSource, EventType, SharedProperties, Me, $modal) {
         $scope.htmlTooltipTransformation = "<p><b>function</b>(event, actionTarget, actionType, eventSource, eventType, options) {<br>" +
         "  return // Evaluation code (your expression comes there) <br>" +
         "}</p><ul><li><b>event</b>: The event received by iFLUX</li>" +
@@ -190,18 +190,27 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
                         $location.path(contextRoot + '/rules');
                         $scope.errorMessages = null;
                     }, function error(err, status) {
+                        console.log($scope.payload.transformations.length);
                         console.log(err);
                         if (err.data.name)
                             $scope.errorMessages.push(err.data.name[0]);
                         if (err.data.conditions) {
+
                             $scope.errorMessages.push(err.data.conditions[0][0]);
+
                         }
                         if (err.data.transformations) {
-                            if (err.data.transformations[0].actionTargetId)
-                                $scope.errorMessages.push(err.data.transformations[0].actionTargetId[0]);
-                            if (err.data.transformations[0].actionTypeId)
-                                $scope.errorMessages.push(err.data.transformations[0].actionTypeId[0]);
+                            var k;
+                            var n;
+                            for (k = 1; k < $scope.payload.transformations.length; k++) {
+                                n = "\'" + k + "\'";
+                                console.log(n);
+                                if (err.data.transformations[n].actionTargetId)
+                                    $scope.errorMessages.push(err.data.transformations[n].actionTargetId[0]);
+                                if (err.data.transformations[n].actionTypeId)
+                                    $scope.errorMessages.push(err.data.transformations[n].actionTypeId[0]);
 
+                            }
                         }
                         if (err.data.organizationId) {
                             $scope.errorMessages.push(err.data.organizationId[0]);
@@ -216,5 +225,133 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
             $location.path(contextRoot + '/rules');
             isUpdate = false;
         };
+
+        $scope.openEventTypeModal = function (eventTypeId) {
+            $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: partialsPath + '/modalEventType.jade',
+                controller: 'ModalEventTypeCtrl',
+                size: 'lg',
+                resolve: {
+                    eventTypeId: function () {
+                        return eventTypeId;
+                    }
+                }
+
+            });
+        };
+
+        $scope.openEventSourceModal = function (eventSourceId) {
+            $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: partialsPath + '/modalEventSource.jade',
+                controller: 'ModalEventSourceCtrl',
+                size: 'lg',
+                resolve: {
+                    eventSourceId: function () {
+                        return eventSourceId;
+                    }
+                }
+            });
+        };
+
+        $scope.openActionTargetModal = function (actionTargetId) {
+            $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: partialsPath + '/modalActionTarget.jade',
+                controller: 'ModalActionTargetCtrl',
+                size: 'lg',
+                resolve: {
+                    actionTargetId: function () {
+                        return actionTargetId;
+                    }
+                }
+            });
+        };
+
+        $scope.openActionTypeModal = function (actionTypeId) {
+            $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: partialsPath + '/modalActionType.jade',
+                controller: 'ModalActionTypeCtrl',
+                size: 'lg',
+                resolve: {
+                    actionTypeId: function () {
+                        return actionTypeId;
+                    }
+                }
+            });
+        };
     }
 ]);
+
+/*
+    Controller for each Modal View. A modal view is to display the event source / event type or action Target / action Type choosen via the selected list.
+
+ */
+iFluxFrontCtrl.controller('ModalEventTypeCtrl', ['$rootScope', '$scope', '$modalInstance', 'eventTypeId', 'EventType',
+    function ($rootScope, $scope, $modalInstance, eventTypeId, EventType) {
+        $scope.eType = EventType.get({"eventTypeId": eventTypeId},
+            function success(data) {
+                $scope.jsonSchema = JSON.stringify(data.schema, null, '\t');
+            }
+        );
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+]);
+
+iFluxFrontCtrl.controller('ModalEventSourceCtrl', ['$rootScope', '$scope', '$modalInstance', 'eventSourceId', 'EventSource', 'EventSourceTemplate',
+    function ($rootScope, $scope, $modalInstance, eventSourceId, EventSource, EventSourceTemplate) {
+        $scope.form = ["*"];
+        $scope.eSource = EventSource.get({eventSourceId: eventSourceId},
+            function success(data) {
+                EventSourceTemplate.get({eventSourceId: data.eventSourceTemplateId},
+                    function success(data) {
+                        $scope.schema = data.configuration.schema;
+                    }
+                );
+            }
+        );
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+]);
+
+iFluxFrontCtrl.controller('ModalActionTypeCtrl', ['$rootScope', '$scope', '$modalInstance', 'actionTypeId', 'ActionType',
+    function ($rootScope, $scope, $modalInstance, actionTypeId, ActionType) {
+        $scope.aType = ActionType.get({"actionTypeId": actionTypeId},
+            function success(data) {
+                $scope.jsonSchema = JSON.stringify(data.schema, null, '\t');
+            }
+        );
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+]);
+
+iFluxFrontCtrl.controller('ModalActionTargetCtrl', ['$rootScope', '$scope', '$modalInstance', 'actionTargetId', 'ActionTarget', 'ActionTargetTemplate',
+    function ($rootScope, $scope, $modalInstance, actionTargetId, ActionTarget, ActionTargetTemplate) {
+        $scope.form = ["*"];
+        $scope.aTarget = ActionTarget.get({actionTargetId: actionTargetId},
+            function success(data) {
+                ActionTargetTemplate.get({actionTargetId: data.actionTargetTemplateId},
+                    function success(data) {
+                        $scope.schema = data.configuration.schema;
+                    }
+                );
+            }
+        );
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+]);
+

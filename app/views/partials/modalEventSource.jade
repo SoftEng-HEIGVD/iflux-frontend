@@ -1,0 +1,33 @@
+//
+   Created by vincent on 9/16/15.
+
+.container
+    #page-content-wrapper
+        h3 Event Source Viewer
+        .big-panel
+            .col-lg-12.form-horizontal
+                form(name="eventSource" +
+                "Form")
+                    .col-lg-6
+                        h4 General Info
+                        .form-group(show-errors="")
+                            label.col-sm-4.control-label(for="NameTemplate") Name *
+                            .col-sm-8 {{eSource.name}}
+
+                        .form-group
+                            label.col-sm-4.control-label(for="description") Description
+                            .col-sm-8 {{eSource.description}}
+                .col-lg-6
+                    h4 Schema
+                    .form-group
+                        .col-sm-12
+                            label.control-label Configuration form *
+                            hr
+                        .panel-body
+                            .col-sm-12
+                                div
+                                    form(sf-schema="schema", sf-form="form", sf-model="eSource.configuration", ng-disabled='true')
+        .col-lg-12
+            .buttonbar
+                a.btn.btn-primary(ng-click="cancel()") Close
+            br

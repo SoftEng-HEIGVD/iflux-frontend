@@ -1,0 +1,32 @@
+//
+   Created by vincent on 9/16/15.
+
+.container
+    #page-content-wrapper
+        h3 Action Target Viewer
+        .big-panel
+            .col-lg-12.form-horizontal
+                .col-lg-6
+                    form(name="actionTargetForm")
+                        h4 General Info
+                        .form-group
+                            label.col-sm-4.control-label Name *
+                            .col-sm-8 {{aTarget.name}}
+                        .form-group
+                            label.col-sm-4.control-label Description
+                            .col-sm-8 {{aTarget.description}}
+                .col-lg-6
+                    h4 Schema
+                    .form-group
+                        .col-sm-12
+                            label.control-label Action Target configuration form
+                            hr
+                        .panel-body
+                            .col-sm-12
+                                div
+                                    form(sf-schema="schema", sf-form="form", sf-model="aTarget.configuration")
+        .col-lg-12
+
+            .buttonbar
+                a.btn.btn-primary(ng-click="cancel()") Close
+            br
