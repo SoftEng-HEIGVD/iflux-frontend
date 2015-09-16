@@ -36,6 +36,15 @@ iFluxFrontCtrl.controller('SettingsCtrl', ['$rootScope', '$scope', '$location', 
             $location.path(contextRoot + '/userOrganizationEditor');
         };
 
+        $scope.deleteOrganization = function(organizationId, idx){
+            Organization.delete({organizationId: organizationId}, function success(res) {
+            }, function error(res) {
+                if (res.status == 403) {
+                    $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
+                }
+            });
+        };
+
 
         $scope.modifyOrganization = function (organization) {
             Organization.update(organization);

@@ -33,5 +33,5 @@
                         td
                             a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventTypeEditor/{{ eventType.id }}") Modifiy
                         td
-                            a.btn.btn-xs.btn-danger(ng-click="deleteET(eventType.id, $index)", ng-disabled="!eventType.deletable") Delete
+                            a.btn.btn-xs.btn-danger(ng-click="!eventType.deletable || deleteET(eventType.id, $index)", ng-disabled="!eventType.deletable") Delete
             a.btn.btn-primary(ng-href="#{contextRoot}/eventTypeEditor") Create a new event type

@@ -39,7 +39,7 @@
                         td
                             a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
                         td
-                            a.btn.btn-xs.btn-danger(ng-click="deleteATTemplate(actionTargetTemplate.id, $index)", ng-disabled="!actionTarget.deletable") Delete
+                            a.btn.btn-xs.btn-danger(ng-click="!actionTargetTemplate.deletable || deleteATTemplate(actionTargetTemplate.id, $index)", ng-disabled="!actionTargetTemplate.deletable") Delete
 
                     tr(ng-show="$index === showIndex")
                         td
@@ -62,7 +62,7 @@
                                             td
                                                 a.btn.btn-xs.btn-primary(ng-click="modifyAT(actionTarget.id, actionTargetTemplate.id)") Modify
                                             td
-                                                a.btn.btn-xs.btn-danger(ng-click="deleteAT(actionTarget.id)", ng-disabled="!actionTarget.deletable") Delete
+                                                a.btn.btn-xs.btn-danger(ng-click="!actionTarget.deletable || deleteAT(actionTarget.id)", ng-disabled="!actionTarget.deletable") Delete
 
             a.btn.btn-primary(ng-href="#{contextRoot}/actionTargetTemplateEditor") Create a new action target template
 

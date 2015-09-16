@@ -33,5 +33,5 @@
                         td
                             a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTypeEditor/{{actionType.id}}") Modifiy
                         td
-                            a.btn.btn-xs.btn-danger(ng-click="deleteAT(actionType.id, $index)", ng-disabled="!actionType.deletable") Delete
+                            a.btn.btn-xs.btn-danger(ng-click="!actionType.deletable || deleteAT(actionType.id, $index)", ng-disabled="!actionType.deletable") Delete
             a.btn.btn-primary(ng-href="#{contextRoot}/actionTypeEditor") Create a new action type

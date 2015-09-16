@@ -28,6 +28,7 @@
                             th View users
                             th Add user
                             th Modification
+                            th Delete
                         tbody(ng-repeat='organization in organizations | orderBy:predicate:reverse | filter:{name:search}')
                             tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
                                 td {{organization.name}}
@@ -37,6 +38,8 @@
                                     a.btn.btn-xs.btn-primary(ng-click='addUser(organization.id)') Add
                                 td
                                     a.btn.btn-xs.btn-primary(ng-click='addUser(organization.id)', ng-disabled='true') Modify
+                                td
+                                    a.btn.btn-xs.btn-danger(ng-click='!organization.deletable || deleteOrganization(organization.id, $index)', ng-disabled='!organization.deletable') Delete
                             tr(ng-show='$index === showIndex')
                                 td
                                 td(colspan='4')
