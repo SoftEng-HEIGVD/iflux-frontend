@@ -282,11 +282,25 @@ iFluxFrontCtrl.controller('RuleEditorCtrl', ['$rootScope', '$scope', '$filter', 
                 }
             });
         };
+        $scope.openEventSourceTemplateModal = function (eventSourceId) {
+            $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: partialsPath + '/modalEventSourceTemplate.jade',
+                controller: 'ModalEventSourceTemplateCtrl',
+                size: 'lg',
+                resolve: {
+                    eventSourceId: function () {
+                        return eventSourceId;
+                    }
+                }
+            });
+        };
+
     }
 ]);
 
 /*
-    Controller for each Modal View. A modal view is to display the event source / event type or action Target / action Type choosen via the selected list.
+ Controller for each Modal View. A modal view is to display the event source / event type or action Target / action Type choosen via the selected list.
 
  */
 iFluxFrontCtrl.controller('ModalEventTypeCtrl', ['$rootScope', '$scope', '$modalInstance', 'eventTypeId', 'EventType',
@@ -346,6 +360,30 @@ iFluxFrontCtrl.controller('ModalActionTargetCtrl', ['$rootScope', '$scope', '$mo
                         $scope.schema = data.configuration.schema;
                     }
                 );
+            }
+        );
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+]);
+
+iFluxFrontCtrl.controller('ModalEventSourceTemplateCtrl', ['$rootScope', '$scope', '$modalInstance', 'eventSourceId', 'EventSource', 'EventSourceTemplate',
+    function ($rootScope, $scope, $modalInstance, eventSourceId, EventSource, EventSourceTemplate) {
+        $scope.form = ["*"];
+        $scope.esTemplate = EventSourceTemplate.get({eventSourceId: eventSourceId},
+            function success(data) {
+                $scope.jsonSchema = JSON.stringify(data.configuration.schema, null, '\t');
+                $scope.schema = data.configuration.schema;
+                if (data.configurationUi === undefined || data.configurationUi.schemaForm === undefined || data.configurationUi.schemaForm === "" || !data.configurationUi.schemaForm) {
+                    $scope.jsonForm = ["*"];
+                    $scope.esTemplate.configurationUi = {};
+                    $scope.esTemplate.configurationUi.schemaForm = ["*"];
+                }
+                else {
+                    $scope.jsonForm = JSON.stringify(data.configurationUi.schemaForm, null, '\t');
+                }
             }
         );
 

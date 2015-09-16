@@ -175,11 +175,13 @@
                                             p.help-block.text-danger
                                     .form-group
                                         label.col-sm-4(for='eventSourceFnSelect') Event Source Template
-                                        .col-sm-8
+                                        .col-sm-7
                                             ui-select#eventSourceFnSelect(name='orgSelect0', ng-model='transformation.fn.sample.eventSourceTemplateId', theme='bootstrap')
                                                 ui-select-match(placeholder='Select an event source template') {{$select.selected.name}}
                                                 ui-select-choices(repeat='eventSourceTemplate.id as eventSourceTemplate in eventSourceTemplates  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
                                                     div(ng-bind-html='eventSourceTemplate.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventSourceTemplateModal(transformation.fn.sample.eventSourceTemplateId)') ?
                         .col-md-4
                             .panel.panel-info
                                 .panel-heading
