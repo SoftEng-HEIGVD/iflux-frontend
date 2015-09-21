@@ -7,10 +7,11 @@
 
 var iFluxFrontCtrl = angular.module('RulesCtrl', []);
 
-iFluxFrontCtrl.controller('RuleCtrl', ['$scope', 'Rules', 'SharedProperties',
-    function ($scope, Rules, SharedProperties) {
-        $scope.rules = Rules.query();
+iFluxFrontCtrl.controller('RuleCtrl', ['$rootScope', '$scope', 'Rules', 'SharedProperties',
+    function ($rootScope, $scope, Rules, SharedProperties) {
+        $scope.rules = Rules.query({organizationId: $rootScope.globalCurrentOrganization});
         SharedProperties.setProperty($scope.rules);
+
         $scope.delete = function (ruleId, idx) {
             Rules.delete({"rulesId": ruleId},
                 function success(res) {
