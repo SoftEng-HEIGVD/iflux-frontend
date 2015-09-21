@@ -95,6 +95,7 @@ iFluxFrontServices.directive('resizable', function () {
             var el = $(elem);
             el.resizable();
             el.on('resizestop', function (evt, ui) {
+                scope.$apply();
                 if (scope.callback) {
                     scope.callback();
                 }
