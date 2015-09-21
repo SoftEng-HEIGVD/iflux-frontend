@@ -1,61 +1,60 @@
 //
    Created by vincent on 9/16/15.
 
-.container
-    #page-content-wrapper
-        h3 Event Source Template Viewer
-        .big-panel
-            .col-lg-12.form-horizontal
-                form(name="eventSourceTemplateForm")
-                    .col-lg-6
-                        h4 General Info
-                        .form-group
-                            label.col-sm-4.control-label Name *
-                            .col-sm-8 {{esTemplate.name}}
-                        .form-group
-                            label.col-sm-4.control-label Is public
-                            .col-sm-8
-                                div
-                                    input#templatePublic(type="checkbox", ng-model="esTemplate.public", ng-disabled="true")
-                    .col-lg-6
-                        h3 Schema
-                        .form-group
-                            .col-sm-12
-                                label.control-label Schema configuration form *
-                                div
-                                    .js-editor-medium(resizable='')
-                                        div(name="jsonSchemaConfiguration", required="", ui-ace="{require: ['ace/ext/language_tools'],\
-                    advanced: {\
-                    enableSnippets: true,\
-                    enableBasicAutocompletion: true,\
-                    enableLiveAutocompletion: true\
-                    },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json'}", ng-model="jsonSchema")
-                        .form-group
-                            label.col-sm-4.control-label Configuration URL *
-                            .col-sm-8 {{esTemplate.configuration.url}}
-                        .form-group
-                            label.col-sm-4.control-label(for="configurationToken") Token
-                            .col-sm-8 {{esTemplate.configuration.token}}
-            .col-lg-12.form-horizontal
-                .col-lg-6
-                    h4 Configuration UI
-                    .form-group
-                        .col-sm-12
-                            label.control-label Schema Form
+.modal-header
+    h3 Event Source Template Viewer
+
+.modal-body
+    .col-lg-12.form-horizontal
+        form(name="eventSourceTemplateForm")
+            .col-lg-6
+                h4 General Info
+                .form-group
+                    label.col-sm-4.control-label Name *
+                    .col-sm-8 {{esTemplate.name}}
+                .form-group
+                    label.col-sm-4.control-label Is public
+                    .col-sm-8
+                        div
+                            input#templatePublic(type="checkbox", ng-model="esTemplate.public", ng-disabled="true")
+            .col-lg-6
+                h3 Schema
+                .form-group
+                    .col-sm-12
+                        label.control-label Schema configuration form *
+                        div
                             .js-editor-medium(resizable='')
-                                div(ui-ace="{require: ['ace/ext/language_tools'],\
-                advanced: {\
-                enableSnippets: true,\
-                enableBasicAutocompletion: true,\
-                enableLiveAutocompletion: true\
-                },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json'}", ng-model="jsonForm")
-                .col-lg-6
-                    h4 Live preview configuration
-                    .panel
-                        .panel-red.col-lg-10
-                            .col-lg-10
-                                form(sf-schema="schema", sf-form="form", sf-model="eventSchema")
-            .col-lg-12
-                .buttonbar
-                    a.btn.btn-primary(type="button", ng-click="cancel()") Close
-                br
+                                div(name="jsonSchemaConfiguration", required="", ui-ace="{require: ['ace/ext/language_tools'],\
+            advanced: {\
+            enableSnippets: true,\
+            enableBasicAutocompletion: true,\
+            enableLiveAutocompletion: true\
+            },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json'}", ng-model="jsonSchema")
+                .form-group
+                    label.col-sm-4.control-label Configuration URL *
+                    .col-sm-8 {{esTemplate.configuration.url}}
+                .form-group
+                    label.col-sm-4.control-label(for="configurationToken") Token
+                    .col-sm-8 {{esTemplate.configuration.token}}
+    .col-lg-12.form-horizontal
+        .col-lg-6
+            h4 Configuration UI
+            .form-group
+                .col-sm-12
+                    label.control-label Schema Form
+                    .js-editor-medium(resizable='')
+                        div(ui-ace="{require: ['ace/ext/language_tools'],\
+        advanced: {\
+        enableSnippets: true,\
+        enableBasicAutocompletion: true,\
+        enableLiveAutocompletion: true\
+        },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json'}", ng-model="jsonForm")
+        .col-lg-6
+            h4 Live preview configuration
+            .panel
+                .panel-red.col-lg-10
+                    .col-lg-10
+                        form(sf-schema="schema", sf-form="form", sf-model="eventSchema")
+.modal-footer
+    a.btn.btn-primary(ng-click="cancel()") Close
+
