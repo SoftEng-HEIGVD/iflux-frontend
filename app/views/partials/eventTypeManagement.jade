@@ -29,7 +29,8 @@
                         td {{eventType.description }}
                         td
                             input(type="checkbox", ng-model="eventType.public", ng-disabled="true")
-                        td {{eventType.organizationId}}
+
+                        td(ng-repeat="organization in organizations| filter:{id : eventType.organizationId}") {{organization.name}}
                         td
                             a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventTypeEditor/{{ eventType.id }}") Modifiy
                         td

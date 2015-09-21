@@ -29,7 +29,7 @@
                         td {{actionType.description }}
                         td
                             input(type="checkbox", ng-model="actionType.public", ng-disabled="true")
-                        td {{actionType.organizationId}}
+                        td(ng-repeat="organization in organizations| filter:{id : actionType.organizationId}") {{organization.name}}
                         td
                             a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTypeEditor/{{actionType.id}}") Modifiy
                         td

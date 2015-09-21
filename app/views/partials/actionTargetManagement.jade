@@ -31,7 +31,8 @@
                         td {{actionTargetTemplate.key }}
                         td
                             input(type="checkbox", ng-model="actionTargetTemplate.public", ng-disabled="true")
-                        td {{actionTargetTemplate.organizationId}}
+
+                        td(ng-repeat="organization in organizations| filter:{id : actionTargetTemplate.organizationId}") {{organization.name}}
                         td
                             a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
                         td

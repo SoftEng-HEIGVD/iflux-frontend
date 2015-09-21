@@ -3,10 +3,10 @@
  */
 var iFluxFrontCtrl = angular.module('EventTypeCtrl', []);
 
-iFluxFrontCtrl.controller('EventTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventType',
-    function ($rootScope, $scope, $location, $localStorage, EventType) {
+iFluxFrontCtrl.controller('EventTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'EventType','Me',
+    function ($rootScope, $scope, $location, $localStorage, EventType, Me) {
         $scope.eventTypes = EventType.query({organizationId: $rootScope.globalCurrentOrganization});
-
+        $scope.organizations = Me.query();
         $scope.deleteET = function (eventTypeId, idx) {
             EventType.delete({eventTypeId: eventTypeId}, function success(res) {
                 $scope.eventTypes.splice(idx, 1);
@@ -21,9 +21,9 @@ iFluxFrontCtrl.controller('EventTypeMgmtCtrl', ['$rootScope', '$scope', '$locati
 
 ]);
 
-iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventType', 'Me',
-    function ($rootScope, $scope, $location, $route, $localStorage, EventType, Me) {
-        $scope.organizations = Me.query();
+iFluxFrontCtrl.controller('EventTypeEditorCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'EventType',
+    function ($rootScope, $scope, $location, $route, $localStorage, EventType) {
+
 
         var isUpdate = false;
         var typeId = $route.current.params.id;

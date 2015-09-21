@@ -3,8 +3,9 @@
  */
 var iFluxFrontCtrl = angular.module('ActionTypeCtrl', []);
 
-iFluxFrontCtrl.controller('ActionTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionType',
-    function ($rootScope, $scope, $location, $localStorage, ActionType) {
+iFluxFrontCtrl.controller('ActionTypeMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionType','Me',
+    function ($rootScope, $scope, $location, $localStorage, ActionType, Me) {
+        $scope.organizations = Me.query();
         $scope.actionTypes = ActionType.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.deleteAT = function(actionTypeID, idx){
             ActionType.delete({actionTypeId: actionTypeID}, function success(res) {

@@ -4,10 +4,11 @@
 
 var iFluxFrontCtrl = angular.module('ActionTarget', []);
 
-iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionTargetTemplate', 'ActionTarget',
-    function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTarget) {
+iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ActionTargetTemplate', 'ActionTarget','Me',
+    function ($rootScope, $scope, $location, $localStorage, ActionTargetTemplate, ActionTarget, Me) {
 
         $scope.showIndex = null;
+        $scope.organizations = Me.query();
         $scope.actionTargetTemplates = ActionTargetTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.actionTargets = ActionTarget.query({organizationId: $rootScope.globalCurrentOrganization});
         $scope.selectTableRow = function (index) {
