@@ -8,7 +8,8 @@ nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-            a.navbar-brand(ng-href='#{contextRoot}/home') iFLUX
+            a(ng-hide='isAuthenticate').navbar-brand(ng-href='#{contextRoot}/signin') iFLUX
+            a(ng-show='isAuthenticate').navbar-brand(ng-href='#{contextRoot}/cockpit') iFLUX
 
         .navbar-collapse.collapse#navbar
             ul.nav.navbar-nav
