@@ -85,7 +85,7 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
 
         $scope.cancel = function () {
             $location.path(contextRoot + '/eventSource');
-        }
+        };
 
         $scope.submitForm = function () {
             if (isUpdate) {
