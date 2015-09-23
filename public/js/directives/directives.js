@@ -27,8 +27,6 @@ iFluxFrontServices.directive('jsonText', function () {
 
                 if (newValue != oldValue) {
                     ngModelCtrl.$setViewValue(toUser(newValue));
-
-                    // TODO avoid this causing the focus of the input to be lost..
                     ngModelCtrl.$render();
                 }
             }, true); // MUST use objectEquality (true) here, for some reason..

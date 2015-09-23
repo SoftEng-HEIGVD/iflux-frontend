@@ -27,7 +27,7 @@ iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$loc
         $scope.modifyAT = function (aTargetId, atTemplateId) {
             $rootScope.atTemplateId = atTemplateId;
             $location.path(contextRoot + '/actionTargetEditor/' + aTargetId);
-        }
+        };
         $scope.deleteATTemplate = function (atTemplateId, idx) {
             ActionTargetTemplate.delete({actionTargetId: atTemplateId}, function success(res) {
                 $scope.actionTargetTemplates.splice(idx, 1);
