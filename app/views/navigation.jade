@@ -1,0 +1,42 @@
+//- Fixed navbar
+nav.navbar.navbar-default.navbar-fixed-top(data-ng-controller='AuthCtrl')
+    .container
+        .navbar-header
+            button.navbar-toggle.collapsed(type='button' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            a(ng-hide='isAuthenticate').navbar-brand(ng-href='#{contextRoot}/signin') iFLUX
+            a(ng-show='isAuthenticate').navbar-brand(ng-href='#{contextRoot}/cockpit') iFLUX
+
+        .navbar-collapse.collapse#navbar
+            ul.nav.navbar-nav
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/home') Home
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/signin') Sign in
+                li(ng-hide='isAuthenticate'): a(ng-href='#{contextRoot}/register') Register
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/cockpit') Cockpit
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/settings') Settings
+                li(ng-show='isAuthenticate'): a(ng-href='#{contextRoot}/rules') Rules
+
+                li.dropdown(ng-show='isAuthenticate')
+                    a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Actions
+                        span.caret
+                    ul.dropdown-menu
+                        li: a(ng-href='#{contextRoot}/actionTarget') Action Target Templates
+                        li: a(ng-href='#{contextRoot}/actionType') Action Types
+                li.dropdown(ng-show='isAuthenticate')
+                    a.dropdown-toggle(ng-href='' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") Events
+                        span.caret
+                    ul.dropdown-menu
+                        li: a(ng-href='#{contextRoot}/eventSource') Event Source Templates
+                        li: a(ng-href='#{contextRoot}/eventType') Event Types
+                li(ng-show='isAuthenticate'): a(ng-click='logout()') Sign out
+
+            div(ng-show='isAuthenticate')
+                .nav.navbar-nav.navbar-right.header-select(ng-controller="LoginInfoCtrl")
+                    ui-select#organizationSelect(on-select="changeOrganization($item, $model)", ng-model="currentOrganization", theme="bootstrap")
+                        ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
+                        ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", value="{{$select.selected.name}}")
+                            div(ng-bind-html="organization.name | highlight: $select.search")

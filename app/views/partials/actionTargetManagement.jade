@@ -1,0 +1,69 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Target Management
+        .col-lg-12
+            | Search an Action Target Templates
+            input(type="text", ng-model="search")
+            .alert.alert-danger.fade.in(ng-hide='!errorMessage')
+                a.close(href='#', data-dismiss='alert') ×
+                strong Error!
+                |  {{errorMessage}}
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'key'; reverse=!reverse") Key
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Create Action Target
+                    th View Action Target
+                    th Delete
+                tbody(ng-repeat="actionTargetTemplate in actionTargetTemplates | orderBy:predicate:reverse | filter:{name:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand action target.")
+                        td {{actionTargetTemplate.name}}
+                        td {{actionTargetTemplate.key }}
+                        td
+                            input(type="checkbox", ng-model="actionTargetTemplate.public", ng-disabled="true")
+
+                        td(ng-repeat="organization in organizations| filter:{id : actionTargetTemplate.organizationId}") {{organization.name}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTargetTemplateEditor/{{actionTargetTemplate.id}}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="createAT(actionTargetTemplate.id)") Add
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
+                        td
+                            a.btn.btn-xs.btn-danger(ng-click="!actionTargetTemplate.deletable || deleteATTemplate(actionTargetTemplate.id, $index)", ng-disabled="!actionTargetTemplate.deletable") Delete
+
+                    tr(ng-show="$index === showIndex")
+                        td
+                        td(colspan="4")
+                            div
+                                table.table.table-condensed.table-intern
+                                    thead
+                                        th
+                                            a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                                        th
+                                            a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
+                                        th Modification
+                                        th Delete
+
+                                    tbody
+                                        tr(ng-repeat="actionTarget in actionTargets | orderBy:predicate:reverse | filter:{actionTargetTemplateId : actionTargetTemplate.id}")
+                                            td
+                                                | {{actionTarget.name}}
+                                            td {{actionTarget.id}}
+                                            td
+                                                a.btn.btn-xs.btn-primary(ng-click="modifyAT(actionTarget.id, actionTargetTemplate.id)") Modify
+                                            td
+                                                a.btn.btn-xs.btn-danger(ng-click="!actionTarget.deletable || deleteAT(actionTarget.id)", ng-disabled="!actionTarget.deletable") Delete
+
+            a.btn.btn-primary(ng-href="#{contextRoot}/actionTargetTemplateEditor") Create a new action target template
+

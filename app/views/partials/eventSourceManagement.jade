@@ -1,0 +1,64 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Source Management
+        .col-lg-12
+            | Search an Event Source Templates
+            input(type="text", ng-model="search")
+            .alert.alert-danger.fade.in(ng-hide='!errorMessage')
+                a.close(href='#', data-dismiss='alert') ×
+                strong Error!
+                |  {{errorMessage}}
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'key'; reverse=!reverse") Key
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Create Event Source
+                    th View Event Source
+                    th delete
+                tbody(ng-repeat="eventSourceTemplate in eventSourceTemplates | orderBy:predicate:reverse | filter:{name:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'", title="Click to toggle collapse/expand Event Source.")
+                        td {{eventSourceTemplate.name}}
+                        td {{eventSourceTemplate.key}}
+                        td
+                            input(type="checkbox", ng-model="eventSourceTemplate.public", ng-disabled="true")
+                        td(ng-repeat="organization in organizations| filter:{id : eventSourceTemplate.organizationId}") {{organization.name}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventSourceTemplateEditor/{{eventSourceTemplate.id}}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="createES(eventSourceTemplate.id)") Add
+                        td
+                            a.btn.btn-xs.btn-primary(ng-click="selectTableRow($index)") View
+                        td
+                            a.btn.btn-xs.btn-danger(ng-click="!eventSourceTemplate.deletable || deleteESTemplate(eventSourceTemplate.id, $index)", ng-disabled="!eventSourceTemplate.deletable") Delete
+                    tr(ng-show="$index === showIndex")
+                        td
+                        td(colspan="4")
+                            div
+                                table.table.table-condensed.table-intern
+                                    thead
+                                        th
+                                            a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                                        th
+                                            a(href="", ng-click="predicate = 'id'; reverse=!reverse") Id
+                                        th Modification
+                                        th Delete
+                                    tbody
+                                        tr(ng-repeat="eventSource in eventSources | orderBy:predicate:reverse | filter:{eventSourceTemplateId : eventSourceTemplate.id}")
+                                            td
+                                                | {{eventSource.name}}
+                                            td {{eventSource.id}}
+                                            td
+                                                a.btn.btn-xs.btn-primary(ng-click="modifyES(eventSource.id, eventSourceTemplate.id)") Modify
+                                            td
+                                                a.btn.btn-xs.btn-danger(ng-click="!eventSource.deletable || deleteAT(eventSource.id)", ng-disabled="!eventSource.deletable") Delete
+            a.btn.btn-primary(ng-href="#{contextRoot}/eventSourceTemplateEditor") Create a new event source template

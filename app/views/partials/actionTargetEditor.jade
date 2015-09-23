@@ -1,0 +1,35 @@
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Target Editor
+        .big-panel
+            .col-lg-12.form-horizontal
+                .col-lg-6
+                    form(name="actionTargetForm")
+                        h3 General Info
+                        .form-group(show-errors="")
+                            label.col-sm-4.control-label(for="NameTemplate") Name *
+                            .col-sm-8
+                                input#NameTemplate.form-control(type="text", name="nameTemplate", placeholder="Name of the template", ng-model="aTarget.name", required="")
+                        .form-group
+                            label.col-sm-4.control-label(for="description") Description
+                            .col-sm-8
+                                input#description.form-control(type="text", name="description", placeholder="Human readable description", ng-model="aTarget.description")
+                .col-lg-6
+                    h3 Schema
+                    .form-group
+                        .col-sm-12
+                            label.control-label Complete the form below to configure the Action Target
+                            hr
+                        .panel-body
+                            .col-sm-12
+                                div
+                                    form(sf-schema="schema", sf-form="form", sf-model="aTarget.configuration")
+        .col-lg-12
+            .alert.alert-danger.fade.in(ng-hide="!errorMessages")
+                div(ng-repeat="errorMessage in errorMessages")
+                    a.close(href="#", data-dismiss="alert") &#215;
+                    strong Error!
+                    | {{errorMessage}}
+            .buttonbar
+                a.btn.btn-primary(ng-click="cancel()") Cancel
+                a.btn.btn-success(ng-click="submitForm()", ng-disabled="actionTargetForm.$invalid") {{buttonName}}

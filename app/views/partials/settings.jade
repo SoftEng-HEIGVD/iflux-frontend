@@ -1,0 +1,70 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 Settings
+        .big-panel
+            section#user.col-lg-12
+                div
+                    h3 User information
+                .col-lg-8
+                    .form-group
+                        label.col-sm-3.control-label First Name
+                        div {{detailCurrentUser.firstName}}
+                    .form-group
+                        label.col-sm-3.control-label Last Name
+                        div {{detailCurrentUser.lastName}}
+            section#Organization.col-lg-12
+                div
+                    h3 Organization informations
+                .col-lg-8
+                    | Search an Event Source Template:
+                    input(ng-model='search')
+                    table.table.table-condensed
+                        thead
+                            th
+                                a(href='', ng-click="predicate = 'name'; reverse=!reverse") Name
+                            th View users
+                            th Add user
+                            th Modification
+                            th Delete
+                        tbody(ng-repeat='organization in organizations | orderBy:predicate:reverse | filter:{name:search}')
+                            tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
+                                td {{organization.name}}
+                                td
+                                    a.btn.btn-xs.btn-primary(ng-click='selectTableRow($index, organization.id)') View
+                                td
+                                    a.btn.btn-xs.btn-primary(ng-click='addUser(organization.id)') Add
+                                td
+                                    a.btn.btn-xs.btn-primary(ng-click='addUser(organization.id)', ng-disabled='true') Modify
+                                td
+                                    a.btn.btn-xs.btn-danger(ng-click='!organization.deletable || deleteOrganization(organization.id, $index)', ng-disabled='!organization.deletable') Delete
+                            tr(ng-show='$index === showIndex')
+                                td
+                                td(colspan='4')
+                                    div
+                                        table.table.table-condensed.table-intern
+                                            thead
+                                                th
+                                                    a(href='', ng-click="predicate = 'firstName'; reverse=!reverse") Firstname
+                                                th
+                                                    a(href='', ng-click="predicate = 'lastName'; reverse=!reverse") Lastname
+                                                th Remove
+                                            tbody
+                                                tr(ng-repeat='user in users | orderBy:predicate:reverse')
+                                                    td {{user.firstName}}
+                                                    td {{user.lastName}}
+                                                    td
+                                                        a.btn.btn-xs.btn-danger(ng-disabled='true', ng-click='removeUser(user.id)') Remove
+                    hr
+                    div
+                        h3 Add a new organization
+                    .col-lg-8
+                        form(name='addOrgForm')
+                            .form-group(show-errors='')
+                                label.col-sm-3.control-label Name
+                                .col-sm-5
+                                    input#organizationName.form-control(name='organizationName', ng-minlength='5', type='text', placeholder='Name', ng-model='org.name', required='')
+                                .buttonbar.col-sm-9.col-sm-offset-3
+                                    a.btn.btn-primary(ng-click='createOrganization(org.name)') Add a new organization

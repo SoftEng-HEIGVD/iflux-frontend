@@ -1,0 +1,38 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Types Management
+        .col-lg-12
+            | Search an Event Types :
+            input(type="text", ng-model="search")
+            .alert.alert-danger.fade.in(ng-hide='!errorMessage')
+                a.close(href='#', data-dismiss='alert') ×
+                strong Error!
+                |  {{errorMessage}}
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'description'; reverse=!reverse") Description
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Delete
+                tbody(ng-repeat="eventType in eventTypes | orderBy:predicate:reverse | filter:{name:search, description:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
+                        td {{eventType.name}}
+                        td {{eventType.description }}
+                        td
+                            input(type="checkbox", ng-model="eventType.public", ng-disabled="true")
+
+                        td(ng-repeat="organization in organizations| filter:{id : eventType.organizationId}") {{organization.name}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/eventTypeEditor/{{ eventType.id }}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-danger(ng-click="!eventType.deletable || deleteET(eventType.id, $index)", ng-disabled="!eventType.deletable") Delete
+            a.btn.btn-primary(ng-href="#{contextRoot}/eventTypeEditor") Create a new event type

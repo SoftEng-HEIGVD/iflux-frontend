@@ -1,0 +1,37 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Action Types Management
+        .col-lg-12
+            | Search an Action Types :
+            input(type="text", ng-model="search")
+            .alert.alert-danger.fade.in(ng-hide='!errorMessage')
+                a.close(href='#', data-dismiss='alert') ×
+                strong Error!
+                |  {{errorMessage}}
+            table.table.table-condensed
+                thead
+                    th
+                        a(href="", ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href="", ng-click="predicate = 'description'; reverse=!reverse") Description
+                    th
+                        a(href="", ng-click="predicate = 'public'; reverse=!reverse") Public
+                    th
+                        a(href="", ng-click="predicate = 'organization'; reverse=!reverse") Organization
+                    th Modification
+                    th Delete
+                tbody(ng-repeat="actionType in actionTypes | orderBy:predicate:reverse | filter:{name:search, description:search}")
+                    tr(ng-class-odd="'rowOddClickable'", ng-class-even="'rowEvenClickable'")
+                        td {{actionType.name}}
+                        td {{actionType.description }}
+                        td
+                            input(type="checkbox", ng-model="actionType.public", ng-disabled="true")
+                        td(ng-repeat="organization in organizations| filter:{id : actionType.organizationId}") {{organization.name}}
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href="#{contextRoot}/actionTypeEditor/{{actionType.id}}") Modifiy
+                        td
+                            a.btn.btn-xs.btn-danger(ng-click="!actionType.deletable || deleteAT(actionType.id, $index)", ng-disabled="!actionType.deletable") Delete
+            a.btn.btn-primary(ng-href="#{contextRoot}/actionTypeEditor") Create a new action type

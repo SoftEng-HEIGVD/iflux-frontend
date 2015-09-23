@@ -1,0 +1,64 @@
+//
+   Created by vincent on 7/23/15.
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Event Type Editor
+        .big-panel
+            #atTemplateForm(name="atTemplateForm", novalidate="")
+                .col-lg-12.form-horizontal
+                    form(name="eventTypeForm")
+                        .col-lg-6
+                            h3 General Info
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="NameType") Name *
+                                .col-sm-8
+                                    input#NameType.form-control(type="text", name="nameTemplate", placeholder="Name of the Event Type", ng-model="eType.name", required="")
+                                    p.help-block.text-danger
+                            .form-group
+                                label.col-sm-4.control-label(for="DescriptionType") Description
+                                .col-sm-8
+                                    input#DescriptionType.form-control(type="text", name="descriptionType", placeholder="Description of the Event Type", ng-model="eType.description")
+                            //
+                              .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="organizationSelect") Organization *
+                                .col-sm-8
+                                    ui-select#organizationSelect(name="orgSelect0", ng-model="eType.organizationId", theme="bootstrap", required="")
+                                        ui-select-match(placeholder="Select an organization") {{$select.selected.name}}
+                                        ui-select-choices(repeat="organization.id as organization in organizations  | filter: { name: $select.search }", name="orgSelect2", value="{{$select.selected.name}}")
+                                            div(ng-bind-html="organization.name | highlight: $select.search")
+                                    p.help-block.text-danger
+
+                            .form-group
+                                label.col-sm-4.control-label(for="templatePublic") Make the event type public
+                                .col-sm-8
+                                    div
+                                        input#templatePublic(type="checkbox", ng-model="eType.public")
+                            .form-group(show-errors="")
+                                label.col-sm-4.control-label(for="typeUrl") Type (url) *
+                                .col-sm-8
+                                    input#typeUrl.form-control(type="url", name="typeUrl", placeholder="Url to define the event type", ng-model="eType.type", required="")
+                                    p.help-block.text-danger
+                        .col-lg-6
+                            h3 Schema
+                            .form-group(show-errors="")
+                                .col-sm-12
+                                    label.control-label Write a JSON Schema to create a configuration form *
+                                    div
+                                        .js-editor-medium(resizable='')
+                                            div(required="", name="jsonSchemaConfiguration", ui-ace="{require: ['ace/ext/language_tools'],\
+                      advanced: {\
+                      enableSnippets: true,\
+                      enableBasicAutocompletion: true,\
+                      enableLiveAutocompletion: true\
+                      },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model="jsonSchema")
+                                        p.help-block.text-danger
+                .col-lg-12
+                    .alert.alert-danger.fade.in(ng-hide="!errorMessages")
+                        div(ng-repeat="errorMessage in errorMessages")
+                            a.close(href="#", data-dismiss="alert") &#215;
+                            strong Error!
+                            | {{errorMessage}}
+                    .buttonbar
+                        input.btn.btn-primary(type="button", ng-click="cancel()", value="Cancel")
+                        input.btn.btn-success(type="submit", ng-click="submitForm()", ng-disabled="eventTypeForm.$invalid", value="{{buttonName}}")

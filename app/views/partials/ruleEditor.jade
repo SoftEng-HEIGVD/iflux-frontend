@@ -1,0 +1,245 @@
+//
+   Created by vincent on 7/23/15.
+
+
+.container
+    #page-content-wrapper
+        h1 iFLUX Rule Editor
+        .big-panel
+            form(name='ruleEditorForm')
+                .col-lg-12.form-horizontal
+                    h3 General Info
+                    .form-group(show-errors='')
+                        label.col-sm-2.control-label(for='descriptionRules') Name *
+                        .col-sm-10
+                            input#descriptionRules.form-control(name='name', type='text', placeholder='Describe what the rule is supposed to do.', ng-model='payload.name', required='')
+                    .form-group
+                        label.col-sm-2.control-label(for='activeRule') Enable the rule
+                        .col-sm-10
+                            div
+                                input#activeRule(ng-model='payload.active', type='checkbox')
+                //
+                 .form-group(show-errors='')
+                     label.col-sm-2.control-label(for='organizationSelect') Organization *
+                     .col-sm-4
+                         ui-select#organizationSelect(required='', name='orgSelect0', ng-model='payload.organizationId', theme='bootstrap')
+                             ui-select-match(placeholder='Select an organization') {{$select.selected.name}}
+                             ui-select-choices(repeat='organization.id as organization in organizations  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                 div(ng-bind-html='organization.name | highlight: $select.search')
+                         p.help-block.text-danger
+                .col-lg-12.form-horizontal
+                    h3 Conditions
+                    .text-left
+                        button.btn.btn-primary(type='button', ng-click='addConditions()') Add a condition
+                    br
+                    div(ng-repeat='condition in payload.conditions')
+                        .col-md-8
+                            .panel.panel-danger
+                                    .panel-heading
+                                        div
+                                            .col-sm-10
+                                                input.form-control(name='Description', type='text', placeholder='Describe what the rule is supposed to do.', ng-model='condition.description')
+                                            button.btn.btn-danger(type='button', ng-click='removeConditions($index)') Delete
+                                    .form-group
+                                        label.col-sm-4(for='eventSourceSelect') Event Source
+                                        .col-sm-7
+                                            ui-select#eventSourceSelect(name='orgSelect0', ng-model='condition.eventSourceId', theme='bootstrap')
+                                                ui-select-match(placeholder='Select an event source') {{$select.selected.name}}
+                                                ui-select-choices(repeat='eventSource.id as eventSource in eventSources  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='eventSource.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventSourceModal(condition.eventSourceId)') ?
+                                    .form-group
+                                        label.col-sm-4(for='eventTypeSelect') Event Type
+                                        .col-sm-7
+                                            ui-select#eventTypeSelect(name='orgSelect0', ng-model='condition.eventTypeId', on-select='eventTypeSelect(condition.eventTypeId, $index)',theme='bootstrap')
+                                                ui-select-match(placeholder='Select an event type') {{$select.selected.name}}
+                                                ui-select-choices(repeat='eventType.id as eventType in eventTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='eventType.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventTypeModal(condition.eventTypeId)') ?
+                                    .form-group(show-errors='')
+                                        .col-sm-4
+                                            label(tooltip-html='htmlTooltipCondition', tooltip-class='tooltipCustomWidth') JS expression
+                                        .col-sm-8
+                                            .js-editor-medium(resizable='')
+                                                div(required='', name='conditionExpression', ui-ace="{require: ['ace/ext/language_tools'],\
+                           advanced: {\
+                           enableSnippets: true,\
+                           enableBasicAutocompletion: true,\
+                           enableLiveAutocompletion: true\
+                           },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'javascript',onChange: schemaChanged}", ng-model='condition.fn.expression')
+                                            p.help-block.text-danger
+                                    .form-group
+                                        label.col-sm-4 Write a JSON example
+                                        .col-sm-8
+                                            .js-editor-medium(resizable='')
+                                                div(ui-ace="{require: ['ace/ext/language_tools'],\
+                           advanced: {\
+                           enableSnippets: true,\
+                           enableBasicAutocompletion: true,\
+                           enableLiveAutocompletion: true\
+                           },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model='condition.fn.sampleEvent')
+
+                        .col-md-4
+                            .panel.panel-info
+                                .panel-heading
+                                    .panel-title JS expression Help
+                                .panel-body
+                                    div
+                                        | You have access to these arguments for evaluating the JS expression.
+                                    br
+                                    div
+                                        b Event
+                                        ul
+                                            li event.timestamp
+                                            li event.properties
+                                            script(type='text/ng-template', id='field_renderer.html').
+                                                {{id}}
+                                                <ul>
+                                                <li ng-repeat="(id, content) in content.properties" ng-include="'field_renderer.html'"></li>
+                                                </ul>
+                                            ul()
+                                                li(ng-repeat='(id, content) in helpConditionEventTypeForm[$index].schema.properties', ng-include="'field_renderer.html'")
+                                                    div
+                        br
+                        .col-lg-12
+                            .alert.alert-danger.fade.in(ng-hide='!errorMessagesCondition[$index].length')
+                                div(ng-repeat='errorMessage in errorMessagesCondition[$index]')
+                                    a.close(href='#', data-dismiss='alert') ×
+                                    strong Error!
+                                    |  {{errorMessage}}
+
+
+                .col-lg-12.form-horizontal
+                    h3 Actions
+                    .text-left
+                        button.btn.btn-primary(type='button', ng-click='addTransformations()') Add an action
+                    br
+                    div(ng-repeat='transformation in payload.transformations')
+                        .col-md-8
+                            .panel.panel-success
+                                .panel-heading
+                                    .panel-title
+                                        .col-sm-10
+                                            input.form-control(name='Description', type='text', placeholder='Describe what the rule is supposed to do.', ng-model='transformation.description')
+                                        button.btn.btn-danger(type='button', ng-click='removeTransformations($index)') Delete
+                                .panel-body
+                                    .form-group(show-errors='')
+                                        label.col-sm-4(for='actionTargetsSelect') Action Target *
+                                        .col-sm-7
+                                            ui-select#actionTargetsSelect(requried='', name='orgSelect0', ng-model='transformation.actionTargetId', theme='bootstrap')
+                                                ui-select-match(placeholder='Select an action target') {{$select.selected.name}}
+                                                ui-select-choices(repeat='actionTarget.id as actionTarget in actionTargets  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='actionTarget.name | highlight: $select.search')
+                                            p.help-block.text-danger
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openActionTargetModal(transformation.actionTargetId)') ?
+                                    .form-group(show-errors='')
+                                        label.col-sm-4(for='actionTypeSelect') Action Type *
+                                        .col-sm-7
+                                            ui-select#actionTypeSelect(required='', name='orgSelect0', ng-model='transformation.actionTypeId', on-select='actionTypeSelect(transformation.actionTypeId, $index)', theme='bootstrap')
+                                                ui-select-match(placeholder='Select an action type') {{$select.selected.name}}
+                                                ui-select-choices(repeat='actionType.id as actionType in actionTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='actionType.name | highlight: $select.search')
+                                            p.help-block.text-danger
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openActionTypeModal(transformation.actionTypeId)') ?
+                                    .form-group
+                                        label.col-sm-4(for='eventTypeTransSelect') Event Type
+                                        .col-sm-7
+                                            ui-select#eventTypeTransSelect(name='orgSelect0', ng-model='transformation.eventTypeId', on-select='actionEventTypeSelect(transformation.eventTypeId, $index)', theme='bootstrap')
+                                                ui-select-match(placeholder='Select an event type') {{$select.selected.name}}
+                                                ui-select-choices(repeat='eventType.id as eventType in eventTypes  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='eventType.name | highlight: $select.search')
+
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventTypeModal(transformation.eventTypeId)') ?
+                                    .form-group(show-errors='')
+                                        .col-sm-4
+                                            label(tooltip-html='htmlTooltipTransformation', tooltip-class='tooltipCustomWidth') JS expression *
+                                        .col-sm-8
+                                            .js-editor-medium(resizable='')
+                                                div(required='', name='tansformationExpression', ui-ace="{require: ['ace/ext/language_tools'],\
+                                   advanced: {\
+                                   enableSnippets: true,\
+                                   enableBasicAutocompletion: true,\
+                                   enableLiveAutocompletion: true\
+                                   },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'javascript',onChange: schemaChanged}", ng-model='transformation.fn.expression')
+                                            p.help-block.text-danger
+                                    .form-group(show-errors='')
+                                        label.col-sm-4 Write a JSON sample *
+                                        .col-sm-8
+                                            .js-editor-medium(resizable='')
+                                                div(required='', name='tansformationSampleEvent', ui-ace="{require: ['ace/ext/language_tools'],\
+                                   advanced: {\
+                                   enableSnippets: true,\
+                                   enableBasicAutocompletion: true,\
+                                   enableLiveAutocompletion: true\
+                                   },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json',onChange: schemaChanged}", ng-model='transformation.fn.sample2.event')
+                                            p.help-block.text-danger
+                                    .form-group
+                                        label.col-sm-4(for='eventSourceFnSelect') Event Source Template
+                                        .col-sm-7
+                                            ui-select#eventSourceFnSelect(name='orgSelect0', ng-model='transformation.fn.sample.eventSourceTemplateId', theme='bootstrap')
+                                                ui-select-match(placeholder='Select an event source template') {{$select.selected.name}}
+                                                ui-select-choices(repeat='eventSourceTemplate.id as eventSourceTemplate in eventSourceTemplates  | filter: { name: $select.search }', name='orgSelect2', value='{{$select.selected.name}}')
+                                                    div(ng-bind-html='eventSourceTemplate.name | highlight: $select.search')
+                                        .col-sm-1
+                                            button.btn.btn-default(type='button', ng-click='openEventSourceTemplateModal(transformation.fn.sample.eventSourceTemplateId)') ?
+                        .col-md-4
+                            .panel.panel-info
+                                .panel-heading
+                                    .panel-title JS expression Help
+                                .panel-body
+                                    div
+                                        | You have access to these arguments for evaluating the JS expression.
+                                    br
+                                    div
+                                        b Event
+                                        ul
+                                            li event.timestamp
+                                            li(ng-hide="!helpTransformationEventTypeForm[$index].schema.properties") event.properties
+                                            script(type='text/ng-template', id='field_renderer.html').
+                                                {{id}}
+                                                <ul>
+                                                <li ng-repeat="(id, content) in content.properties" ng-include="'field_renderer.html'"></li>
+                                                </ul>
+                                            ul(ng-show="helpTransformationEventTypeForm[$index].schema.properties")
+                                                li(ng-repeat='(id, content) in helpTransformationEventTypeForm[$index].schema.properties', ng-include="'field_renderer.html'")
+                                            ul(ng-show="!helpTransformationEventTypeForm[$index].schema.properties")
+                                                li(ng-repeat='(id, content) in helpConditionEventTypeForm[0].schema.properties', ng-include="'field_renderer.html'")
+
+                                    div
+                                        |You can assign value as defined in Action Type
+                                    br
+                                    div
+                                        b Action Type
+                                        script(type='text/ng-template', id='field_renderer.html').
+                                            {{id}}
+                                            <ul>
+                                            <li ng-repeat="(id, content) in content.properties" ng-include="'field_renderer.html'"></li>
+                                            </ul>
+                                        ul
+                                            li(ng-repeat='(id, content) in helpTransformationActionTypeForm[$index].schema.properties', ng-include="'field_renderer.html'")
+                        br
+                        .col-lg-12
+                            .alert.alert-danger.fade.in(ng-hide='!errorMessagesTransformation[$index].length')
+                                div(ng-repeat='errorMessage in errorMessagesTransformation[$index]')
+                                    a.close(href='#', data-dismiss='alert') ×
+                                    strong Error!
+                                    |  {{errorMessage}}
+
+
+
+        .col-lg-12
+            .buttonbar
+                .alert.alert-danger.fade.in(ng-hide='!errorMessages.length')
+                    div(ng-repeat='errorMessage in errorMessages')
+                        a.close(href='#', data-dismiss='alert') ×
+                        strong Error!
+                        |  {{errorMessage}}
+                input.btn.btn-primary(type='button', ng-click='cancel()', value='Cancel')
+                a.btn.btn-success(ng-click='create()') {{buttonName}}

@@ -1,0 +1,43 @@
+//
+   Created by vincent on 9/16/15.
+
+.modal-header
+    h3 Action Type Viewer
+
+.modal-body
+    .col-lg-12.form-horizontal
+        form(name="actionTypeForm")
+            .col-lg-6
+                h4 General Info
+                .form-group
+                    label.col-sm-4.control-label Name *
+                    .col-sm-8 {{aType.name}}
+                .form-group
+                    label.col-sm-4.control-label Description
+                    .col-sm-8 {{aType.description}}
+                .form-group
+                    label.col-sm-4.control-label Is public
+                    .col-sm-8
+                        div
+                            input#templatePublic(type="checkbox", ng-model="aType.public", ng-disabled="true")
+                .form-group
+                    label.col-sm-4.control-label Type (url) *
+                    .col-sm-8 {{aType.type}}
+            .col-lg-6
+                h4 Schema
+                .form-group
+                    .col-sm-12
+                        label.control-label(for="configurationForm") JSON Schema to create a configuration form *
+                        div
+                            .js-editor-medium(resizable='')
+                                #configurationForm(name="configurationForm", required="", ui-ace="{require: ['ace/ext/language_tools'],\
+          advanced: {\
+          enableSnippets: true,\
+          enableBasicAutocompletion: true,\
+          enableLiveAutocompletion: true\
+          },  useWrapMode : true,  showGutter: true,  theme:'monokai',  mode: 'json'}", ng-model="jsonSchema")
+
+
+.modal-footer
+    a.btn.btn-primary(ng-click="cancel()") Close
+

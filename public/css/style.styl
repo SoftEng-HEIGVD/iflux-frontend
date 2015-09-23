@@ -1,6 +1,173 @@
+light-red = #FFDDDD
+very-light-red = #FFEEEE
+light-green = #ccffcc
+red = #d9534f
+green = #5cb85c
+brand-primary = #2b6195
+brand-secondary = #f1772c
+light-grey = #EEEEEE
+white = #FFFFFF
+blue-help = #bce8f1
+
 body
+  margin-bottom 60px
   padding 50px
   font 14px "Lucida Grande", Helvetica, Arial, sans-serif
 
 a
   color #00B7FF
+
+html
+  position relative
+  min-height 100%
+
+.text-primary
+  color brand-primary
+
+.text-primary i:hover
+  color brand-secondary
+
+.text-secondary
+  color brand-secondary
+
+.footer
+  position absolute
+  bottom 0
+  width 100%
+
+  height 60px
+  background-color #f5f5f5
+
+.container
+  width auto
+  max-width 1200px
+  padding 0 15px
+
+.container .text-muted
+  margin 20px 0
+
+.panel-if
+  height auto
+  min-height 400px
+  padding-bottom 15px
+
+.panel-then
+  height auto
+  min-height 400px
+  padding-bottom 15px
+
+.description
+  padding-bottom 10px
+
+.panel
+  height auto
+  margin 0 auto
+
+  .panel-green
+    border-color light-green
+
+  .panel-red
+    border-color light-red
+
+  .panel-info
+    border-color blue-help
+
+.panel-info .panel-heading
+  color #31708f
+  background-color #d9edf7
+  border-color blue-help
+
+
+.panel-green .panel-heading
+  border-color light-green
+  color green
+  background-color light-green
+
+.panel-red .panel-heading
+  border-color light-red
+  background-color light-red
+  color red
+.panel-heading
+  border-top-left-radius 0
+  border-top-right-radius 0
+
+.panel-title
+  margin-top 0
+  margin-bottom 0
+  font-size 16px
+  color inherit
+
+.big-panel
+  border-color #333333
+  background-color #eeeeee repeat-y
+  .buttonbar
+    padding-top 20px
+
+.titleIfThen
+  padding-top 5px
+
+.header-select
+  padding-top 10px
+  padding-bottom 10px
+  min-height 30px
+  width 200px
+
+.clickableRow
+  cursor pointer
+
+.rowOddClickable
+  background-color light-grey
+  cursor pointer
+
+.rowEvenClickable
+  background-color white
+  cursor pointer
+
+.table .table-intern
+  border-color
+  background-color very-light-red
+
+.text-danger
+  color #e74c3c
+
+.ace_editor
+  height 100%
+  width 100%
+
+.js-editor-small
+  height 60px
+  width 100%
+  resize: both;
+
+.js-editor-medium
+  height 180px
+  max-width 650px
+
+
+.tooltip.tooltipCustomWidth .tooltip-inner
+  max-width 500px
+  width 500px
+  text-align left
+
+.tooltip.tooltipCustomWidth .tooltip-arrow
+  display none
+
+
+
+div[resizable]
+
+
+.form-group
+  padding-left 10px
+  padding-right 10px
+  margin-top 10px
+
+.ui-select-match
+  overflow hidden
+
+.ui-select-bootstrap
+  text-overflow ellipsis
+
+.modal-body
+  overflow auto
+

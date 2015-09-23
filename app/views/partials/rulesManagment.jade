@@ -1,0 +1,28 @@
+.container
+    #page-content-wrapper
+        h1 iFLUX Rule Management
+        .col-lg-12
+            | Search a rule:
+            input(ng-model='search')
+            .alert.alert-danger.fade.in(ng-hide='!errorMessage')
+                a.close(href='#', data-dismiss='alert') ×
+                strong Error!
+                |  {{errorMessage}}
+            table.table.table-condensed
+                thead
+                    th
+                        a(href='', ng-click="predicate = 'name'; reverse=!reverse") Name
+                    th
+                        a(href='', ng-click="predicate = 'enabled'; reverse=!reverse") Enable
+                    th Modification
+                    th Delete
+                tbody
+                    tr(ng-repeat='rule in rules | orderBy:predicate:reverse | filter:search')
+                        td {{rule.name}}
+                        td
+                            input(type='checkbox', ng-model='rule.active', ng-disabled='true')
+                        td
+                            a.btn.btn-xs.btn-primary(ng-href='#{contextRoot}/ruleEditor/{{rule.id}}') Modification
+                        td
+                            a.btn.btn-xs.btn-danger(ng-disabled="!rule.deletable", ng-click='!rule.deletable || delete(rule.id, $index)') Delete
+            a.btn.btn-primary(ng-href='#{contextRoot}/ruleEditor') Create a new rule
