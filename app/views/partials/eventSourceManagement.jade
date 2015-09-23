@@ -60,5 +60,5 @@
                                             td
                                                 a.btn.btn-xs.btn-primary(ng-click="modifyES(eventSource.id, eventSourceTemplate.id)") Modify
                                             td
-                                                a.btn.btn-xs.btn-danger(ng-click="!eventSource.deletable || deleteAT(eventSource.id)", ng-disabled="!eventSource.deletable") Delete
+                                                a.btn.btn-xs.btn-danger(ng-click="!eventSource.deletable || deleteES(eventSource.id)", ng-disabled="!eventSource.deletable") Delete
             a.btn.btn-primary(ng-href="#{contextRoot}/eventSourceTemplateEditor") Create a new event source template

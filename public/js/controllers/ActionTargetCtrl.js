@@ -39,7 +39,7 @@ iFluxFrontCtrl.controller('ActionTargetMgmtCtrl', ['$rootScope', '$scope', '$loc
         };
         $scope.deleteAT = function (atId) {
             ActionTarget.delete({actionTargetId: atId}, function success(res) {
-
+                $scope.actionTargets = ActionTarget.query({organizationId: $rootScope.globalCurrentOrganization});
             }, function error(res) {
                 if (res.status == 403) {
                     $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
