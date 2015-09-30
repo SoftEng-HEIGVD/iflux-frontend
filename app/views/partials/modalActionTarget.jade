@@ -15,6 +15,11 @@
                 .form-group
                     label.col-sm-4.control-label Description
                     .col-sm-8 {{aTarget.description}}
+                .form-group
+                    label.col-sm-4.control-label Is public
+                    .col-sm-8
+                        div
+                            input#templatePublic(type="checkbox", ng-model="aTarget.public", ng-disabled="true")
         .col-lg-6
             h4 Schema
             .form-group

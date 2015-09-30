@@ -38,7 +38,8 @@ iFluxFrontCtrl.controller('EventSourceMgmtCtrl', ['$rootScope', '$scope', '$loca
         };
         $scope.deleteES = function(esID){
             EventSource.delete({eventSourceId: esID}, function success(res) {
-
+                $scope.eventSourceTemplates = EventSourceTemplate.query({organizationId: $rootScope.globalCurrentOrganization});
+                $scope.eventSources = EventSource.query({organizationId: $rootScope.globalCurrentOrganization});
             }, function error(res) {
                 if (res.status == 403) {
                     $scope.errorMessage = "You cannot delete it. Not found or is referenced in another model";
@@ -85,7 +86,7 @@ iFluxFrontCtrl.controller('EventSourceCtrl', ['$rootScope', '$scope', '$location
 
         $scope.cancel = function () {
             $location.path(contextRoot + '/eventSource');
-        }
+        };
 
         $scope.submitForm = function () {
             if (isUpdate) {

@@ -22,7 +22,7 @@ iFluxFrontCtrl.controller('AuthCtrl', ['$rootScope', '$scope', '$location', '$lo
                     }
                 }, function (err) {
                     console.log("error: "+ err);
-                    if (err.data.name) {
+                    if (err.data && err.data.name) {
                         $scope.errorMessages.push(err.data.name);
                     }
                     else if (err.status == 401) {
